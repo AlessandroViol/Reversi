@@ -12,9 +12,10 @@ public class Grid {
         grid[4][4] = -1;
 
 
-
     }
+
     public Grid(int[][] grid) {
+        this.grid = grid;
     }
 
 }
