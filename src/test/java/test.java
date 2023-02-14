@@ -1,4 +1,5 @@
 package org.example;
+
 import org.junit.jupiter.api.Test;
 
 
@@ -6,37 +7,32 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-
 class TestGrid {
 
     @Test
-    void DefaultGrid(){
+    void DefaultGrid() {
         Grid grid = new Grid();
 
-            int[][] TestGrid = {{0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, -1, 1, 0, 0, 0},
-                    {0, 0, 0, 1, -1, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0}};
+        int[][] TestGrid = {{0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, -1, 1, 0, 0, 0},
+                {0, 0, 0, 1, -1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0}};
 
 
-            assertArrayEquals(TestGrid, grid.grid);
+        assertArrayEquals(TestGrid, grid.grid);
 
 
-
-
-
-
-        }
+    }
 
 
     @Test
-    void CheckComplexGrid(){
+    void CheckComplexGrid() {
 
-        int[][] ComplexGrid =   {{-1, -1, 1, -1, 0, 0, 0, -1},
+        int[][] ComplexGrid = {{-1, -1, 1, -1, 0, 0, 0, -1},
                 {1, 1, -1, 1, -1, 0, -1, -1},
                 {1, 1, -1, -1, -1, -1, 1, -1},
                 {0, 0, -1, -1, -1, -1, 1, -1},
