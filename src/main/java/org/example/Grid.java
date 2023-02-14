@@ -14,6 +14,7 @@ public class Grid {
 
 
     }
-
+    public Grid(int[][] grid) {
+    }
 
 }

@@ -31,6 +31,28 @@ class TestGrid {
 
 
         }
+
+
+    @Test
+    void CheckComplexGrid(){
+
+        int[][] ComplexGrid =   {{-1, -1, 1, -1, 0, 0, 0, -1},
+                {1, 1, -1, 1, -1, 0, -1, -1},
+                {1, 1, -1, -1, -1, -1, 1, -1},
+                {0, 0, -1, -1, -1, -1, 1, -1},
+                {0, 1, 1, 1, 1, 1, 1, -1},
+                {0, 0, 0, -1, 1, -1, 1, -1},
+                {0, 0, -1, -1, -1, 1, 1, -1},
+                {0, 0, 0, -1, 0, 0, 1, -1}};
+
+        Grid grid = new Grid(ComplexGrid);
+
+
+        assertArrayEquals(ComplexGrid, grid.grid);
+
+
+    }
+
 }
 
 
