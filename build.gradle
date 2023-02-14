@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
 group 'units.sdm'
@@ -16,4 +16,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes('Main-class': 'units.sdm.Main')
+    }
+}
+
+application {
+    mainClass = 'units.sdm.Main'
 }
