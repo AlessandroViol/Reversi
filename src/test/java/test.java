@@ -1,6 +1,7 @@
-package org.example;
+package units.sdm;
 
 import org.junit.jupiter.api.Test;
+import units.sdm.Grid;
 
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;

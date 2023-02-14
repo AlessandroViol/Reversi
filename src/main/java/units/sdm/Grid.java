@@ -1,4 +1,4 @@
-package org.example;
+package units.sdm;
 
 public class Grid {
     int size = 8;
