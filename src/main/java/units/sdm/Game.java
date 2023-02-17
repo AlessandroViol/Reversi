@@ -2,6 +2,10 @@ package units.sdm;
 import java.util.Scanner;
 
 public class Game {
+    Player player1;
+    Player player2;
+
+    Grid grid;
 
     int ColourTurn = -1;
 
@@ -17,10 +21,10 @@ public class Game {
         name2 = scan.next();
 
 
-        Player player1 = new Player(name1, -1);
-        Player player2 = new Player(name2, 1);
+        this.player1 = new Player(name1, -1);
+        this.player2 = new Player(name2, 1);
 
-        Grid grid = new Grid();
+        this.grid = new Grid();
 
         scan.close();
     }
