@@ -19,6 +19,25 @@ public class Grid {
     }
 
     public boolean AllowMove(int x, int y, int ColourTurn) {
+        for (int i = -1; i < 2; i++) {
+            if (x + i < 0 || x + i > 7) {
+                continue;
+            }
+            for (int j = -1; j < 2; j++) {
+                if (i == 0 && j == 0) continue;
+
+                if (y + j < 0 || y + j > 7) {
+                    continue;
+                }
+                if (grid[x + i][y + j] == -ColourTurn) {
+                    if (CheckDirection(i, j, x + i, y + j, ColourTurn) == true) {
+                        return true;
+
+                    }
+                }
+
+            }
+        }
 
         return false;
 
