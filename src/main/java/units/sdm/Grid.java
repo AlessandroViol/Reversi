@@ -18,4 +18,10 @@ public class Grid {
         this.grid = grid;
     }
 
+    public boolean AllowMove(int x, int y, int ColourTurn) {
+
+        return false;
+
+    }
+
 }
