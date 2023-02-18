@@ -24,4 +24,22 @@ public class Grid {
 
     }
 
+
+    public boolean CheckDirection(int i, int j, int x, int y, int ColourTurn) {
+        while (x + i > 0 && x + i < 8 && y + j > 0 && y + j < 8) { //
+            if (grid[x + i][y + j] == ColourTurn) { //
+                return true;
+
+            } else if (grid[x + i][y + j] == 0) {
+                return false;
+
+            }
+            x = x + i;
+            y = y + j;
+
+        }
+        return false;
+
+
+    }
 }
