@@ -22,9 +22,9 @@ public class TestConsoleReversi {
                                 "3 | | | | | | | | |\n" +
                                 "4 | | | |w|b| | | |\n" +
                                 "5 | | | |b|w| | | |\n" +
-                                "3 | | | | | | | | |\n" +
-                                "3 | | | | | | | | |\n" +
-                                "3 | | | | | | | | |\n";
+                                "6 | | | | | | | | |\n" +
+                                "7 | | | | | | | | |\n" +
+                                "8 | | | | | | | | |\n";
 
         assertEquals(expectedOutput, outputStream.toString());
     }
