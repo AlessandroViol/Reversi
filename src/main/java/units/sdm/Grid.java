@@ -20,7 +20,7 @@ public class Grid {
 
     public boolean AllowMove(int x, int y, int ColourTurn) {
 
-        if(grid[x][y]!=0) return false;
+        if (grid[x][y] != 0) return false;
 
         for (int i = -1; i < 2; i++) {
             if (x + i < 0 || x + i > 7) {
@@ -63,16 +63,32 @@ public class Grid {
         return false;
 
     }
+
     public void update_Grid(int x, int y, int ColourTurn) {
 
-        this.grid= new int[][]{{0, 0, -1, -1, -1, -1, -1, -1},
-                        {0, 0, 1, -1, -1, -1, -1, -1},
-                        {0, 0, 0, -1, -1, -1, -1, 1},
-                        {0, 0, -1, -1, -1, -1, 1, 0},
-                        {1, 1, -1, -1, 1, 1, -1, -1},
-                        {0, -1, 1, -1, 0, 0, -1, 0},
-                        {-1, 0, 0, 1, 0, 0, -1, 0},
-                        {0, 0, 0, 0, 1, 0, 0, 0}};
+        for (int i = -1; i < 2; i++) {
+            if (x + i < 0 || x + i > 7) {
+                continue;
+            }
+            for (int j = -1; j < 2; j++) {
+                if (i == 0 && j == 0) continue;
 
+                if (y + j < 0 || y + j > 7) {
+                    continue;
+                }
+                if (grid[x + i][y + j] == -ColourTurn) {
+                    if (CheckDirection(i, j, x + i, y + j, ColourTurn)) {
+                        int xTemp = x;
+                        int yTemp = y;
+                        while (grid[xTemp + i][yTemp + j] == -ColourTurn) {
+                            grid[xTemp + i][yTemp + j] = ColourTurn;
+                            xTemp = x + i;
+                            yTemp = yTemp + j;
+                        }
+                    }
+                }
+            }
+        }
+        return;
     }
 }
