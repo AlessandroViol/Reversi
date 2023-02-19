@@ -19,6 +19,9 @@ public class Grid {
     }
 
     public boolean AllowMove(int x, int y, int ColourTurn) {
+
+        if(grid[x][y]!=0) return false;
+
         for (int i = -1; i < 2; i++) {
             if (x + i < 0 || x + i > 7) {
                 continue;
@@ -30,7 +33,7 @@ public class Grid {
                     continue;
                 }
                 if (grid[x + i][y + j] == -ColourTurn) {
-                    if (CheckDirection(i, j, x + i, y + j, ColourTurn) == true) {
+                    if (CheckDirection(i, j, x + i, y + j, ColourTurn)) {
                         return true;
 
                     }
@@ -49,7 +52,7 @@ public class Grid {
             if (grid[x + i][y + j] == ColourTurn) { //
                 return true;
 
-            } else if (grid[x + i][y + j] == 0) {
+            } else if (grid[x + i][y + j] == 0 || grid[x + i][y + j] == 2) {
                 return false;
 
             }
@@ -59,6 +62,17 @@ public class Grid {
         }
         return false;
 
+    }
+    public void update_Grid(int x, int y, int ColourTurn) {
+
+        this.grid= new int[][]{{0, 0, -1, -1, -1, -1, -1, -1},
+                        {0, 0, 1, -1, -1, -1, -1, -1},
+                        {0, 0, 0, -1, -1, -1, -1, 1},
+                        {0, 0, -1, -1, -1, -1, 1, 0},
+                        {1, 1, -1, -1, 1, 1, -1, -1},
+                        {0, -1, 1, -1, 0, 0, -1, 0},
+                        {-1, 0, 0, 1, 0, 0, -1, 0},
+                        {0, 0, 0, 0, 1, 0, 0, 0}};
 
     }
 }
