@@ -7,6 +7,8 @@ public class Game {
 
     Grid grid;
 
+    GridView view;
+
     int ColourTurn = -1;
 
     public Game() {
@@ -27,6 +29,13 @@ public class Game {
         this.grid = new Grid();
 
         scan.close();
+    }
+
+    public Game(GridView view) {
+        this();
+        this.view = view;
+
+        view.show(grid);
     }
 
 }

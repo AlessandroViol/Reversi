@@ -16,15 +16,15 @@ public class TestConsoleReversi {
         ConsoleReversi view = new ConsoleReversi();
         view.show(new Grid());
 
-        String expectedOutput = "  |A|B|C|D|E|F|G|H|\n" +
-                                "1 | | | | | | | | |\n" +
-                                "2 | | | | | | | | |\n" +
-                                "3 | | | | | | | | |\n" +
-                                "4 | | | |w|b| | | |\n" +
-                                "5 | | | |b|w| | | |\n" +
-                                "6 | | | | | | | | |\n" +
-                                "7 | | | | | | | | |\n" +
-                                "8 | | | | | | | | |\n";
+        String expectedOutput = (char) 27 + "[4m  |A|B|C|D|E|F|G|H" + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m1 | | | | | | | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m2 | | | | | | | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m3 | | | | | | | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m4 | | | |o|\u001B[31mo\u001B[0m" + (char) 27 + "[4m| | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m5 | | | |\u001B[31mo\u001B[0m" + (char) 27 + "[4m|o| | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m6 | | | | | | | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m7 | | | | | | | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m8 | | | | | | | | " + (char) 27 + "[0m|\n";
 
         assertEquals(expectedOutput, outputStream.toString());
     }
