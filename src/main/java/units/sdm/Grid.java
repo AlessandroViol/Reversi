@@ -140,9 +140,14 @@ public class Grid {
             }
         }
 
-
     }
 
+    public void RemoveAllowedPegs(){
+        for(int i=0; i<8; i++)
+            for(int j=0; j<8; j++)
+                if (grid[i][j]==2) grid[i][j]=0;
+
+    }
 
 }
 
