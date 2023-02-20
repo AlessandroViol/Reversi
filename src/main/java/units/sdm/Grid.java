@@ -64,26 +64,15 @@ public class Grid {
 
     }
 
-    public void place(int x, int y, int colourTurn) {
-        if (colourTurn == -1) {
-            grid = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, -1, 0, 0, 0},
-                    {0, 0, 0, -1, -1, 0, 0, 0},
-                    {0, 0, -1, -1, -1, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0}};
-        } else {
-            grid = new int[][] {{0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 1, 0, 0, 0},
-                    {0, 0, 0, 1, 1, 1, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0}};
+    public boolean place(int x, int y, int colourTurn) {
+
+        if (AllowMove(x, y, colourTurn)) {
+            grid[x][y] = colourTurn;
+            update_Grid(x, y, colourTurn);
         }
+        else return false;
+
+        return true;
     }
 
     public void update_Grid(int x, int y, int ColourTurn) {
