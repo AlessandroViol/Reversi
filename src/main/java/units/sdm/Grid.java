@@ -130,5 +130,19 @@ public class Grid {
         }
 
     }
+
+    public void AddAllowedPegs(int ColourTurn) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (AllowMove(i, j, ColourTurn)) {
+                    grid[i][j] = 2;
+                }
+            }
+        }
+
+
+    }
+
+
 }
 
