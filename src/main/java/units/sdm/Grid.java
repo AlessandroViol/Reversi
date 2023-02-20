@@ -4,6 +4,10 @@ public class Grid {
     int size = 8;
     int grid[][] = new int[size][size];
 
+    int NumberOfWhites;
+    int NumberOfBlacks;
+
+
     public Grid() {
 
         grid[3][3] = -1;
@@ -102,4 +106,34 @@ public class Grid {
         }
         return;
     }
+
+
+    public void PegsCount(){
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(grid[i][j] == -1){
+                    NumberOfWhites +=1;
+                }else if(grid[i][j] == 1){
+                    NumberOfBlacks += 1;
+                }
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
