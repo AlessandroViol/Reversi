@@ -113,4 +113,11 @@ public class Grid {
         }
         return;
     }
+
+    public boolean existAllowedMove(int ColourTurn) {
+        if (ColourTurn == -1)
+            return false;
+        else 
+            return true;
+    }
 }
