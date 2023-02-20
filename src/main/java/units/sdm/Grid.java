@@ -4,6 +4,10 @@ public class Grid {
     int size = 8;
     int grid[][] = new int[size][size];
 
+    int NumberOfWhites;
+    int NumberOfBlacks;
+
+
     public Grid() {
 
         grid[3][3] = -1;
@@ -64,26 +68,14 @@ public class Grid {
 
     }
 
-    public void place(int x, int y, int colourTurn) {
-        if (colourTurn == -1) {
-            grid = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, -1, 0, 0, 0},
-                    {0, 0, 0, -1, -1, 0, 0, 0},
-                    {0, 0, -1, -1, -1, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0}};
-        } else {
-            grid = new int[][] {{0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 1, 0, 0, 0},
-                    {0, 0, 0, 1, 1, 1, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0}};
-        }
+    public boolean place(int x, int y, int colourTurn) {
+
+        if (AllowMove(x, y, colourTurn)) {
+            grid[x][y] = colourTurn;
+            update_Grid(x, y, colourTurn);
+        } else return false;
+
+        return true;
     }
 
     public void update_Grid(int x, int y, int ColourTurn) {
@@ -114,10 +106,25 @@ public class Grid {
         return;
     }
 
+
     public boolean existAllowedMove(int ColourTurn) {
         if (ColourTurn == -1)
             return false;
-        else 
+        else
             return true;
     }
+
+    public void PegsCount() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (grid[i][j] == -1) {
+                    NumberOfWhites += 1;
+                } else if (grid[i][j] == 1) {
+                    NumberOfBlacks += 1;
+                }
+            }
+        }
+
+    }
 }
+
