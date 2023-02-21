@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 import units.sdm.ConsoleReversi;
-import units.sdm.Grid;
+import units.sdm.Checkerboard;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -14,7 +14,7 @@ public class TestConsoleReversi {
         System.setOut(new PrintStream(outputStream));
 
         ConsoleReversi view = new ConsoleReversi();
-        view.show(new Grid());
+        view.show(new Checkerboard());
 
         String expectedOutput = (char) 27 + "[4m  |A|B|C|D|E|F|G|H" + (char) 27 + "[0m|\n" +
                                 (char) 27 + "[4m1 | | | | | | | | " + (char) 27 + "[0m|\n" +

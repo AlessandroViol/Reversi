@@ -1,64 +1,66 @@
 package units.sdm;
+
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestAllowMove {
     @Test
-    void DefaultGrid(){
+    void defaultCheckerboard() {
 
-        Grid grid = new Grid();
+        Checkerboard checkerboard = new Checkerboard();
 
-        int[][] check = {{0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 2, 0, 0, 0, 0},
-                         {0, 0, 2, -1, 1, 0, 0, 0},
-                         {0, 0, 0, 1, -1, 2, 0, 0},
-                         {0, 0, 0, 0, 2, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0}};
+        int[][] referenceCheckerboard = {{0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 2, 0, 0, 0, 0},
+                {0, 0, 2, -1, 1, 0, 0, 0},
+                {0, 0, 0, 1, -1, 2, 0, 0},
+                {0, 0, 0, 0, 2, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0}};
 
-        for(int i=0; i<8; i++) {
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (grid.AllowMove(i, j, 1)) grid.grid[i][j] = 2;
+                if (checkerboard.allowPlace(i, j, 1)) checkerboard.checkerboard[i][j] = 2;
             }
         }
 
-        assertArrayEquals(check, grid.grid);
+        assertArrayEquals(referenceCheckerboard, checkerboard.checkerboard);
 
     }
 
     @Test
-    void ComplexGrid(){
+    void complexCheckerboard() {
 
         ConsoleReversi view = new ConsoleReversi();
 
-        int[][] s =  {{0, 0, -1, -1, -1, -1, -1, -1},
-                      {0, 0, 1, -1, -1, -1, -1, -1},
-                      {0, 0, 0, -1, -1, -1, -1, 0},
-                      {0, 0, -1, -1, -1, -1, -1, 0},
-                      {1, 1, -1, -1, 1, 1, -1, -1},
-                      {0, -1, 1, -1, 0, 0, -1, 0},
-                      {-1, 0, 0, 1, 0, 0, -1, 0},
-                      {0, 0, 0, 0, 1, 0, 0, 0}};
+        int[][] checkerboardMatrix = {{0, 0, -1, -1, -1, -1, -1, -1},
+                {0, 0, 1, -1, -1, -1, -1, -1},
+                {0, 0, 0, -1, -1, -1, -1, 0},
+                {0, 0, -1, -1, -1, -1, -1, 0},
+                {1, 1, -1, -1, 1, 1, -1, -1},
+                {0, -1, 1, -1, 0, 0, -1, 0},
+                {-1, 0, 0, 1, 0, 0, -1, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0}};
 
-        Grid grid= new Grid(s);
+        Checkerboard checkerboard = new Checkerboard(checkerboardMatrix);
 
-        int[][] check =  {{0, 0, -1, -1, -1, -1, -1, -1},
-                          {0, 0, 1, -1, -1, -1, -1, -1},
-                          {0, 0, 2, -1, -1, -1, -1, 2},
-                          {0, 0, -1, -1, -1, -1, -1, 0},
-                          {1, 1, -1, -1, 1, 1, -1, -1},
-                          {2, -1, 1, -1, 2, 0, -1, 0},
-                          {-1, 2, 2, 1, 0, 0, -1, 2},
-                          {0, 0, 0, 0, 1, 0, 0, 0}};
+        int[][] referenceCheckerboard = {{0, 0, -1, -1, -1, -1, -1, -1},
+                {0, 0, 1, -1, -1, -1, -1, -1},
+                {0, 0, 2, -1, -1, -1, -1, 2},
+                {0, 0, -1, -1, -1, -1, -1, 0},
+                {1, 1, -1, -1, 1, 1, -1, -1},
+                {2, -1, 1, -1, 2, 0, -1, 0},
+                {-1, 2, 2, 1, 0, 0, -1, 2},
+                {0, 0, 0, 0, 1, 0, 0, 0}};
 
-        for(int i=0; i<8; i++) {
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (grid.AllowMove(i, j, 1)) grid.grid[i][j] = 2;
+                if (checkerboard.allowPlace(i, j, 1)) checkerboard.checkerboard[i][j] = 2;
             }
         }
 
-        assertArrayEquals(check, grid.grid);
+        assertArrayEquals(referenceCheckerboard, checkerboard.checkerboard);
 
     }
 

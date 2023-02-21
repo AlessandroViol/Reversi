@@ -1,12 +1,12 @@
 package units.sdm;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-public class TestUpdateGrid {
+public class TestUpdateCheckerboard {
 
     @Test
-    void Test(){
+    void test(){
 
-        int[][] Grid =
+        int[][] checkerboardMatrix =
                 {{0, 0, -1, -1, -1, -1, -1, -1},
                  {0, 0, 1, -1, -1, -1, -1, -1},
                  {0, 0, 0, -1, -1, -1, -1, 1},
@@ -16,10 +16,10 @@ public class TestUpdateGrid {
                  {-1, 0, 0, 1, 0, 0, -1, 0},
                  {0, 0, 0, 0, 1, 0, 0, 0}};
 
-        Grid grid = new Grid(Grid);
-        grid.update_Grid(2,7,1);
+        Checkerboard checkerboard = new Checkerboard(checkerboardMatrix);
+        checkerboard.updateCheckerboard(2,7,1);
 
-        int[][] GridNextMove =
+        int[][] referenceCheckerboard =
                 {{0, 0, -1, -1, -1, -1, -1, -1},
                  {0, 0, 1, -1, -1, -1, -1, -1},
                  {0, 0, 0, -1, -1, -1, -1, 1},
@@ -29,7 +29,7 @@ public class TestUpdateGrid {
                  {-1, 0, 0, 1, 0, 0, -1, 0},
                  {0, 0, 0, 0, 1, 0, 0, 0}};
 
-        assertArrayEquals(GridNextMove, grid.grid);
+        assertArrayEquals(referenceCheckerboard, checkerboard.checkerboard);
 
 
    }

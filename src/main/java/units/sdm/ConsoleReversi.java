@@ -1,31 +1,31 @@
 package units.sdm;
 
-public class ConsoleReversi implements GridView {
+public class ConsoleReversi implements ReversiView {
     @Override
-    public void show(Grid grid) {
-        String currentSlot;
+    public void show(Checkerboard checkerboard) {
+        String currentValue;
 
         System.out.print((char) 27 + "[4m  ");
-        for (int i = 0; i < grid.size; i++) {
+        for (int i = 0; i < checkerboard.SIZE; i++) {
             System.out.print("|" + (char) (i + 65));
         }
         System.out.print((char) 27 + "[0m|\n");
 
-        for (int i = 0; i < grid.size; i++) {
+        for (int i = 0; i < checkerboard.SIZE; i++) {
             System.out.print((char) 27 + "[4m" + (i + 1) + " ");
-            for (int j = 0; j < grid.size; j++) {
-                switch (grid.grid[i][j]) {
+            for (int j = 0; j < checkerboard.SIZE; j++) {
+                switch (checkerboard.checkerboard[i][j]) {
                     case -1:
-                        currentSlot = "o";
+                        currentValue = "o";
                         break;
                     case 1:
-                        currentSlot = "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
+                        currentValue = "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
                         break;
                     default:
-                        currentSlot = " ";
+                        currentValue = " ";
                         break;
                 }
-                System.out.print("|" + currentSlot);
+                System.out.print("|" + currentValue);
             }
             System.out.print((char) 27 + "[0m|\n");
         }

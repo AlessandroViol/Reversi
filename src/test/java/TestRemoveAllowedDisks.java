@@ -1,12 +1,12 @@
 package units.sdm;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-public class RemoveAllowedPegsTest {
+public class TestRemoveAllowedDisks {
 
     @Test
-    void Remove(){
+    void remove(){
 
-        int[][] GridAllowedMoves = {{0, 0, -1, -1, -1, -1, -1, -1},
+        int[][] checkerboardMatrix = {{0, 0, -1, -1, -1, -1, -1, -1},
                 {0, 0, 1, -1, -1, -1, -1, -1},
                 {0, 0, 2, -1, -1, -1, -1, 2},
                 {0, 0, -1, -1, -1, -1, -1, 0},
@@ -15,7 +15,7 @@ public class RemoveAllowedPegsTest {
                 {-1, 2, 2, 1, 0, 0, -1, 2},
                 {0, 0, 0, 0, 1, 0, 0, 0}};
 
-        int[][] Grid = {{0, 0, -1, -1, -1, -1, -1, -1},
+        int[][] referenceCheckerboard = {{0, 0, -1, -1, -1, -1, -1, -1},
                 {0, 0, 1, -1, -1, -1, -1, -1},
                 {0, 0, 0, -1, -1, -1, -1, 0},
                 {0, 0, -1, -1, -1, -1, -1, 0},
@@ -24,10 +24,10 @@ public class RemoveAllowedPegsTest {
                 {-1, 0, 0, 1, 0, 0, -1, 0},
                 {0, 0, 0, 0, 1, 0, 0, 0}};
 
-        Grid grid = new Grid(GridAllowedMoves);
-        grid.RemoveAllowedPegs();
+        Checkerboard checkerboard = new Checkerboard(checkerboardMatrix);
+        checkerboard.removeAllowedDisks();
 
-        assertArrayEquals(grid.grid, Grid);
+        assertArrayEquals(checkerboard.checkerboard, referenceCheckerboard);
 
 
     }

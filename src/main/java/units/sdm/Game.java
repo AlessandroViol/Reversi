@@ -2,40 +2,40 @@ package units.sdm;
 import java.util.Scanner;
 
 public class Game {
-    Player player1;
-    Player player2;
+    Player playerWhite;
+    Player playerBlack;
 
-    Grid grid;
+    Checkerboard checkerboard;
 
-    GridView view;
+    ReversiView view;
 
-    int ColourTurn = -1;
+    int colourTurn = -1;
 
     public Game() {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("What's your name player1?");
-        String name1;
-        name1 = scan.next();
+        String nameWhite;
+        nameWhite = scan.next();
 
         System.out.print("What's your name player2?");
-        String name2;
-        name2 = scan.next();
+        String nameBlack;
+        nameBlack = scan.next();
 
 
-        this.player1 = new Player(name1, -1);
-        this.player2 = new Player(name2, 1);
+        this.playerWhite = new Player(nameWhite, -1);
+        this.playerBlack = new Player(nameBlack, 1);
 
-        this.grid = new Grid();
+        this.checkerboard = new Checkerboard();
 
         scan.close();
     }
 
-    public Game(GridView view) {
+    public Game(ReversiView view) {
         this();
         this.view = view;
 
-        view.show(grid);
+        view.show(checkerboard);
     }
 
 }

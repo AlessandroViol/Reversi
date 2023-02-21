@@ -1,20 +1,19 @@
 package units.sdm;
 
 import org.junit.jupiter.api.Test;
-import units.sdm.Grid;
 
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-class TestGrid {
+class TestCheckerboard {
 
     @Test
-    void DefaultGrid() {
-        Grid grid = new Grid();
+    void defaultGrid() {
+        Checkerboard checkerboard = new Checkerboard();
 
-        int[][] TestGrid = {{0, 0, 0, 0, 0, 0, 0, 0},
+        int[][] referenceCheckerboard = {{0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, -1, 1, 0, 0, 0},
@@ -24,16 +23,16 @@ class TestGrid {
                 {0, 0, 0, 0, 0, 0, 0, 0}};
 
 
-        assertArrayEquals(TestGrid, grid.grid);
+        assertArrayEquals(referenceCheckerboard, checkerboard.checkerboard);
 
 
     }
 
 
     @Test
-    void CheckComplexGrid() {
+    void checkComplexCheckerboard() {
 
-        int[][] ComplexGrid = {{-1, -1, 1, -1, 0, 0, 0, -1},
+        int[][] referenceCheckerboard = {{-1, -1, 1, -1, 0, 0, 0, -1},
                 {1, 1, -1, 1, -1, 0, -1, -1},
                 {1, 1, -1, -1, -1, -1, 1, -1},
                 {0, 0, -1, -1, -1, -1, 1, -1},
@@ -42,10 +41,10 @@ class TestGrid {
                 {0, 0, -1, -1, -1, 1, 1, -1},
                 {0, 0, 0, -1, 0, 0, 1, -1}};
 
-        Grid grid = new Grid(ComplexGrid);
+        Checkerboard checkerboard = new Checkerboard(referenceCheckerboard);
 
 
-        assertArrayEquals(ComplexGrid, grid.grid);
+        assertArrayEquals(referenceCheckerboard, checkerboard.checkerboard);
 
 
     }

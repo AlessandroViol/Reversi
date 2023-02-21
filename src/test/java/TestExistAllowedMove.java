@@ -17,9 +17,9 @@ public class TestExistAllowedMove {
                 {-1, 1, -1, -1, -1, -1, -1, 0},
                 {1, 1, 1, 1, 1, 1, 1, 0}};
 
-        Grid grid = new Grid(noMoves);
+        Checkerboard checkerboard = new Checkerboard(noMoves);
 
-        assertFalse(grid.existAllowedMove(-1));
+        assertFalse(checkerboard.existAllowedPlace(-1));
     }
 
     @Test
@@ -33,8 +33,8 @@ public class TestExistAllowedMove {
                 {-1, 1, -1, -1, -1, -1, -1, 0},
                 {1, 1, 1, 1, 1, 1, 1, 0}};
 
-        Grid grid = new Grid(noMoves);
+        Checkerboard checkerboard = new Checkerboard(noMoves);
 
-        assertTrue(grid.existAllowedMove(1));
+        assertTrue(checkerboard.existAllowedPlace(1));
     }
 }
