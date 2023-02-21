@@ -18,7 +18,10 @@ public class Checkerboard {
     }
 
     public Checkerboard(int[][] checkerboard) {
-        this.checkerboard = checkerboard;
+        this.checkerboard = new int[SIZE][SIZE];
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                this.checkerboard[i][j] = checkerboard[i][j];
     }
 
     public boolean allowPlace(int posX, int posY, int colorTurn) {
@@ -48,7 +51,6 @@ public class Checkerboard {
         return false;
 
     }
-
 
     public boolean checkDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) {
         while (posX + offsetX > 0 && posX + offsetX < 8 && posY + offsetY > 0 && posY + offsetY < 8) { //
@@ -104,7 +106,6 @@ public class Checkerboard {
         }
         return;
     }
-
 
     public boolean existAllowedPlace(int colourTurn) {
         for (int i = 0; i < SIZE; i++) {

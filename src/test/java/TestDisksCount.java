@@ -8,16 +8,7 @@ public class TestDisksCount {
     @Test
     void numberDisks() {
 
-        int[][] count = {{0, 0, -1, -1, -1, -1, -1, -1},
-                        {0, 0, 1, -1, -1, -1, -1, -1},
-                        {0, 0, 0, -1, -1, -1, -1, 0},
-                        {0, 0, -1, -1, -1, -1, -1, 0},
-                        {1, 1, -1, -1, 1, 1, -1, -1},
-                        {0, -1, 1, -1, 0, 0, -1, 0},
-                        {-1, 0, 0, 1, 0, 0, -1, 0},
-                        {0, 0, 0, 0, 1, 0, 0, 0}};
-
-        Checkerboard checkerboard = new Checkerboard(count);
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboard);
 
         int NWhites = 29;
         int NBlacks = 8;
