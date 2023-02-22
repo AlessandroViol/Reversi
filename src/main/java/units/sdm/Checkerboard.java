@@ -2,7 +2,7 @@ package units.sdm;
 
 public class Checkerboard {
     final static int SIZE = 8;
-    int [][] checkerboard;
+    int[][] checkerboard;
 
     int NumberOfWhites;
     int NumberOfBlacks;
@@ -11,8 +11,6 @@ public class Checkerboard {
     final static int W = -1;
     final static int N = 0;
     final static int A = 2;
-
-
 
 
     public Checkerboard() {
@@ -156,5 +154,12 @@ public class Checkerboard {
 
     }
 
-}
 
+    public boolean gameOver() {
+        if (!existAllowedPlace(B) && !existAllowedPlace(W)) {
+            return true;
+        }
+        return false;
+    }
+
+}
