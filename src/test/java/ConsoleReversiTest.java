@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestConsoleReversi {
+public class ConsoleReversiTest {
     @Test
     void consoleOutput() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

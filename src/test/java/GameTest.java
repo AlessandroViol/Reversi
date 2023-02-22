@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class TestGameOver {
+public class GameTest {
     final static int B = Checkerboard.B;
     final static int W = Checkerboard.W;
     final static int N = Checkerboard.N;
@@ -15,7 +15,6 @@ public class TestGameOver {
 
     @Test
     void endGameFull() {
-
 
         int[][] GameOverFull = {{W, W, W, B, B, B, B, B},
                                 {W, W, W, W, W, W, W, B},
@@ -25,8 +24,6 @@ public class TestGameOver {
                                 {W, W, B, B, B, B, B, B},
                                 {W, B, B, W, W, W, W, B},
                                 {B, B, B, W, W, W, W, B}};
-
-
 
         Checkerboard checkerboard = new Checkerboard(GameOverFull);
         assertTrue(checkerboard.gameOver());
