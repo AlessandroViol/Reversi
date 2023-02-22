@@ -23,8 +23,8 @@ public class Game {
         nameBlack = scan.next();
 
 
-        this.playerWhite = new Player(nameWhite, -1);
-        this.playerBlack = new Player(nameBlack, 1);
+        this.playerWhite = new Player(nameWhite, Checkerboard.W);
+        this.playerBlack = new Player(nameBlack, Checkerboard.B);
 
         this.checkerboard = new Checkerboard();
 

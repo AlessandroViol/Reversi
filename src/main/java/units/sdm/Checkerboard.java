@@ -1,41 +1,48 @@
 package units.sdm;
 
 public class Checkerboard {
-    final int SIZE = 8;
+    final static int SIZE = 8;
     int [][] checkerboard;
 
     int NumberOfWhites;
     int NumberOfBlacks;
 
+    final static int B = 1;
+    final static int W = -1;
+    final static int N = 0;
+    final static int A = 2;
+
+
+
 
     public Checkerboard() {
         checkerboard = new int[SIZE][SIZE];
 
-        checkerboard[3][3] = -1;
-        checkerboard[4][3] = 1;
-        checkerboard[3][4] = 1;
-        checkerboard[4][4] = -1;
+        checkerboard[3][3] = W;
+        checkerboard[4][3] = B;
+        checkerboard[3][4] = B;
+        checkerboard[4][4] = W;
     }
 
     public Checkerboard(int[][] checkerboard) {
         this.checkerboard = new int[SIZE][SIZE];
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
                 this.checkerboard[i][j] = checkerboard[i][j];
     }
 
     public boolean allowPlace(int posX, int posY, int colorTurn) {
 
-        if (checkerboard[posX][posY] != 0) return false;
+        if (checkerboard[posX][posY] != N) return false;
 
         for (int offsetX = -1; offsetX < 2; offsetX++) {
-            if (posX + offsetX < 0 || posX + offsetX > 7) {
+            if (posX + offsetX < 0 || posX + offsetX > SIZE - 1) {
                 continue;
             }
             for (int offsetY = -1; offsetY < 2; offsetY++) {
                 if (offsetX == 0 && offsetY == 0) continue;
 
-                if (posY + offsetY < 0 || posY + offsetY > 7) {
+                if (posY + offsetY < 0 || posY + offsetY > SIZE - 1) {
                     continue;
                 }
                 if (checkerboard[posX + offsetX][posY + offsetY] == -colorTurn) {
@@ -53,11 +60,11 @@ public class Checkerboard {
     }
 
     public boolean checkDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) {
-        while (posX + offsetX > 0 && posX + offsetX < 8 && posY + offsetY > 0 && posY + offsetY < 8) { //
+        while (posX + offsetX > 0 && posX + offsetX < SIZE && posY + offsetY > 0 && posY + offsetY < SIZE) { //
             if (checkerboard[posX + offsetX][posY + offsetY] == colourTurn) { //
                 return true;
 
-            } else if (checkerboard[posX + offsetX][posY + offsetY] == 0 || checkerboard[posX + offsetX][posY + offsetY] == 2) {
+            } else if (checkerboard[posX + offsetX][posY + offsetY] == N || checkerboard[posX + offsetX][posY + offsetY] == A) {
                 return false;
 
             }
@@ -82,13 +89,13 @@ public class Checkerboard {
     public void updateCheckerboard(int posX, int posY, int colourTurn) {
 
         for (int offsetX = -1; offsetX < 2; offsetX++) {
-            if (posX + offsetX < 0 || posX + offsetX > 7) {
+            if (posX + offsetX < 0 || posX + offsetX > SIZE - 1) {
                 continue;
             }
             for (int offsetY = -1; offsetY < 2; offsetY++) {
                 if (offsetX == 0 && offsetY == 0) continue;
 
-                if (posY + offsetY < 0 || posY + offsetY > 7) {
+                if (posY + offsetY < 0 || posY + offsetY > SIZE - 1) {
                     continue;
                 }
                 if (checkerboard[posX + offsetX][posY + offsetY] == -colourTurn) {
@@ -119,11 +126,11 @@ public class Checkerboard {
     }
 
     public void disksCount() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (checkerboard[i][j] == -1) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (checkerboard[i][j] == W) {
                     NumberOfWhites += 1;
-                } else if (checkerboard[i][j] == 1) {
+                } else if (checkerboard[i][j] == B) {
                     NumberOfBlacks += 1;
                 }
             }
@@ -132,10 +139,10 @@ public class Checkerboard {
     }
 
     public void addAllowedDisks(int colourTurn) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 if (allowPlace(i, j, colourTurn)) {
-                    checkerboard[i][j] = 2;
+                    checkerboard[i][j] = A;
                 }
             }
         }
@@ -143,9 +150,9 @@ public class Checkerboard {
     }
 
     public void removeAllowedDisks() {
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-                if (checkerboard[i][j] == 2) checkerboard[i][j] = 0;
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                if (checkerboard[i][j] == A) checkerboard[i][j] = N;
 
     }
 

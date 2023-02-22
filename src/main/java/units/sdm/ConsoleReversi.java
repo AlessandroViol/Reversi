@@ -15,10 +15,10 @@ public class ConsoleReversi implements ReversiView {
             System.out.print((char) 27 + "[4m" + (i + 1) + " ");
             for (int j = 0; j < checkerboard.SIZE; j++) {
                 switch (checkerboard.checkerboard[i][j]) {
-                    case -1:
+                    case Checkerboard.W:
                         currentValue = "o";
                         break;
-                    case 1:
+                    case Checkerboard.B:
                         currentValue = "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
                         break;
                     default:

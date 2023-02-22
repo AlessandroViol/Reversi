@@ -10,9 +10,9 @@ public class TestAllowPlace {
 
         Checkerboard checkerboard = new Checkerboard();
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (checkerboard.allowPlace(i, j, 1)) checkerboard.checkerboard[i][j] = 2;
+        for (int i = 0; i < Checkerboard.SIZE ; i++) {
+            for (int j = 0; j < Checkerboard.SIZE ; j++) {
+                if (checkerboard.allowPlace(i, j, Checkerboard.B)) checkerboard.checkerboard[i][j] = Checkerboard.A;
             }
         }
 
@@ -27,9 +27,9 @@ public class TestAllowPlace {
 
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboard);
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (checkerboard.allowPlace(i, j, 1)) checkerboard.checkerboard[i][j] = 2;
+        for (int i = 0; i < Checkerboard.SIZE ; i++) {
+            for (int j = 0; j < Checkerboard.SIZE ; j++) {
+                if (checkerboard.allowPlace(i, j, Checkerboard.B)) checkerboard.checkerboard[i][j] = Checkerboard.A;
             }
         }
 

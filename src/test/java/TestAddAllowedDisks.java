@@ -11,7 +11,7 @@ public class TestAddAllowedDisks {
     void addPegs() {
 
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboard);
-        checkerboard.addAllowedDisks(1);
+        checkerboard.addAllowedDisks(Checkerboard.B);
 
         assertArrayEquals(checkerboard.checkerboard, CheckerboardUtility.complexCheckerboardAllowedDisks);
 
