@@ -7,10 +7,10 @@ public class Checkerboard {
     int NumberOfWhites;
     int NumberOfBlacks;
 
-    final static int B = 1;
-    final static int W = -1;
-    final static int N = 0;
-    final static int A = 2;
+    public final static int B = 1;
+    public final static int W = -1;
+    public final static int N = 0;
+    public final static int A = 2;
 
 
     public Checkerboard() {
