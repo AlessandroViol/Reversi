@@ -7,11 +7,12 @@ public class ConsoleReversi implements ReversiView {
     Game game;
 
     @Override
-    public void installLogic(Game game){
-        this.game=game;
+    public void installLogic(Game game) {
+        this.game = game;
     }
+
     @Override
-    public void show(){
+    public void show() {
 
         Scanner scan = new Scanner(System.in);
 
@@ -27,10 +28,10 @@ public class ConsoleReversi implements ReversiView {
 
         System.out.print("Are you ready?");
 
-        String start=scan.next();
+        String start = scan.next();
 
         game.turn();
-        
+
     }
 
     @Override
@@ -57,8 +58,27 @@ public class ConsoleReversi implements ReversiView {
             System.out.print((char) 27 + "[0m|\n");
         }
     }
+
     @Override
-    public void displayGameOver(){}
+    public void displayGameOver() {
+
+        if (game.getCheckerboard().getNumberOfWhites() > game.getCheckerboard().getNumberOfBlacks()) {
+            System.out.println(game.getPlayerWhite().getName() + " wins!");
+        } else {
+            System.out.println(game.getPlayerBlack().getName() + " wins!");
+        }
+
+        System.out.println("White disks: "+game.getCheckerboard().getNumberOfWhites());
+        System.out.println("Black disks: "+game.getCheckerboard().getNumberOfBlacks());
+
+        System.out.println("Press any key to terminate");
+        Scanner scan = new Scanner(System.in);
+        scan.next();
+
+
+    }
+
     @Override
-    public void noMoves(){}
+    public void noMoves() {
+    }
 }
