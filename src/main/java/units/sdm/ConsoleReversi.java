@@ -36,6 +36,21 @@ public class ConsoleReversi implements ReversiView {
 
     @Override
     public void displayTurn(Checkerboard checkerboard) {
+        displayCheckerboard();
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Make your move, specify row:");
+        int i = Integer.parseInt(scan.next()) - 1;
+
+        System.out.println("Specify column:");
+        int j = scan.next().toUpperCase().toCharArray()[0] - 65;
+
+        game.tryPlace(i, j);
+    }
+
+    public void displayCheckerboard() {
+        Checkerboard checkerboard = game.getCheckerboard();
         String currentValue;
 
         System.out.print((char) 27 + "[4m  ");
