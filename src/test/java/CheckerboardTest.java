@@ -25,7 +25,7 @@ class CheckerboardTest {
                 {N, N, N, N, N, N, N, N}};
 
 
-        assertArrayEquals(referenceCheckerboard, checkerboard.checkerboard);
+        assertArrayEquals(referenceCheckerboard, checkerboard.getCheckerboard());
 
     }
 
@@ -43,7 +43,7 @@ class CheckerboardTest {
 
         Checkerboard checkerboard = new Checkerboard(referenceCheckerboard);
 
-        assertArrayEquals(referenceCheckerboard, checkerboard.checkerboard);
+        assertArrayEquals(referenceCheckerboard, checkerboard.getCheckerboard());
 
     }
 
@@ -53,7 +53,7 @@ class CheckerboardTest {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboard);
         checkerboard.addAllowedDisks(Checkerboard.B);
 
-        assertArrayEquals(checkerboard.checkerboard, CheckerboardUtility.complexCheckerboardAllowedDisks);
+        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.complexCheckerboardAllowedDisks);
 
     }
 
@@ -64,11 +64,11 @@ class CheckerboardTest {
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                if (checkerboard.allowPlace(i, j, Checkerboard.B)) checkerboard.checkerboard[i][j] = Checkerboard.A;
+                if (checkerboard.allowPlace(i, j, Checkerboard.B)) checkerboard.getCheckerboard()[i][j] = Checkerboard.A;
             }
         }
 
-        assertArrayEquals(CheckerboardUtility.simpleCheckerboardAllowedDisks, checkerboard.checkerboard);
+        assertArrayEquals(CheckerboardUtility.simpleCheckerboardAllowedDisks, checkerboard.getCheckerboard());
 
     }
 
@@ -81,11 +81,11 @@ class CheckerboardTest {
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                if (checkerboard.allowPlace(i, j, Checkerboard.B)) checkerboard.checkerboard[i][j] = Checkerboard.A;
+                if (checkerboard.allowPlace(i, j, Checkerboard.B)) checkerboard.getCheckerboard()[i][j] = Checkerboard.A;
             }
         }
 
-        assertArrayEquals(checkerboard.checkerboard, CheckerboardUtility.complexCheckerboardAllowedDisks);
+        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.complexCheckerboardAllowedDisks);
 
     }
 
@@ -99,8 +99,8 @@ class CheckerboardTest {
 
         checkerboard.disksCount();
 
-        assertEquals(checkerboard.NumberOfWhites, NWhites);
-        assertEquals(checkerboard.NumberOfBlacks, NBlacks);
+        assertEquals(checkerboard.getNumberOfWhites(), NWhites);
+        assertEquals(checkerboard.getNumberOfBlacks(), NBlacks);
     }
 
     @Test
@@ -119,7 +119,7 @@ class CheckerboardTest {
                 {N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N}};
 
-        assertArrayEquals(expectedMatrix, checkerboard.checkerboard);
+        assertArrayEquals(expectedMatrix, checkerboard.getCheckerboard());
     }
 
     @Test
@@ -138,7 +138,7 @@ class CheckerboardTest {
                 {N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N}};
 
-        assertArrayEquals(expectedMatrix, checkerboard.checkerboard);
+        assertArrayEquals(expectedMatrix, checkerboard.getCheckerboard());
     }
 
     @Test
@@ -168,7 +168,7 @@ class CheckerboardTest {
         checkerboard.place(4, 3, B);
         checkerboard.place(4, 4, B);
 
-        assertArrayEquals(expectedMatrix, checkerboard.checkerboard);
+        assertArrayEquals(expectedMatrix, checkerboard.getCheckerboard());
     }
 
     @Test
@@ -229,7 +229,7 @@ class CheckerboardTest {
                         {W, N, N, B, N, N, W, N},
                         {N, N, N, N, B, N, N, N}};
 
-        assertArrayEquals(referenceCheckerboard, checkerboard.checkerboard);
+        assertArrayEquals(referenceCheckerboard, checkerboard.getCheckerboard());
 
     }
 
@@ -239,7 +239,7 @@ class CheckerboardTest {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboardAllowedDisks);
         checkerboard.removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.checkerboard, CheckerboardUtility.complexCheckerboard);
+        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.complexCheckerboard);
 
 
     }

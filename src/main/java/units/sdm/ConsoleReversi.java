@@ -14,7 +14,7 @@ public class ConsoleReversi implements ReversiView {
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             System.out.print((char) 27 + "[4m" + (i + 1) + " ");
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                currentValue = switch (checkerboard.checkerboard[i][j]) {
+                currentValue = switch (checkerboard.getCheckerboard()[i][j]) {
                     case Checkerboard.W -> "o";
                     case Checkerboard.B -> "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
                     case Checkerboard.A -> "x";
