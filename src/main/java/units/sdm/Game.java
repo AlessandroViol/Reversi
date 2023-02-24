@@ -13,30 +13,19 @@ public class Game {
     private int colourTurn = -1;
 
     private Game() {
-        Scanner scan = new Scanner(System.in);
-
-        System.out.print("What's your name player1?");
-        String nameWhite;
-        nameWhite = scan.next();
-
-        System.out.print("What's your name player2?");
-        String nameBlack;
-        nameBlack = scan.next();
-
-
-        this.playerWhite = new Player(nameWhite, Checkerboard.W);
-        this.playerBlack = new Player(nameBlack, Checkerboard.B);
+        this.playerWhite = new Player("Black", Checkerboard.W);
+        this.playerBlack = new Player("White", Checkerboard.B);
 
         this.checkerboard = new Checkerboard();
-
-        scan.close();
     }
 
     public Game(ReversiView view) {
         this();
         this.view = view;
+    }
 
-        view.displayTurn(checkerboard);
+    public void start(){
+        view.show();
     }
 
     public int getColourTurn() {
@@ -60,7 +49,7 @@ public class Game {
         if (checkerboard.gameOver())
             view.displayGameOver();
         else {
-            if (checkerboard.existAllowedPlace(colourTurn)) {
+            if (!checkerboard.existAllowedPlace(colourTurn)) {
                 view.displayNoMoves();
             }
             checkerboard.addAllowedDisks(colourTurn);
