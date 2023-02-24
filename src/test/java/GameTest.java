@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class GameTest {
-    final static int B = Checkerboard.B;
-    final static int W = Checkerboard.W;
-    final static int N = Checkerboard.N;
-    final static int A = Checkerboard.A;
+class GameTest {
+    private final static int B = Checkerboard.B;
+    private final static int W = Checkerboard.W;
+    private final static int N = Checkerboard.N;
+    private final static int A = Checkerboard.A;
 
     @Test
     void endGameFull() {

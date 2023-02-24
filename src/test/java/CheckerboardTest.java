@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CheckerboardTest {
-    final static int B = Checkerboard.B;
-    final static int W = Checkerboard.W;
-    final static int N = Checkerboard.N;
-    final static int A = Checkerboard.A;
+class CheckerboardTest {
+    private final static int B = Checkerboard.B;
+    private final static int W = Checkerboard.W;
+    private final static int N = Checkerboard.N;
+    private final static int A = Checkerboard.A;
 
     @Test
     void createDefaultCheckerboard() {
