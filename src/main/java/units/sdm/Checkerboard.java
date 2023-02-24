@@ -30,8 +30,7 @@ public class Checkerboard {
     }
 
     public boolean allowPlace(int posX, int posY, int colorTurn) {
-
-        if (checkerboard[posX][posY] != N) return false;
+        if (checkerboard[posX][posY] != N && checkerboard[posX][posY] != A) return false;
 
         for (int offsetX = -1; offsetX < 2; offsetX++) {
             if (posX + offsetX < 0 || posX + offsetX > SIZE - 1) {
@@ -39,7 +38,6 @@ public class Checkerboard {
             }
             for (int offsetY = -1; offsetY < 2; offsetY++) {
                 if (offsetX == 0 && offsetY == 0) continue;
-
                 if (posY + offsetY < 0 || posY + offsetY > SIZE - 1) {
                     continue;
                 }
@@ -58,7 +56,8 @@ public class Checkerboard {
     }
 
     public boolean checkDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) {
-        while (posX + offsetX > 0 && posX + offsetX < SIZE && posY + offsetY > 0 && posY + offsetY < SIZE) { //
+        while (posX + offsetX >= 0 && posX + offsetX < SIZE && posY + offsetY >= 0 && posY + offsetY < SIZE) { //
+
             if (checkerboard[posX + offsetX][posY + offsetY] == colourTurn) { //
                 return true;
 
@@ -71,7 +70,6 @@ public class Checkerboard {
 
         }
         return false;
-
     }
 
     public boolean place(int posX, int posY, int colourTurn) {
@@ -102,7 +100,7 @@ public class Checkerboard {
                         int yTemp = posY;
                         while (checkerboard[xTemp + offsetX][yTemp + offsetY] == -colourTurn) {
                             checkerboard[xTemp + offsetX][yTemp + offsetY] = colourTurn;
-                            xTemp = posX + offsetX;
+                            xTemp = xTemp + offsetX;
                             yTemp = yTemp + offsetY;
                         }
                     }

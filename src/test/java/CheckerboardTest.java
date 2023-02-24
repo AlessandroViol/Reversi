@@ -110,7 +110,7 @@ class CheckerboardTest {
         checkerboard.place(4, 2, W);
         checkerboard.place(2, 4, W);
 
-        int[][] expectedGrid = {{N, N, N, N, N, N, N, N},
+        int[][] expectedMatrix = {{N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N},
                 {N, N, N, N, W, N, N, N},
                 {N, N, N, W, W, N, N, N},
@@ -119,7 +119,7 @@ class CheckerboardTest {
                 {N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N}};
 
-        assertArrayEquals(expectedGrid, checkerboard.checkerboard);
+        assertArrayEquals(expectedMatrix, checkerboard.checkerboard);
     }
 
     @Test
@@ -129,7 +129,7 @@ class CheckerboardTest {
         checkerboard.place(2, 3, B);
         checkerboard.place(4, 5, B);
 
-        int[][] expectedGrid = {{N, N, N, N, N, N, N, N},
+        int[][] expectedMatrix = {{N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N},
                 {N, N, N, B, N, N, N, N},
                 {N, N, N, B, B, N, N, N},
@@ -138,7 +138,37 @@ class CheckerboardTest {
                 {N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N}};
 
-        assertArrayEquals(expectedGrid, checkerboard.checkerboard);
+        assertArrayEquals(expectedMatrix, checkerboard.checkerboard);
+    }
+
+    @Test
+    void placeAtBounds(){
+        int[][] borderMatrix = {{B, N, N, N, B, N, N, B},
+                                {N, W, N, N, W, N, W, N},
+                                {N, N, W, N, W, W, N, N},
+                                {B, W, W, N, N, W, W, B},
+                                {N, N, N, N, N, N, N, N},
+                                {N, N, W, N, W, W, N, N},
+                                {N, W, N, N, W, N, W, N},
+                                {B, N, N, N, B, N, N, B}};
+
+        Checkerboard checkerboard = new Checkerboard(borderMatrix);
+
+        int[][] expectedMatrix = {{B, N, N, N, B, N, N, B},
+                                  {N, B, N, N, B, N, B, N},
+                                  {N, N, B, N, B, B, N, N},
+                                  {B, B, B, B, B, B, B, B},
+                                  {N, N, N, B, B, N, N, N},
+                                  {N, N, B, N, B, B, N, N},
+                                  {N, B, N, N, B, N, B, N},
+                                  {B, N, N, N, B, N, N, B}};
+
+        checkerboard.place(3, 3, B);
+        checkerboard.place(3, 4, B);
+        checkerboard.place(4, 3, B);
+        checkerboard.place(4, 4, B);
+
+        assertArrayEquals(expectedMatrix, checkerboard.checkerboard);
     }
 
     @Test
