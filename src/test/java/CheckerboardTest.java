@@ -50,10 +50,10 @@ class CheckerboardTest {
     @Test
     void addAllowedDisks() {
 
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboard);
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         checkerboard.addAllowedDisks(Checkerboard.B);
 
-        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.complexCheckerboardAllowedDisks);
+        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
 
     }
 
@@ -68,7 +68,7 @@ class CheckerboardTest {
             }
         }
 
-        assertArrayEquals(CheckerboardUtility.simpleCheckerboardAllowedDisks, checkerboard.getCheckerboard());
+        assertArrayEquals(CheckerboardUtility.SIMPLE_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getCheckerboard());
 
     }
 
@@ -77,7 +77,7 @@ class CheckerboardTest {
 
         ConsoleReversi view = new ConsoleReversi();
 
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboard);
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
@@ -85,14 +85,14 @@ class CheckerboardTest {
             }
         }
 
-        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.complexCheckerboardAllowedDisks);
+        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
 
     }
 
     @Test
     void disksCount() {
 
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboard);
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         int NWhites = 29;
         int NBlacks = 8;
@@ -236,10 +236,10 @@ class CheckerboardTest {
     @Test
     void removeAllowedDisks(){
 
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.complexCheckerboardAllowedDisks);
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
         checkerboard.removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.complexCheckerboard);
+        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
 
     }
