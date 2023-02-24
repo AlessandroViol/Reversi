@@ -2,16 +2,16 @@ package units.sdm;
 import java.util.Scanner;
 
 public class Game {
-    Player playerWhite;
-    Player playerBlack;
+    private Player playerWhite;
+    private Player playerBlack;
 
-    Checkerboard checkerboard;
+    private Checkerboard checkerboard;
 
-    ReversiView view;
+    private ReversiView view;
 
-    int colourTurn = -1;
+    private int colourTurn = -1;
 
-    public Game() {
+    private Game() {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("What's your name player1?");
@@ -36,6 +36,22 @@ public class Game {
         this.view = view;
 
         view.show(checkerboard);
+    }
+
+    public int getColourTurn(){
+        return colourTurn;
+    }
+
+    public Player getPlayerWhite(){
+        return playerWhite;
+    }
+
+    public Player getPlayerBlack(){
+        return playerBlack;
+    }
+
+    public Checkerboard getCheckerboard(){
+        return checkerboard;
     }
 
 }

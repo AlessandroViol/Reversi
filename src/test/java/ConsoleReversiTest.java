@@ -1,3 +1,5 @@
+package units.sdm;
+
 import org.junit.jupiter.api.Test;
 import units.sdm.CheckerboardUtility;
 import units.sdm.ConsoleReversi;
