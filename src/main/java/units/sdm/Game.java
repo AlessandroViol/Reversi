@@ -1,4 +1,5 @@
 package units.sdm;
+
 import java.util.Scanner;
 
 public class Game {
@@ -38,34 +39,43 @@ public class Game {
         view.displayTurn(checkerboard);
     }
 
-    public int getColourTurn(){
+    public int getColourTurn() {
         return colourTurn;
     }
 
-    public Player getPlayerWhite(){
+    public Player getPlayerWhite() {
         return playerWhite;
     }
 
-    public Player getPlayerBlack(){
+    public Player getPlayerBlack() {
         return playerBlack;
     }
 
-    public Checkerboard getCheckerboard(){
+    public Checkerboard getCheckerboard() {
         return checkerboard;
     }
 
 
-    public void turn(){
-        if(checkerboard.gameOver())
+    public void turn() {
+        if (checkerboard.gameOver())
             view.displayGameOver();
-        else{
-            if(checkerboard.existAllowedPlace(colourTurn)){
+        else {
+            if (checkerboard.existAllowedPlace(colourTurn)) {
                 view.noMoves();
             }
             checkerboard.addAllowedDisks(colourTurn);
             view.displayTurn(checkerboard);
         }
 
+    }
+
+    public void tryPlace(int x, int y) {
+        if (checkerboard.allowPlace(x, y, colourTurn)) {
+            checkerboard.place(x, y, colourTurn);
+            colourTurn = -colourTurn;
+            checkerboard.removeAllowedDisks();
+            turn();
+        }
 
 
     }
