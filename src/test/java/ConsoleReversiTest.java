@@ -17,7 +17,7 @@ class ConsoleReversiTest {
         System.setOut(new PrintStream(outputStream));
 
         ConsoleReversi view = new ConsoleReversi();
-        view.show(new Checkerboard());
+        view.displayTurn(new Checkerboard());
 
         String expectedOutput = (char) 27 + "[4m  |A|B|C|D|E|F|G|H" + (char) 27 + "[0m|\n" +
                                 (char) 27 + "[4m1 | | | | | | | | " + (char) 27 + "[0m|\n" +
@@ -41,7 +41,7 @@ class ConsoleReversiTest {
 
         Checkerboard checkerboard = new Checkerboard();
         checkerboard.addAllowedDisks(Checkerboard.B);
-        view.show(checkerboard);
+        view.displayTurn(checkerboard);
 
         String expectedOutput = (char) 27 + "[4m  |A|B|C|D|E|F|G|H" + (char) 27 + "[0m|\n" +
                 (char) 27 + "[4m1 | | | | | | | | " + (char) 27 + "[0m|\n" +

@@ -35,7 +35,7 @@ public class Game {
         this();
         this.view = view;
 
-        view.show(checkerboard);
+        view.displayTurn(checkerboard);
     }
 
     public int getColourTurn(){

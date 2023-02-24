@@ -1,5 +1,8 @@
 package units.sdm;
 
 public interface ReversiView {
-    void show(Checkerboard checkerboard);
+    void installLogic(Game game);
+    void show();
+    void displayTurn(Checkerboard checkerboard);
+
 }
