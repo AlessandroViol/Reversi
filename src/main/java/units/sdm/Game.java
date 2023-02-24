@@ -63,7 +63,7 @@ public class Game {
                 view.noMoves();
             }
             checkerboard.addAllowedDisks(colourTurn);
-            view.displayTurn();
+            view.displayTurn(checkerboard);
         }
 
 

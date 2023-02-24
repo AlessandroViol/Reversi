@@ -61,6 +61,4 @@ public class ConsoleReversi implements ReversiView {
     public void displayGameOver(){}
     @Override
     public void noMoves(){}
-    @Override
-    public void displayTurn(){}
 }
