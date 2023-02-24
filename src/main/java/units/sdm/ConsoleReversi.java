@@ -57,4 +57,10 @@ public class ConsoleReversi implements ReversiView {
             System.out.print((char) 27 + "[0m|\n");
         }
     }
+    @Override
+    public void displayGameOver(){}
+    @Override
+    public void noMoves(){}
+    @Override
+    public void displayTurn(){}
 }

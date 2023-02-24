@@ -54,4 +54,20 @@ public class Game {
         return checkerboard;
     }
 
+
+    public void turn(){
+        if(checkerboard.gameOver())
+            view.displayGameOver();
+        else{
+            if(checkerboard.existAllowedPlace(colourTurn)){
+                view.noMoves();
+            }
+            checkerboard.addAllowedDisks(colourTurn);
+            view.displayTurn();
+        }
+
+
+
+    }
+
 }
