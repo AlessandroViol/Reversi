@@ -10,6 +10,6 @@ public interface ReversiView {
 
     void displayGameOver();
 
-    void noMoves();
+    void displayNoMoves();
 }
 

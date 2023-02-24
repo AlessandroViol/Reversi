@@ -79,6 +79,11 @@ public class ConsoleReversi implements ReversiView {
     }
 
     @Override
-    public void noMoves() {
+    public void displayNoMoves() {
+        System.out.println("No moves available!");
+        System.out.println("Press any key to skip the turn");
+        Scanner scan = new Scanner(System.in);
+        scan.next();
+        game.nextTurn();
     }
 }

@@ -61,7 +61,7 @@ public class Game {
             view.displayGameOver();
         else {
             if (checkerboard.existAllowedPlace(colourTurn)) {
-                view.noMoves();
+                view.displayNoMoves();
             }
             checkerboard.addAllowedDisks(colourTurn);
             view.displayTurn(checkerboard);
@@ -72,12 +72,13 @@ public class Game {
     public void tryPlace(int x, int y) {
         if (checkerboard.allowPlace(x, y, colourTurn)) {
             checkerboard.place(x, y, colourTurn);
-            colourTurn = -colourTurn;
-            checkerboard.removeAllowedDisks();
-            turn();
+            nextTurn();
         }
-
-
     }
 
+    public void nextTurn(){
+        colourTurn = -colourTurn;
+        checkerboard.removeAllowedDisks();
+        turn();
+    }
 }
