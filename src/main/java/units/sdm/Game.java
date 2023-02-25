@@ -10,11 +10,11 @@ public class Game {
 
     private ReversiView view;
 
-    private int colourTurn = -1;
+    private int colourTurn = 1;
 
     private Game() {
-        this.playerWhite = new Player("Black", Checkerboard.W);
-        this.playerBlack = new Player("White", Checkerboard.B);
+        this.playerWhite = new Player("Black", Checkerboard.B);
+        this.playerBlack = new Player("White", Checkerboard.W);
 
         this.checkerboard = new Checkerboard();
     }
@@ -61,6 +61,7 @@ public class Game {
     public void tryPlace(int x, int y) {
         if (checkerboard.allowPlace(x, y, colourTurn)) {
             checkerboard.place(x, y, colourTurn);
+            checkerboard.disksCount();
             nextTurn();
         }
     }

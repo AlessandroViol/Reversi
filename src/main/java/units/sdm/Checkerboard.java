@@ -134,6 +134,10 @@ public class Checkerboard {
     }
 
     public void disksCount() {
+
+        numberOfBlacks=0;
+        numberOfWhites=0;
+
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (checkerboard[i][j] == W) {
