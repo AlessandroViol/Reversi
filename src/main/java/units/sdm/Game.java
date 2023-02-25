@@ -24,7 +24,7 @@ public class Game {
         this.view = view;
     }
 
-    public void start(){
+    public void start() {
         view.show();
     }
 
@@ -59,14 +59,15 @@ public class Game {
     }
 
     public void tryPlace(int x, int y) {
-        if (checkerboard.allowPlace(x, y, colourTurn)) {
+        if (x >= 0 && x < Checkerboard.SIZE && y >= 0 && y < Checkerboard.SIZE && checkerboard.allowPlace(x, y, colourTurn)) {
             checkerboard.place(x, y, colourTurn);
             checkerboard.disksCount();
             nextTurn();
-        }
+        } else
+            view.displayNotAllowed();
     }
 
-    public void nextTurn(){
+    public void nextTurn() {
         colourTurn = -colourTurn;
         checkerboard.removeAllowedDisks();
         turn();

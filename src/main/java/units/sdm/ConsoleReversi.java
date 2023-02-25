@@ -41,10 +41,10 @@ public class ConsoleReversi implements ReversiView {
         Scanner scan = new Scanner(System.in);
 
         String name;
-        if(game.getColourTurn()==-1) name=game.getPlayerBlack().getName();
-        else name=game.getPlayerWhite().getName();
+        if (game.getColourTurn() == -1) name = game.getPlayerBlack().getName();
+        else name = game.getPlayerWhite().getName();
 
-        System.out.println(name+", make your move, specify row:");
+        System.out.println(name + ", make your move, specify row:");
         int i = Integer.parseInt(scan.next()) - 1;
 
         System.out.println("Specify column:");
@@ -87,8 +87,8 @@ public class ConsoleReversi implements ReversiView {
             System.out.println(game.getPlayerBlack().getName() + " wins!");
         }
 
-        System.out.println("White disks: "+game.getCheckerboard().getNumberOfWhites());
-        System.out.println("Black disks: "+game.getCheckerboard().getNumberOfBlacks());
+        System.out.println("White disks: " + game.getCheckerboard().getNumberOfWhites());
+        System.out.println("Black disks: " + game.getCheckerboard().getNumberOfBlacks());
 
         System.out.println("Press any key to terminate");
         Scanner scan = new Scanner(System.in);
@@ -104,5 +104,18 @@ public class ConsoleReversi implements ReversiView {
         Scanner scan = new Scanner(System.in);
         scan.next();
         game.nextTurn();
+    }
+
+    @Override
+    public void displayNotAllowed() {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Invalid coordinates, specify new row:");
+        int i = Integer.parseInt(scan.next()) - 1;
+
+        System.out.println("Specify new column:");
+        int j = scan.next().toUpperCase().toCharArray()[0] - 65;
+
+        game.tryPlace(i, j);
     }
 }

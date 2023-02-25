@@ -11,5 +11,7 @@ public interface ReversiView {
     void displayGameOver();
 
     void displayNoMoves();
+
+    void displayNotAllowed();
 }
 
