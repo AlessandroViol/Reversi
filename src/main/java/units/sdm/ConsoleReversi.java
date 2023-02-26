@@ -16,19 +16,19 @@ public class ConsoleReversi implements ReversiView {
 
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("What's your name player1?");
+        System.out.println("What's your name player \u001B[31mBlack\u001B[0m?");
+        String nameBlack;
+        nameBlack = scan.next();
+        game.getPlayerBlack().setName("\u001B[31m" + nameBlack + "\u001B[0m");
+
+        System.out.println("What's your name player White?");
         String nameWhite;
         nameWhite = scan.next();
         game.getPlayerWhite().setName(nameWhite);
 
-        System.out.print("What's your name player2?");
-        String nameBlack;
-        nameBlack = scan.next();
-        game.getPlayerBlack().setName(nameBlack);
+        System.out.println("Are you ready?");
 
-        System.out.print("Are you ready?");
-
-        String start = scan.next();
+        scan.next();
 
         game.turn();
 
@@ -44,10 +44,10 @@ public class ConsoleReversi implements ReversiView {
         if (game.getColourTurn() == -1) name = game.getPlayerBlack().getName();
         else name = game.getPlayerWhite().getName();
 
-        System.out.println(name + ", make your move, specify row:");
+        System.out.println(name + ", make your move, specify row (1-8):");
         int i = Integer.parseInt(scan.next()) - 1;
 
-        System.out.println("Specify column:");
+        System.out.println("Specify column (a-h):");
         int j = scan.next().toUpperCase().toCharArray()[0] - 65;
 
         game.tryPlace(i, j);
@@ -69,7 +69,7 @@ public class ConsoleReversi implements ReversiView {
                 currentValue = switch (checkerboard.getCheckerboard()[i][j]) {
                     case Checkerboard.W -> "o";
                     case Checkerboard.B -> "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
-                    case Checkerboard.A -> "x";
+                    case Checkerboard.A -> "\033[0;32mx\u001B[0m" + (char) 27 + "[4m";
                     default -> " ";
                 };
                 System.out.print("|" + currentValue);
@@ -80,7 +80,7 @@ public class ConsoleReversi implements ReversiView {
 
     @Override
     public void displayGameOver() {
-
+        displayCheckerboard();
         if (game.getCheckerboard().getNumberOfWhites() > game.getCheckerboard().getNumberOfBlacks()) {
             System.out.println(game.getPlayerWhite().getName() + " wins!");
         } else {

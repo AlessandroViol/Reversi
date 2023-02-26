@@ -1,9 +1,6 @@
 package units.sdm;
 
 import org.junit.jupiter.api.Test;
-import units.sdm.CheckerboardUtility;
-import units.sdm.ConsoleReversi;
-import units.sdm.Checkerboard;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -11,6 +8,9 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ConsoleReversiTest {
+    private final String B = "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
+    private final String A = "\033[0;32mx\u001B[0m" + (char) 27 + "[4m";
+
     @Test
     void consoleOutput() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -27,8 +27,8 @@ class ConsoleReversiTest {
                                 (char) 27 + "[4m1 | | | | | | | | " + (char) 27 + "[0m|\n" +
                                 (char) 27 + "[4m2 | | | | | | | | " + (char) 27 + "[0m|\n" +
                                 (char) 27 + "[4m3 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m4 | | | |o|\u001B[31mo\u001B[0m" + (char) 27 + "[4m| | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m5 | | | |\u001B[31mo\u001B[0m" + (char) 27 + "[4m|o| | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m4 | | | |o|" + B + "| | | " + (char) 27 + "[0m|\n" +
+                                (char) 27 + "[4m5 | | | |" + B + "|o| | | " + (char) 27 + "[0m|\n" +
                                 (char) 27 + "[4m6 | | | | | | | | " + (char) 27 + "[0m|\n" +
                                 (char) 27 + "[4m7 | | | | | | | | " + (char) 27 + "[0m|\n" +
                                 (char) 27 + "[4m8 | | | | | | | | " + (char) 27 + "[0m|\n";
@@ -53,10 +53,10 @@ class ConsoleReversiTest {
         String expectedOutput = (char) 27 + "[4m  |A|B|C|D|E|F|G|H" + (char) 27 + "[0m|\n" +
                 (char) 27 + "[4m1 | | | | | | | | " + (char) 27 + "[0m|\n" +
                 (char) 27 + "[4m2 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m3 | | | |x| | | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m4 | | |x|o|\u001B[31mo\u001B[0m" + (char) 27 + "[4m| | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m5 | | | |\u001B[31mo\u001B[0m" + (char) 27 + "[4m|o|x| | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m6 | | | | |x| | | " + (char) 27 + "[0m|\n" +
+                (char) 27 + "[4m3 | | | |" + A +"| | | | " + (char) 27 + "[0m|\n" +
+                (char) 27 + "[4m4 | | |" + A + "|o|" + B + "| | | " + (char) 27 + "[0m|\n" +
+                (char) 27 + "[4m5 | | | |" + B + "|o|" + A + "| | " + (char) 27 + "[0m|\n" +
+                (char) 27 + "[4m6 | | | | |" + A + "| | | " + (char) 27 + "[0m|\n" +
                 (char) 27 + "[4m7 | | | | | | | | " + (char) 27 + "[0m|\n" +
                 (char) 27 + "[4m8 | | | | | | | | " + (char) 27 + "[0m|\n";
 
