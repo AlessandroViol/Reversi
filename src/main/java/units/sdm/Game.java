@@ -72,4 +72,11 @@ public class Game {
         checkerboard.removeAllowedDisks();
         turn();
     }
+
+    public String getCurrentPlayerName() {
+        if (colourTurn == Checkerboard.B) {
+            return playerBlack.getName();
+        }
+        return playerWhite.getName();
+    }
 }

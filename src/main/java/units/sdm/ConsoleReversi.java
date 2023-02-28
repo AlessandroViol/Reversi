@@ -40,11 +40,7 @@ public class ConsoleReversi implements ReversiView {
 
         Scanner scan = new Scanner(System.in);
 
-        String name;
-        if (game.getColourTurn() == -1) name = game.getPlayerBlack().getName();
-        else name = game.getPlayerWhite().getName();
-
-        System.out.println(name + ", make your move, specify row (1-8):");
+        System.out.println(game.getCurrentPlayerName() + ", make your move, specify row (1-8):");
         int i = Integer.parseInt(scan.next()) - 1;
 
         System.out.println("Specify column (a-h):");
