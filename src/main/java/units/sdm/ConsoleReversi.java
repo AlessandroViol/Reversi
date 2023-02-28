@@ -77,11 +77,8 @@ public class ConsoleReversi implements ReversiView {
     @Override
     public void displayGameOver() {
         displayCheckerboard();
-        if (game.getCheckerboard().getNumberOfWhites() > game.getCheckerboard().getNumberOfBlacks()) {
-            System.out.println(game.getPlayerWhite().getName() + " wins!");
-        } else {
-            System.out.println(game.getPlayerBlack().getName() + " wins!");
-        }
+        System.out.println(game.getWinnerName() + " wins!");
+
 
         System.out.println("White disks: " + game.getCheckerboard().getNumberOfWhites());
         System.out.println("Black disks: " + game.getCheckerboard().getNumberOfBlacks());

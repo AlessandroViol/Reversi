@@ -79,4 +79,11 @@ public class Game {
         }
         return playerWhite.getName();
     }
+
+    public String getWinnerName() {
+        if (checkerboard.getNumberOfBlacks() > checkerboard.getNumberOfWhites()) {
+            return playerBlack.getName();
+        }
+        return playerWhite.getName();
+    }
 }
