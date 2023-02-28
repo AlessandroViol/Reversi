@@ -29,15 +29,15 @@ public class Checkerboard {
                 this.checkerboard[i][j] = checkerboard[i][j];
     }
 
-    public int[][] getCheckerboard(){
+    public int[][] getCheckerboard() {
         return this.checkerboard;
     }
 
-    public int getNumberOfWhites(){
+    public int getNumberOfWhites() {
         return numberOfWhites;
     }
 
-    public int getNumberOfBlacks(){
+    public int getNumberOfBlacks() {
         return numberOfBlacks;
     }
 
@@ -45,21 +45,19 @@ public class Checkerboard {
         if (checkerboard[posX][posY] != N && checkerboard[posX][posY] != A) return false;
 
         for (int offsetX = -1; offsetX < 2; offsetX++) {
-            if (posX + offsetX < 0 || posX + offsetX > SIZE - 1) {
-                continue;
-            }
-            for (int offsetY = -1; offsetY < 2; offsetY++) {
-                if (offsetX == 0 && offsetY == 0) continue;
-                if (posY + offsetY < 0 || posY + offsetY > SIZE - 1) {
-                    continue;
-                }
-                if (checkerboard[posX + offsetX][posY + offsetY] == -colorTurn) {
-                    if (checkDirection(offsetX, offsetY, posX + offsetX, posY + offsetY, colorTurn)) {
-                        return true;
+            if (posX + offsetX >= 0 && posX + offsetX < SIZE) {
+                for (int offsetY = -1; offsetY < 2; offsetY++) {
+                    if (offsetX == 0 && offsetY == 0)
+                        continue;
 
+                    if (posY + offsetY >= 0 && posY + offsetY < SIZE) {
+                        if (checkerboard[posX + offsetX][posY + offsetY] == -colorTurn) {
+                            if (checkDirection(offsetX, offsetY, posX + offsetX, posY + offsetY, colorTurn)) {
+                                return true;
+                            }
+                        }
                     }
                 }
-
             }
         }
 
@@ -97,29 +95,27 @@ public class Checkerboard {
     protected void updateCheckerboard(int posX, int posY, int colourTurn) {
 
         for (int offsetX = -1; offsetX < 2; offsetX++) {
-            if (posX + offsetX < 0 || posX + offsetX > SIZE - 1) {
-                continue;
-            }
-            for (int offsetY = -1; offsetY < 2; offsetY++) {
-                if (offsetX == 0 && offsetY == 0) continue;
+            if (posX + offsetX >= 0 && posX + offsetX < SIZE) {
+                for (int offsetY = -1; offsetY < 2; offsetY++) {
+                    if (offsetX == 0 && offsetY == 0)
+                        continue;
 
-                if (posY + offsetY < 0 || posY + offsetY > SIZE - 1) {
-                    continue;
-                }
-                if (checkerboard[posX + offsetX][posY + offsetY] == -colourTurn) {
-                    if (checkDirection(offsetX, offsetY, posX + offsetX, posY + offsetY, colourTurn)) {
-                        int xTemp = posX;
-                        int yTemp = posY;
-                        while (checkerboard[xTemp + offsetX][yTemp + offsetY] == -colourTurn) {
-                            checkerboard[xTemp + offsetX][yTemp + offsetY] = colourTurn;
-                            xTemp = xTemp + offsetX;
-                            yTemp = yTemp + offsetY;
+                    if (posY + offsetY >= 0 && posY + offsetY < SIZE) {
+                        if (checkerboard[posX + offsetX][posY + offsetY] == -colourTurn) {
+                            if (checkDirection(offsetX, offsetY, posX + offsetX, posY + offsetY, colourTurn)) {
+                                int xTemp = posX;
+                                int yTemp = posY;
+                                while (checkerboard[xTemp + offsetX][yTemp + offsetY] == -colourTurn) {
+                                    checkerboard[xTemp + offsetX][yTemp + offsetY] = colourTurn;
+                                    xTemp = xTemp + offsetX;
+                                    yTemp = yTemp + offsetY;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-        return;
     }
 
     public boolean existAllowedPlace(int colourTurn) {
@@ -135,8 +131,8 @@ public class Checkerboard {
 
     public void disksCount() {
 
-        numberOfBlacks=0;
-        numberOfWhites=0;
+        numberOfBlacks = 0;
+        numberOfWhites = 0;
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
