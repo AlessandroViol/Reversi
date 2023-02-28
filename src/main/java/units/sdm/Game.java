@@ -86,4 +86,17 @@ public class Game {
         }
         return playerWhite.getName();
     }
+
+    public void validateAndTryPlace(String row, String column) {
+        int rowIndex;
+        try {
+            rowIndex = Integer.parseInt(row) - 1;
+        } catch (NumberFormatException ex) {
+            view.displayNotAllowed();
+            return;
+        }
+        int columnIndex = column.toUpperCase().toCharArray()[0] - 65;
+
+        tryPlace(rowIndex, columnIndex);
+    }
 }

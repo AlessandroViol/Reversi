@@ -41,12 +41,12 @@ public class ConsoleReversi implements ReversiView {
         Scanner scan = new Scanner(System.in);
 
         System.out.println(game.getCurrentPlayerName() + ", make your move, specify row (1-8):");
-        int i = Integer.parseInt(scan.next()) - 1;
+        String row = scan.next();
 
         System.out.println("Specify column (a-h):");
-        int j = scan.next().toUpperCase().toCharArray()[0] - 65;
+        String column = scan.next();
 
-        game.tryPlace(i, j);
+        game.validateAndTryPlace(row, column);
     }
 
     public void displayCheckerboard() {
