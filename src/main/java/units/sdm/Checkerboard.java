@@ -27,9 +27,15 @@ public class Checkerboard {
     //one argument constructor that copies the matrix of a given checkerboard
     public Checkerboard(int[][] checkerboard) {
         this.checkerboard = new int[SIZE][SIZE];
-        for (int i = 0; i < SIZE; i++)
-            for (int j = 0; j < SIZE; j++)
-                this.checkerboard[i][j] = checkerboard[i][j];
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                int squareVal = checkerboard[i][j];
+                if (squareVal != W && squareVal != B && squareVal != N && squareVal != A)
+                    this.checkerboard[i][j] = N;
+                else
+                    this.checkerboard[i][j] = squareVal;
+            }
+        }
     }
 
     //attribute getters for class attributes
