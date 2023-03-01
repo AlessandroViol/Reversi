@@ -6,6 +6,12 @@ public class ConsoleReversi implements ReversiView {
 
     Game game;
 
+    private final String BOLD =(char) 27 + "[1m";
+    private final String LINE =(char) 27 + "[4m";
+    private final String RED = "\u001B[31m";
+    private final String GREEN = "\033[0;32m";
+    private final String END =(char) 27 + "[0m";
+
     @Override
     public void installLogic(Game game) {
         this.game = game;
@@ -13,25 +19,23 @@ public class ConsoleReversi implements ReversiView {
 
     @Override
     public void show() {
-
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("What's your name player \u001B[31mBlack\u001B[0m?");
+        System.out.println("What's your name player " + RED + BOLD + "Black" + END + "?");
         String nameBlack;
         nameBlack = scan.next();
-        game.getPlayerBlack().setName("\u001B[31m" + nameBlack + "\u001B[0m");
+        game.getPlayerBlack().setName(RED + BOLD + nameBlack + END);
 
-        System.out.println("What's your name player White?");
+        System.out.println("What's your name player " + BOLD + "White" + END + "?");
         String nameWhite;
         nameWhite = scan.next();
-        game.getPlayerWhite().setName(nameWhite);
+        game.getPlayerWhite().setName(BOLD + nameWhite + END);
 
         System.out.println("Are you ready?");
 
         scan.next();
 
         game.turn();
-
     }
 
     @Override
@@ -53,46 +57,48 @@ public class ConsoleReversi implements ReversiView {
         Checkerboard checkerboard = game.getCheckerboard();
         String currentValue;
 
-        System.out.print((char) 27 + "[4m  ");
+        System.out.print(LINE + "  ");
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             System.out.print("|" + (char) (i + 65));
         }
-        System.out.print((char) 27 + "[0m|\n");
+        System.out.print(END + "|\n");
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
-            System.out.print((char) 27 + "[4m" + (i + 1) + " ");
+            System.out.print(LINE + (i + 1) + " ");
             for (int j = 0; j < Checkerboard.SIZE; j++) {
                 currentValue = switch (checkerboard.getCheckerboard()[i][j]) {
                     case Checkerboard.W -> "o";
-                    case Checkerboard.B -> "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
-                    case Checkerboard.A -> "\033[0;32mx\u001B[0m" + (char) 27 + "[4m";
+                    case Checkerboard.B -> RED + "o" + END + LINE;
+                    case Checkerboard.A -> GREEN + "x" + END + LINE;
                     default -> " ";
                 };
                 System.out.print("|" + currentValue);
             }
-            System.out.print((char) 27 + "[0m|\n");
+            System.out.print(END + "|\n");
         }
     }
 
     @Override
     public void displayGameOver() {
         displayCheckerboard();
-        System.out.println(game.getWinnerName() + " wins!");
 
+        if (game.isDraw())
+            System.out.println("\nThis is a " + BOLD + "Draw!" + END);
+        else
+            System.out.println("\n" + game.getWinnerName() + BOLD + " wins!" + END);
 
-        System.out.println("White disks: " + game.getCheckerboard().getNumberOfWhites());
-        System.out.println("Black disks: " + game.getCheckerboard().getNumberOfBlacks());
+        System.out.println(game.getPlayerBlack().getName() + " disks: " + game.getCheckerboard().getNumberOfBlacks());
+        System.out.println(game.getPlayerWhite().getName() + " disks: " + game.getCheckerboard().getNumberOfWhites());
 
         System.out.println("Press any key to terminate");
         Scanner scan = new Scanner(System.in);
         scan.next();
-
-
     }
 
     @Override
     public void displayNoMoves() {
-        System.out.println("No moves available!");
+        displayCheckerboard();
+        System.out.println(game.getCurrentPlayerName() + " no moves available!");
         System.out.println("Press any key to skip the turn");
         Scanner scan = new Scanner(System.in);
         scan.next();
@@ -103,12 +109,12 @@ public class ConsoleReversi implements ReversiView {
     public void displayNotAllowed() {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Invalid coordinates, specify new row:");
-        int i = Integer.parseInt(scan.next()) - 1;
+        System.out.println("Invalid coordinates, specify new row (1-8):");
+        String row = scan.next();
 
-        System.out.println("Specify new column:");
-        int j = scan.next().toUpperCase().toCharArray()[0] - 65;
+        System.out.println("Specify new column (a-h):");
+        String column = scan.next();
 
-        game.tryPlace(i, j);
+        game.validateAndTryPlace(row, column);
     }
 }

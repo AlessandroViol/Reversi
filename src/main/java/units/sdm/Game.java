@@ -57,11 +57,11 @@ public class Game {
         else {
             if (!checkerboard.existAllowedPlace(colourTurn)) {
                 view.displayNoMoves();
+                return;
             }
             checkerboard.addAllowedDisks(colourTurn);
             view.displayTurn(checkerboard);
         }
-
     }
 
     public void tryPlace(int x, int y) {
@@ -84,6 +84,13 @@ public class Game {
             return playerBlack.getName();
         }
         return playerWhite.getName();
+    }
+
+    public boolean isDraw() {
+        if (checkerboard.getNumberOfBlacks() == checkerboard.getNumberOfWhites())
+            return true;
+        else
+            return false;
     }
 
     public String getWinnerName() {
