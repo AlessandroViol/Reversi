@@ -12,15 +12,21 @@ public class Game {
 
     private int colourTurn = 1;
 
-    private Game() {
+    public Game(ReversiView view) {
         this.playerWhite = new Player("Black", Checkerboard.B);
         this.playerBlack = new Player("White", Checkerboard.W);
 
         this.checkerboard = new Checkerboard();
+
+        this.view = view;
     }
 
-    public Game(ReversiView view) {
-        this();
+    public Game(ReversiView view, Checkerboard checkerboard) {
+        this.playerWhite = new Player("Black", Checkerboard.B);
+        this.playerBlack = new Player("White", Checkerboard.W);
+
+        this.checkerboard = new Checkerboard(checkerboard.getCheckerboard());
+
         this.view = view;
     }
 
