@@ -25,16 +25,23 @@ public class Checkerboard {
     }
 
     //one argument constructor that copies the matrix of a given checkerboard
-    public Checkerboard(int[][] checkerboard) {
+    public Checkerboard(int[][] checkerboard) throws InvalidSquareValueException {
         this.checkerboard = new int[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 int squareVal = checkerboard[i][j];
                 if (squareVal != W && squareVal != B && squareVal != N && squareVal != A)
-                    this.checkerboard[i][j] = N;
+                    throw new InvalidSquareValueException(squareVal);
                 else
                     this.checkerboard[i][j] = squareVal;
             }
+        }
+    }
+
+    public static class InvalidSquareValueException extends RuntimeException {
+        public InvalidSquareValueException(int value) {
+            super("Tried to write value [" + value + "] into a Checkerboard object. The only allowed values are: " +
+                    "{" + W + "; " + B + "; " + N + "; " + A + "}");
         }
     }
 
@@ -110,8 +117,7 @@ public class Checkerboard {
         if (allowPlace(posX, posY, colourTurn)) {
             checkerboard[posX][posY] = colourTurn;
             updateCheckerboard(posX, posY, colourTurn);
-        }
-        else
+        } else
             return false;
 
         return true;
