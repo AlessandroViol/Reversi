@@ -2,14 +2,47 @@ package units.sdm;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     private final static int B = Checkerboard.B;
     private final static int W = Checkerboard.W;
     private final static int N = Checkerboard.N;
     private final static int A = Checkerboard.A;
+
+    public class DummyView implements ReversiView{
+
+        @Override
+        public void installLogic(Game game){
+            return;
+        }
+
+        @Override
+        public void show(){
+            return;
+        }
+
+        @Override
+        public void displayTurn(Checkerboard checkerboard){
+            return;
+        }
+
+        @Override
+        public void displayGameOver(){
+            return;
+        }
+
+        @Override
+        public void displayNoMoves(){
+            return;
+        }
+
+        @Override
+        public void displayNotAllowed(){
+            return;
+        }
+
+    }
 
     @Test
     void endGameFull() {
@@ -40,8 +73,6 @@ class GameTest {
                                     {W, W, W, W, W, W, W, N},
                                     {W, W, W, W, W, W, W, W}};
 
-
-
         Checkerboard checkerboard = new Checkerboard(GameOverNotFull);
         assertTrue(checkerboard.gameOver());
     }
@@ -51,4 +82,58 @@ class GameTest {
         assertFalse(checkerboard.gameOver());
     }
 
+    @Test
+    void tryPlaceAllowed(){
+
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+
+        int[][] referenceCheckerboard = {{N, N, W, W, W, W, W, W},
+                {N, N, B, W, W, W, W, W},
+                {N, N, N, W, W, W, W, B},
+                {N, N, W, W, W, W, B, N},
+                {B, B, W, W, B, B, W, W},
+                {N, W, B, W, N, N, W, N},
+                {W, N, N, B, N, N, W, N},
+                {N, N, N, N, B, N, N, N}};
+
+        DummyView dummy = new DummyView();
+        Game game =new Game(dummy, checkerboard);
+
+        game.tryPlace(2,7);
+        game.getCheckerboard().removeAllowedDisks();
+
+        assertArrayEquals(referenceCheckerboard, game.getCheckerboard().getCheckerboard());
+
+    }
+
+    @Test
+    void tryPlaceNotAllowed(){
+
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+
+        DummyView dummy = new DummyView();
+        Game game =new Game(dummy, checkerboard);
+
+        game.tryPlace(0,2);
+        game.getCheckerboard().removeAllowedDisks();
+
+        assertArrayEquals(checkerboard.getCheckerboard(), game.getCheckerboard().getCheckerboard());
+
+    }
+
+    @Test
+    void tryPlaceOutOfGrid(){
+
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+
+        DummyView dummy = new DummyView();
+        Game game =new Game(dummy, checkerboard);
+
+        game.tryPlace(-1,9);
+        game.getCheckerboard().removeAllowedDisks();
+
+        assertArrayEquals(checkerboard.getCheckerboard(), game.getCheckerboard().getCheckerboard());
+
+    }
+    
 }
