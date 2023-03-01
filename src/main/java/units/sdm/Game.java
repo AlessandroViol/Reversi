@@ -51,11 +51,11 @@ public class Game {
         else {
             if (!checkerboard.existAllowedPlace(colourTurn)) {
                 view.displayNoMoves();
+                return;
             }
             checkerboard.addAllowedDisks(colourTurn);
             view.displayTurn(checkerboard);
         }
-
     }
 
     public void tryPlace(int x, int y) {
