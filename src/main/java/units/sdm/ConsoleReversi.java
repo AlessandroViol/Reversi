@@ -77,22 +77,24 @@ public class ConsoleReversi implements ReversiView {
     @Override
     public void displayGameOver() {
         displayCheckerboard();
-        System.out.println(game.getWinnerName() + " wins!");
 
+        if (game.isDraw())
+            System.out.println("This is a Draw!");
+        else
+            System.out.println(game.getWinnerName() + " wins!");
 
-        System.out.println("White disks: " + game.getCheckerboard().getNumberOfWhites());
-        System.out.println("Black disks: " + game.getCheckerboard().getNumberOfBlacks());
+        System.out.println(game.getPlayerBlack().getName() + " disks: " + game.getCheckerboard().getNumberOfBlacks());
+        System.out.println(game.getPlayerWhite().getName() + " disks: " + game.getCheckerboard().getNumberOfWhites());
 
         System.out.println("Press any key to terminate");
         Scanner scan = new Scanner(System.in);
         scan.next();
-
-
     }
 
     @Override
     public void displayNoMoves() {
-        System.out.println("No moves available!");
+        displayCheckerboard();
+        System.out.println(game.getCurrentPlayerName() + " no moves available!");
         System.out.println("Press any key to skip the turn");
         Scanner scan = new Scanner(System.in);
         scan.next();

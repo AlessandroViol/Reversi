@@ -80,6 +80,13 @@ public class Game {
         return playerWhite.getName();
     }
 
+    public boolean isDraw() {
+        if (checkerboard.getNumberOfBlacks() == checkerboard.getNumberOfWhites())
+            return true;
+        else
+            return false;
+    }
+
     public String getWinnerName() {
         if (checkerboard.getNumberOfBlacks() > checkerboard.getNumberOfWhites()) {
             return playerBlack.getName();
