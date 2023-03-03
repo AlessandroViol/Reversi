@@ -1,7 +1,5 @@
 package units.sdm;
 
-import java.util.Scanner;
-
 public class Game {
     private Player playerWhite;
     private Player playerBlack;
@@ -13,8 +11,8 @@ public class Game {
     private int colourTurn = 1;
 
     public Game(ReversiView view) {
-        this.playerWhite = new Player("Black", Checkerboard.B);
-        this.playerBlack = new Player("White", Checkerboard.W);
+        this.playerBlack = new Player("Black", Checkerboard.B);
+        this.playerWhite = new Player("White", Checkerboard.W);
 
         this.checkerboard = new Checkerboard();
 
@@ -22,8 +20,8 @@ public class Game {
     }
 
     public Game(ReversiView view, Checkerboard checkerboard) {
-        this.playerWhite = new Player("Black", Checkerboard.B);
-        this.playerBlack = new Player("White", Checkerboard.W);
+        this.playerBlack = new Player("Black", Checkerboard.B);
+        this.playerWhite = new Player("White", Checkerboard.W);
 
         this.checkerboard = new Checkerboard(checkerboard.getCheckerboard());
 
@@ -87,10 +85,7 @@ public class Game {
     }
 
     public boolean isDraw() {
-        if (checkerboard.getNumberOfBlacks() == checkerboard.getNumberOfWhites())
-            return true;
-        else
-            return false;
+        return checkerboard.getNumberOfBlacks() == checkerboard.getNumberOfWhites();
     }
 
     public String getWinnerName() {
