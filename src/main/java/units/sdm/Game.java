@@ -1,110 +1,27 @@
 package units.sdm;
 
-public class Game {
-    private Player playerWhite;
-    private Player playerBlack;
+public interface Game {
+    public void start();
 
-    private Checkerboard checkerboard;
+    public int getColourTurn();
 
-    private ReversiView view;
+    public Player getPlayerWhite();
 
-    private int colourTurn = 1;
+    public Player getPlayerBlack();
 
-    public Game(ReversiView view) {
-        this.playerBlack = new Player("Black", Checkerboard.B);
-        this.playerWhite = new Player("White", Checkerboard.W);
+    public Checkerboard getCheckerboard();
 
-        this.checkerboard = new Checkerboard();
+    public void turn();
 
-        this.view = view;
-    }
+    public void tryPlace(int x, int y);
 
-    public Game(ReversiView view, Checkerboard checkerboard) {
-        this.playerBlack = new Player("Black", Checkerboard.B);
-        this.playerWhite = new Player("White", Checkerboard.W);
+    public void nextTurn();
 
-        this.checkerboard = new Checkerboard(checkerboard.getCheckerboard());
+    public String getCurrentPlayerName();
 
-        this.view = view;
-    }
+    public boolean isDraw();
 
-    public void start() {
-        view.show();
-    }
+    public String getWinnerName();
 
-    public int getColourTurn() {
-        return colourTurn;
-    }
-
-    public Player getPlayerWhite() {
-        return playerWhite;
-    }
-
-    public Player getPlayerBlack() {
-        return playerBlack;
-    }
-
-    public Checkerboard getCheckerboard() {
-        return checkerboard;
-    }
-
-
-    public void turn() {
-        if (checkerboard.gameOver())
-            view.displayGameOver();
-        else {
-            if (!checkerboard.existAllowedPlace(colourTurn)) {
-                view.displayNoMoves();
-                return;
-            }
-            checkerboard.addAllowedDisks(colourTurn);
-            view.displayTurn(checkerboard);
-        }
-    }
-
-    public void tryPlace(int x, int y) {
-        if (x >= 0 && x < Checkerboard.SIZE && y >= 0 && y < Checkerboard.SIZE && checkerboard.allowPlace(x, y, colourTurn)) {
-            checkerboard.place(x, y, colourTurn);
-            checkerboard.disksCount();
-            nextTurn();
-        } else
-            view.displayNotAllowed();
-    }
-
-    public void nextTurn() {
-        colourTurn = -colourTurn;
-        checkerboard.removeAllowedDisks();
-        turn();
-    }
-
-    public String getCurrentPlayerName() {
-        if (colourTurn == Checkerboard.B) {
-            return playerBlack.getName();
-        }
-        return playerWhite.getName();
-    }
-
-    public boolean isDraw() {
-        return checkerboard.getNumberOfBlacks() == checkerboard.getNumberOfWhites();
-    }
-
-    public String getWinnerName() {
-        if (checkerboard.getNumberOfBlacks() > checkerboard.getNumberOfWhites()) {
-            return playerBlack.getName();
-        }
-        return playerWhite.getName();
-    }
-
-    public void validateAndTryPlace(String row, String column) {
-        int rowIndex;
-        try {
-            rowIndex = Integer.parseInt(row) - 1;
-        } catch (NumberFormatException ex) {
-            view.displayNotAllowed();
-            return;
-        }
-        int columnIndex = column.toUpperCase().toCharArray()[0] - 65;
-
-        tryPlace(rowIndex, columnIndex);
-    }
+    public void validateAndTryPlace(String row, String column);
 }

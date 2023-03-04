@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameTest {
+class ReversiGameTest {
     private final static int B = Checkerboard.B;
     private final static int W = Checkerboard.W;
     private final static int N = Checkerboard.N;
@@ -13,7 +13,7 @@ class GameTest {
     public class DummyView implements ReversiView {
 
         @Override
-        public void installLogic(Game game) {
+        public void installLogic(Game reversiGame) {
             return;
         }
 
@@ -98,12 +98,12 @@ class GameTest {
                 {N, N, N, N, B, N, N, N}};
 
         DummyView dummy = new DummyView();
-        Game game = new Game(dummy, checkerboard);
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        game.tryPlace(2, 7);
-        game.getCheckerboard().removeAllowedDisks();
+        reversiGame.tryPlace(2, 7);
+        reversiGame.getCheckerboard().removeAllowedDisks();
 
-        assertArrayEquals(referenceCheckerboard, game.getCheckerboard().getCheckerboard());
+        assertArrayEquals(referenceCheckerboard, reversiGame.getCheckerboard().getCheckerboard());
 
     }
 
@@ -113,12 +113,12 @@ class GameTest {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
-        Game game = new Game(dummy, checkerboard);
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        game.tryPlace(0, 2);
-        game.getCheckerboard().removeAllowedDisks();
+        reversiGame.tryPlace(0, 2);
+        reversiGame.getCheckerboard().removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.getCheckerboard(), game.getCheckerboard().getCheckerboard());
+        assertArrayEquals(checkerboard.getCheckerboard(), reversiGame.getCheckerboard().getCheckerboard());
 
     }
 
@@ -128,12 +128,12 @@ class GameTest {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
-        Game game = new Game(dummy, checkerboard);
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        game.tryPlace(-1, 9);
-        game.getCheckerboard().removeAllowedDisks();
+        reversiGame.tryPlace(-1, 9);
+        reversiGame.getCheckerboard().removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.getCheckerboard(), game.getCheckerboard().getCheckerboard());
+        assertArrayEquals(checkerboard.getCheckerboard(), reversiGame.getCheckerboard().getCheckerboard());
 
     }
 
@@ -152,11 +152,11 @@ class GameTest {
         Checkerboard checkerboard = new Checkerboard(drawCheckerboard);
 
         DummyView dummy = new DummyView();
-        Game game = new Game(dummy, checkerboard);
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        game.getCheckerboard().disksCount();
+        reversiGame.getCheckerboard().disksCount();
 
-        assertTrue(game.isDraw());
+        assertTrue(reversiGame.isDraw());
 
     }
 
@@ -166,11 +166,11 @@ class GameTest {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
-        Game game = new Game(dummy, checkerboard);
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        game.getCheckerboard().disksCount();
+        reversiGame.getCheckerboard().disksCount();
 
-        assertFalse(game.isDraw());
+        assertFalse(reversiGame.isDraw());
 
     }
 
@@ -180,10 +180,10 @@ class GameTest {
         Checkerboard checkerboard=new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy=new DummyView();
-        Game game=new Game(dummy, checkerboard);
+        ReversiGame reversiGame =new ReversiGame(dummy, checkerboard);
 
-        game.getCheckerboard().disksCount();
-        assertEquals(game.getWinnerName(), "White");
+        reversiGame.getCheckerboard().disksCount();
+        assertEquals(reversiGame.getWinnerName(), "White");
     }
 
     @Test
@@ -201,10 +201,10 @@ class GameTest {
         Checkerboard checkerboard=new Checkerboard(grid);
 
         DummyView dummy=new DummyView();
-        Game game=new Game(dummy, checkerboard);
+        ReversiGame reversiGame =new ReversiGame(dummy, checkerboard);
 
-        game.getCheckerboard().disksCount();
-        assertEquals(game.getWinnerName(), "Black");
+        reversiGame.getCheckerboard().disksCount();
+        assertEquals(reversiGame.getWinnerName(), "Black");
     }
 
 }

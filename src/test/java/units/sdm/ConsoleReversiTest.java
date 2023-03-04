@@ -17,9 +17,9 @@ class ConsoleReversiTest {
         System.setOut(new PrintStream(outputStream));
 
         ConsoleReversi view = new ConsoleReversi();
-        Game game = new Game(view);
+        ReversiGame reversiGame = new ReversiGame(view);
 
-        view.installLogic(game);
+        view.installLogic(reversiGame);
 
         view.displayCheckerboard();
 
@@ -42,11 +42,11 @@ class ConsoleReversiTest {
         System.setOut(new PrintStream(outputStream));
 
         ConsoleReversi view = new ConsoleReversi();
-        Game game = new Game(view);
+        ReversiGame reversiGame = new ReversiGame(view);
 
-        view.installLogic(game);
+        view.installLogic(reversiGame);
 
-        game.getCheckerboard().addAllowedDisks(Checkerboard.B);
+        reversiGame.getCheckerboard().addAllowedDisks(Checkerboard.B);
 
         view.displayCheckerboard();
 
