@@ -4,13 +4,7 @@ import java.util.Scanner;
 
 public class ConsoleReversi implements ReversiView {
 
-    Game game;
-
-    private final String BOLD =(char) 27 + "[1m";
-    private final String LINE =(char) 27 + "[4m";
-    private final String RED = "\u001B[31m";
-    private final String GREEN = "\033[0;32m";
-    private final String END =(char) 27 + "[0m";
+    protected Game game;
 
     @Override
     public void installLogic(Game game) {
@@ -21,15 +15,15 @@ public class ConsoleReversi implements ReversiView {
     public void show() {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("What's your name player " + RED + BOLD + "Black" + END + "?");
+        System.out.println("What's your name player Black?");
         String nameBlack;
         nameBlack = scan.next();
-        game.getPlayerBlack().setName(RED + BOLD + nameBlack + END);
+        game.getPlayerBlack().setName(nameBlack);
 
-        System.out.println("What's your name player " + BOLD + "White" + END + "?");
+        System.out.println("What's your name player White?");
         String nameWhite;
         nameWhite = scan.next();
-        game.getPlayerWhite().setName(BOLD + nameWhite + END);
+        game.getPlayerWhite().setName(nameWhite);
 
         System.out.println("Are you ready?");
 
@@ -57,24 +51,24 @@ public class ConsoleReversi implements ReversiView {
         Checkerboard checkerboard = game.getCheckerboard();
         String currentValue;
 
-        System.out.print(LINE + "  ");
+        System.out.print("   ");
         for (int i = 0; i < Checkerboard.SIZE; i++) {
-            System.out.print("|" + (char) (i + 65));
+            System.out.print("[" + (char) (i + 65) + "]");
         }
-        System.out.print(END + "|\n");
+        System.out.print("\n");
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
-            System.out.print(LINE + (i + 1) + " ");
+            System.out.print("[" + (i + 1) + "]");
             for (int j = 0; j < Checkerboard.SIZE; j++) {
                 currentValue = switch (checkerboard.getCheckerboard()[i][j]) {
-                    case Checkerboard.W -> "o";
-                    case Checkerboard.B -> RED + "o" + END + LINE;
-                    case Checkerboard.A -> GREEN + "x" + END + LINE;
-                    default -> " ";
+                    case Checkerboard.W -> "[W]";
+                    case Checkerboard.B -> "[B]";
+                    case Checkerboard.A -> "[A]";
+                    default -> "[ ]";
                 };
-                System.out.print("|" + currentValue);
+                System.out.print(currentValue);
             }
-            System.out.print(END + "|\n");
+            System.out.print("\n");
         }
     }
 
@@ -83,9 +77,9 @@ public class ConsoleReversi implements ReversiView {
         displayCheckerboard();
 
         if (game.isDraw())
-            System.out.println("\nThis is a " + BOLD + "Draw!" + END);
+            System.out.println("\nThis is a Draw!");
         else
-            System.out.println("\n" + game.getWinnerName() + BOLD + " wins!" + END);
+            System.out.println("\n" + game.getWinnerName() + " wins!");
 
         System.out.println(game.getPlayerBlack().getName() + " disks: " + game.getCheckerboard().getNumberOfBlacks());
         System.out.println(game.getPlayerWhite().getName() + " disks: " + game.getCheckerboard().getNumberOfWhites());

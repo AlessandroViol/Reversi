@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ConsoleReversiTest {
+class FormattedConsoleReversiTest {
     private final String B = "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
     private final String A = "\033[0;32mx\u001B[0m" + (char) 27 + "[4m";
 
@@ -16,7 +16,7 @@ class ConsoleReversiTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        ConsoleReversi view = new ConsoleReversi();
+        ConsoleReversi view = new FormattedConsoleReversi();
         ReversiGame reversiGame = new ReversiGame(view);
 
         view.installLogic(reversiGame);
@@ -41,7 +41,7 @@ class ConsoleReversiTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        ConsoleReversi view = new ConsoleReversi();
+        ConsoleReversi view = new FormattedConsoleReversi();
         ReversiGame reversiGame = new ReversiGame(view);
 
         view.installLogic(reversiGame);
