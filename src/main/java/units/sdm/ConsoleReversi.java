@@ -75,12 +75,20 @@ public class ConsoleReversi implements ReversiView {
     @Override
     public void displayGameOver() {
         displayCheckerboard();
+        System.out.println("\n" + game.getWinnerName() + " wins!");
 
-        if (game.isDraw())
-            System.out.println("\nThis is a Draw!");
-        else
-            System.out.println("\n" + game.getWinnerName() + " wins!");
+        displayResults();
+    }
 
+    @Override
+    public void displayDraw(){
+        displayCheckerboard();
+        System.out.println("\nThis is a Draw!");
+
+        displayResults();
+    }
+
+    protected void displayResults() {
         System.out.println(game.getPlayerBlack().getName() + " disks: " + game.getCheckerboard().getNumberOfBlacks());
         System.out.println(game.getPlayerWhite().getName() + " disks: " + game.getCheckerboard().getNumberOfWhites());
 

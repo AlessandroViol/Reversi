@@ -10,6 +10,8 @@ public interface ReversiView {
 
     void displayGameOver();
 
+    void displayDraw();
+
     void displayNoMoves();
 
     void displayNotAllowed();

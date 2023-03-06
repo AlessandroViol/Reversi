@@ -59,17 +59,16 @@ public class FormattedConsoleReversi extends ConsoleReversi{
     @Override
     public void displayGameOver() {
         displayCheckerboard();
+        System.out.println("\n" + game.getWinnerName() + BOLD + " wins!" + END);
 
-        if (game.isDraw())
-            System.out.println("\nThis is a " + BOLD + "Draw!" + END);
-        else
-            System.out.println("\n" + game.getWinnerName() + BOLD + " wins!" + END);
+        displayResults();
+    }
 
-        System.out.println(game.getPlayerBlack().getName() + " disks: " + game.getCheckerboard().getNumberOfBlacks());
-        System.out.println(game.getPlayerWhite().getName() + " disks: " + game.getCheckerboard().getNumberOfWhites());
+    @Override
+    public void displayDraw() {
+        displayCheckerboard();
+        System.out.println("\nThis is a " + BOLD + "Draw!" + END);
 
-        System.out.println("Press any key to terminate");
-        Scanner scan = new Scanner(System.in);
-        scan.next();
+        displayResults();
     }
 }

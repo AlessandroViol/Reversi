@@ -42,6 +42,8 @@ class ReversiGameTest {
             return;
         }
 
+        @Override
+        public void displayDraw() {}
     }
 
     @Test
