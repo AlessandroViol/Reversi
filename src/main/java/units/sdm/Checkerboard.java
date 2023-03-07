@@ -1,39 +1,39 @@
 package units.sdm;
 
 public class Checkerboard {
-    public final static int SIZE = 8;
-    private int[][] checkerboard;
+    public static final int SIZE = 8;
+    private int[][] matrix;
 
     private int numberOfWhites;
     private int numberOfBlacks;
 
     //Values coding the values of the black and white pieces and empty and allowed places on the checkerboard
-    public final static int B = 1;
-    public final static int W = -1;
-    public final static int N = 0;
-    public final static int A = 2;
+    public static final  int B = 1;
+    public static final int W = -1;
+    public static final int N = 0;
+    public static final int A = 2;
 
 
     //zero argument constructor that initialize the default checkerboard for reversi
     public Checkerboard() {
-        checkerboard = new int[SIZE][SIZE];
+        matrix = new int[SIZE][SIZE];
 
-        checkerboard[3][3] = W;
-        checkerboard[4][3] = B;
-        checkerboard[3][4] = B;
-        checkerboard[4][4] = W;
+        matrix[3][3] = W;
+        matrix[4][3] = B;
+        matrix[3][4] = B;
+        matrix[4][4] = W;
     }
 
     //one argument constructor that copies the matrix of a given checkerboard
-    public Checkerboard(int[][] checkerboard) throws InvalidSquareValueException {
-        this.checkerboard = new int[SIZE][SIZE];
+    public Checkerboard(int[][] matrix) throws InvalidSquareValueException {
+        this.matrix = new int[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                int squareVal = checkerboard[i][j];
+                int squareVal = matrix[i][j];
                 if (squareVal != W && squareVal != B && squareVal != N && squareVal != A)
                     throw new InvalidSquareValueException(squareVal);
                 else
-                    this.checkerboard[i][j] = squareVal;
+                    this.matrix[i][j] = squareVal;
             }
         }
     }
@@ -46,8 +46,8 @@ public class Checkerboard {
     }
 
     //attribute getters for class attributes
-    public int[][] getCheckerboard() {
-        return this.checkerboard;
+    public int[][] getMatrix() {
+        return this.matrix;
     }
 
     public int getNumberOfWhites() {
@@ -68,7 +68,7 @@ public class Checkerboard {
         boolean isDirectionAllowed;
 
         //check that the specified square is empty
-        if (checkerboard[posX][posY] != N && checkerboard[posX][posY] != A)
+        if (matrix[posX][posY] != N && matrix[posX][posY] != A)
             return false;
 
         //look at the adjacent squares in different directions using vertical and horizontal offsets
@@ -81,7 +81,7 @@ public class Checkerboard {
                     isInHorizontalBounds = (posY + offsetY >= 0) && (posY + offsetY < SIZE);
 
                     if ((!isSameSquare) && isInHorizontalBounds) {
-                        isOppositeColor = checkerboard[posX + offsetX][posY + offsetY] == -colorTurn;
+                        isOppositeColor = matrix[posX + offsetX][posY + offsetY] == -colorTurn;
                         isDirectionAllowed = checkDirection(offsetX, offsetY, posX + offsetX, posY + offsetY, colorTurn);
 
                         if (isOppositeColor && isDirectionAllowed)
@@ -99,10 +99,10 @@ public class Checkerboard {
     private boolean checkDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) {
         //move along the squares in the specified direction while in-bound to look for a disk of the same color or an empty square
         while (posX + offsetX >= 0 && posX + offsetX < SIZE && posY + offsetY >= 0 && posY + offsetY < SIZE) {
-            if (checkerboard[posX + offsetX][posY + offsetY] == colourTurn)
+            if (matrix[posX + offsetX][posY + offsetY] == colourTurn)
                 return true;
 
-            else if (checkerboard[posX + offsetX][posY + offsetY] == N || checkerboard[posX + offsetX][posY + offsetY] == A)
+            else if (matrix[posX + offsetX][posY + offsetY] == N || matrix[posX + offsetX][posY + offsetY] == A)
                 return false;
 
             //look at the next square along the direction
@@ -115,14 +115,12 @@ public class Checkerboard {
     }
 
     //if the specified placement is allowed then place the disk and update the checkerboard
-    protected boolean place(int posX, int posY, int colourTurn) {
+    protected void place(int posX, int posY, int colourTurn) {
         if (allowPlace(posX, posY, colourTurn)) {
-            checkerboard[posX][posY] = colourTurn;
+            matrix[posX][posY] = colourTurn;
             updateCheckerboard(posX, posY, colourTurn);
-        } else
-            return false;
+        }
 
-        return true;
     }
 
     //after a placement swap the color of all the adjacent disks of all the allowed lines
@@ -143,15 +141,15 @@ public class Checkerboard {
                     isInHorizontalBounds = (posY + offsetY >= 0) && (posY + offsetY < SIZE);
 
                     if ((!isSameSquare) && isInHorizontalBounds) {
-                        isOppositeColor = checkerboard[posX + offsetX][posY + offsetY] == -colourTurn;
+                        isOppositeColor = matrix[posX + offsetX][posY + offsetY] == -colourTurn;
                         isDirectionAllowed = checkDirection(offsetX, offsetY, posX + offsetX, posY + offsetY, colourTurn);
 
                         if (isOppositeColor && isDirectionAllowed) {
                             int xTemp = posX;
                             int yTemp = posY;
 
-                            while (checkerboard[xTemp + offsetX][yTemp + offsetY] == -colourTurn) {
-                                checkerboard[xTemp + offsetX][yTemp + offsetY] = colourTurn;
+                            while (matrix[xTemp + offsetX][yTemp + offsetY] == -colourTurn) {
+                                matrix[xTemp + offsetX][yTemp + offsetY] = colourTurn;
                                 xTemp = xTemp + offsetX;
                                 yTemp = yTemp + offsetY;
                             }
@@ -182,9 +180,9 @@ public class Checkerboard {
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (checkerboard[i][j] == W) {
+                if (matrix[i][j] == W) {
                     numberOfWhites += 1;
-                } else if (checkerboard[i][j] == B) {
+                } else if (matrix[i][j] == B) {
                     numberOfBlacks += 1;
                 }
             }
@@ -196,7 +194,7 @@ public class Checkerboard {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (allowPlace(i, j, colourTurn)) {
-                    checkerboard[i][j] = A;
+                    matrix[i][j] = A;
                 }
             }
         }
@@ -206,16 +204,13 @@ public class Checkerboard {
     protected void removeAllowedDisks() {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
-                if (checkerboard[i][j] == A) checkerboard[i][j] = N;
+                if (matrix[i][j] == A) matrix[i][j] = N;
 
     }
 
     //return true if neither players have available placings and false otherwise
     public boolean gameOver() {
-        if (!existAllowedPlace(B) && !existAllowedPlace(W)) {
-            return true;
-        }
-        return false;
+        return !existAllowedPlace(B) && !existAllowedPlace(W);
     }
 
 }

@@ -60,7 +60,7 @@ public class ConsoleReversi implements ReversiView {
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             System.out.print("[" + (i + 1) + "]");
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                currentValue = switch (checkerboard.getCheckerboard()[i][j]) {
+                currentValue = switch (checkerboard.getMatrix()[i][j]) {
                     case Checkerboard.W -> "[W]";
                     case Checkerboard.B -> "[B]";
                     case Checkerboard.A -> "[A]";

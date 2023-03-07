@@ -64,6 +64,30 @@ class ReversiGameTest {
     }
 
     @Test
+    void setPlayerWhite(){
+
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.setPlayerWhite("Player1");
+
+        assertEquals("Player1", reversiGame.getPlayerWhite());
+
+    }
+
+    @Test
+    void setPlayerBlack(){
+
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.setPlayerBlack("Player2");
+
+        assertEquals("Player2", reversiGame.getPlayerBlack());
+
+    }
+
+    @Test
     void endGame() {
 
         int[][] GameOverNotFull = {{W, W, W, W, W, W, W, W},
@@ -105,7 +129,7 @@ class ReversiGameTest {
         reversiGame.tryPlace(2, 7);
         reversiGame.getCheckerboard().removeAllowedDisks();
 
-        assertArrayEquals(referenceCheckerboard, reversiGame.getCheckerboard().getCheckerboard());
+        assertArrayEquals(referenceCheckerboard, reversiGame.getCheckerboard().getMatrix());
 
     }
 
@@ -120,7 +144,7 @@ class ReversiGameTest {
         reversiGame.tryPlace(0, 2);
         reversiGame.getCheckerboard().removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.getCheckerboard(), reversiGame.getCheckerboard().getCheckerboard());
+        assertArrayEquals(checkerboard.getMatrix(), reversiGame.getCheckerboard().getMatrix());
 
     }
 
@@ -135,7 +159,7 @@ class ReversiGameTest {
         reversiGame.tryPlace(-1, 9);
         reversiGame.getCheckerboard().removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.getCheckerboard(), reversiGame.getCheckerboard().getCheckerboard());
+        assertArrayEquals(checkerboard.getMatrix(), reversiGame.getCheckerboard().getMatrix());
 
     }
 
@@ -185,7 +209,7 @@ class ReversiGameTest {
         ReversiGame reversiGame =new ReversiGame(dummy, checkerboard);
 
         reversiGame.getCheckerboard().disksCount();
-        assertEquals(reversiGame.getWinnerName(), "White");
+        assertEquals("White",reversiGame.getWinnerName());
     }
 
     @Test
@@ -206,7 +230,7 @@ class ReversiGameTest {
         ReversiGame reversiGame =new ReversiGame(dummy, checkerboard);
 
         reversiGame.getCheckerboard().disksCount();
-        assertEquals(reversiGame.getWinnerName(), "Black");
+        assertEquals("Black",reversiGame.getWinnerName());
     }
 
 }

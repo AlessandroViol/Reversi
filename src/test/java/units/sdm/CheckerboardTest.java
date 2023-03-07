@@ -25,7 +25,7 @@ class CheckerboardTest {
                 {N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N}};
 
-        assertArrayEquals(referenceCheckerboard, checkerboard.getCheckerboard());
+        assertArrayEquals(referenceCheckerboard, checkerboard.getMatrix());
     }
 
     //the one argument constructor should set the checkerboard matrix be a copy of the provided one
@@ -42,7 +42,7 @@ class CheckerboardTest {
 
         Checkerboard checkerboard = new Checkerboard(referenceCheckerboard);
 
-        assertArrayEquals(referenceCheckerboard, checkerboard.getCheckerboard());
+        assertArrayEquals(referenceCheckerboard, checkerboard.getMatrix());
     }
 
     //the addAllowedDisks method should mark all the allowed placings in a generic board layout
@@ -51,7 +51,7 @@ class CheckerboardTest {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         checkerboard.addAllowedDisks(Checkerboard.B);
 
-        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
+        assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getMatrix());
     }
 
     //the addAllowedDisks method should mark all the allowed placings in the starting layout
@@ -62,11 +62,11 @@ class CheckerboardTest {
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
                 if (checkerboard.allowPlace(i, j, Checkerboard.B))
-                    checkerboard.getCheckerboard()[i][j] = Checkerboard.A;
+                    checkerboard.getMatrix()[i][j] = Checkerboard.A;
             }
         }
 
-        assertArrayEquals(CheckerboardUtility.SIMPLE_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getCheckerboard());
+        assertArrayEquals(CheckerboardUtility.SIMPLE_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getMatrix());
     }
 
     //the method allowPlace should be able to recognize all the allowed placings in a generic board layout
@@ -78,11 +78,11 @@ class CheckerboardTest {
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
                 if (checkerboard.allowPlace(i, j, Checkerboard.B))
-                    checkerboard.getCheckerboard()[i][j] = Checkerboard.A;
+                    checkerboard.getMatrix()[i][j] = Checkerboard.A;
             }
         }
 
-        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
+        assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getMatrix());
     }
 
     //The method disksCount should count the correct number of black disks
@@ -93,7 +93,7 @@ class CheckerboardTest {
 
         checkerboard.disksCount();
 
-        assertEquals(checkerboard.getNumberOfBlacks(), numBlacks);
+        assertEquals(numBlacks, checkerboard.getNumberOfBlacks());
     }
 
     //the method disksCount should count the correct number of white disks
@@ -104,7 +104,7 @@ class CheckerboardTest {
 
         checkerboard.disksCount();
 
-        assertEquals(checkerboard.getNumberOfWhites(), numWhites);
+        assertEquals(numWhites, checkerboard.getNumberOfWhites());
     }
 
     //when placing a white disk in an allowed position the values of the matrix elements should be set to white according to Reversi rules
@@ -124,7 +124,7 @@ class CheckerboardTest {
         checkerboard.place(4, 2, W);
         checkerboard.place(2, 4, W);
 
-        assertArrayEquals(expectedMatrix, checkerboard.getCheckerboard());
+        assertArrayEquals(expectedMatrix, checkerboard.getMatrix());
     }
 
     //when placing a black disk in an allowed position the values of the matrix elements should be set to black according to Reversi rules
@@ -144,7 +144,7 @@ class CheckerboardTest {
         checkerboard.place(2, 3, B);
         checkerboard.place(4, 5, B);
 
-        assertArrayEquals(expectedMatrix, checkerboard.getCheckerboard());
+        assertArrayEquals(expectedMatrix, checkerboard.getMatrix());
     }
 
     //the place method should work in all directions and be able to handle the border squares
@@ -174,7 +174,7 @@ class CheckerboardTest {
         checkerboard.place(4, 3, B);
         checkerboard.place(4, 4, B);
 
-        assertArrayEquals(expectedMatrix, checkerboard.getCheckerboard());
+        assertArrayEquals(expectedMatrix, checkerboard.getMatrix());
     }
 
     //the method existAllowPlace should return false if the white player doesn't have any allowed placing
@@ -233,7 +233,7 @@ class CheckerboardTest {
 
         checkerboard.updateCheckerboard(2, 7, B);
 
-        assertArrayEquals(referenceCheckerboard, checkerboard.getCheckerboard());
+        assertArrayEquals(referenceCheckerboard, checkerboard.getMatrix());
     }
 
     //the removeAllowedDisks method should remove the marks of allowed placings
@@ -242,6 +242,6 @@ class CheckerboardTest {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
         checkerboard.removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.getCheckerboard(), CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD, checkerboard.getMatrix());
     }
 }

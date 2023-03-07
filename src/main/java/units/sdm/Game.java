@@ -1,31 +1,29 @@
 package units.sdm;
 
 public interface Game {
-    public void start();
+    void start();
 
-    public int getColourTurn();
+    String getPlayerWhite();
 
-    public String getPlayerWhite();
+    String getPlayerBlack();
 
-    public String getPlayerBlack();
+    void setPlayerWhite(String name);
 
-    public void setPlayerWhite(String name);
+    void setPlayerBlack(String name);
 
-    public void setPlayerBlack(String name);
+    Checkerboard getCheckerboard();
 
-    public Checkerboard getCheckerboard();
+    void turn();
 
-    public void turn();
+    void tryPlace(int x, int y);
 
-    public void tryPlace(int x, int y);
+    void nextTurn();
 
-    public void nextTurn();
+    String getCurrentPlayerName();
 
-    public String getCurrentPlayerName();
+    boolean isDraw();
 
-    public boolean isDraw();
+    String getWinnerName();
 
-    public String getWinnerName();
-
-    public void validateAndTryPlace(String row, String column);
+    void validateAndTryPlace(String row, String column);
 }

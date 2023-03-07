@@ -3,12 +3,12 @@ package units.sdm;
 import java.util.Scanner;
 
 public class FormattedConsoleReversi extends ConsoleReversi{
-    private final String BOLD = (char) 27 + "[1m";
-    private final String LINE = (char) 27 + "[4m";
-    private final String RED = (char) 27 + "[31m";
-    private final String GREEN = (char) 27 + "[32m";
-    private final String WHITE = (char) 27 + "[97m";
-    private final String END = (char) 27 + "[0m";
+    private static final String BOLD = (char) 27 + "[1m";
+    private static final String LINE = (char) 27 + "[4m";
+    private static final String RED = (char) 27 + "[31m";
+    private static final String GREEN = (char) 27 + "[32m";
+    private static final String WHITE = (char) 27 + "[97m";
+    private static final String END = (char) 27 + "[0m";
 
     @Override
     public void show() {
@@ -45,7 +45,7 @@ public class FormattedConsoleReversi extends ConsoleReversi{
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             System.out.print(LINE + (i + 1) + " ");
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                currentValue = switch (checkerboard.getCheckerboard()[i][j]) {
+                currentValue = switch (checkerboard.getMatrix()[i][j]) {
                     case Checkerboard.W -> "o";
                     case Checkerboard.B -> RED + "o" + WHITE;
                     case Checkerboard.A -> GREEN + "x" + WHITE;

@@ -26,7 +26,7 @@ public class ReversiGame implements Game {
         this.playerBlack ="Black";
         this.playerWhite ="White";
 
-        this.checkerboard = new Checkerboard(checkerboard.getCheckerboard());
+        this.checkerboard = new Checkerboard(checkerboard.getMatrix());
 
         this.view = view;
     }
@@ -34,12 +34,6 @@ public class ReversiGame implements Game {
     @Override
     public void start() {
         view.show();
-    }
-
-    @Override
-    public int getColourTurn() {
-
-        return colourTurn;
     }
 
     @Override
@@ -68,11 +62,12 @@ public class ReversiGame implements Game {
 
     @Override
     public void turn() {
-        if (checkerboard.gameOver())
+        if (checkerboard.gameOver()){
             if (isDraw())
                 view.displayDraw();
             else
-                view.displayGameOver();
+                view.displayGameOver();}
+
         else {
             if (!checkerboard.existAllowedPlace(colourTurn)) {
                 view.displayNoMoves();
