@@ -10,7 +10,8 @@ On his turn, a player must place a piece on the board so that there exists at le
 If the player has no allowed pieces to place, he skips the turn. When both players don't have allowed move, for example when the board is filled, the game ends. The player with the higher number of disks of his colour wins. A game may result in a draw.
 ## Features
 
-- A command-line application
+- A command-line application with a simple interface
+- An alternative more user-friendly interface can be selected (works only for terminals that support ANSI-escape formatting)  
 - Displays available moves
 - Two local player support
 
@@ -18,10 +19,15 @@ If the player has no allowed pieces to place, he skips the turn. When both playe
 
 ## Run Locally
 
-Download the .jar file of a release
+Download the .jar file of a release and run it with the command
 
 ```bash
   java -jar reversi-VERSION.jar
+```
+
+If your terminal support ANSI-escape formatting you may want to run it with the enhanced interface by passing the parameter `f`
+```bash
+  java -jar reversi-VERSION.jar f
 ```
 
 
