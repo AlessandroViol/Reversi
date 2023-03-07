@@ -5,9 +5,13 @@ public interface Game {
 
     public int getColourTurn();
 
-    public Player getPlayerWhite();
+    public String getPlayerWhite();
 
-    public Player getPlayerBlack();
+    public String getPlayerBlack();
+
+    public void setPlayerWhite(String name);
+
+    public void setPlayerBlack(String name);
 
     public Checkerboard getCheckerboard();
 

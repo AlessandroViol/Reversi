@@ -1,8 +1,9 @@
 package units.sdm;
 
 public class ReversiGame implements Game {
-    private Player playerWhite;
-    private Player playerBlack;
+
+    private String playerWhite;
+    private String playerBlack;
 
     private Checkerboard checkerboard;
 
@@ -11,8 +12,9 @@ public class ReversiGame implements Game {
     private int colourTurn = 1;
 
     public ReversiGame(ReversiView view) {
-        this.playerBlack = new Player("Black", Checkerboard.B);
-        this.playerWhite = new Player("White", Checkerboard.W);
+
+        this.playerBlack ="Black";
+        this.playerWhite ="White";
 
         this.checkerboard = new Checkerboard();
 
@@ -20,8 +22,9 @@ public class ReversiGame implements Game {
     }
 
     public ReversiGame(ReversiView view, Checkerboard checkerboard) {
-        this.playerBlack = new Player("Black", Checkerboard.B);
-        this.playerWhite = new Player("White", Checkerboard.W);
+
+        this.playerBlack ="Black";
+        this.playerWhite ="White";
 
         this.checkerboard = new Checkerboard(checkerboard.getCheckerboard());
 
@@ -35,17 +38,27 @@ public class ReversiGame implements Game {
 
     @Override
     public int getColourTurn() {
+
         return colourTurn;
     }
 
     @Override
-    public Player getPlayerWhite() {
+    public String getPlayerWhite() {
         return playerWhite;
     }
 
     @Override
-    public Player getPlayerBlack() {
+    public String getPlayerBlack() {
         return playerBlack;
+    }
+
+    @Override
+    public void setPlayerWhite(String name) {
+        playerWhite=name;
+    }
+    @Override
+    public void setPlayerBlack(String name) {
+        playerBlack=name;
     }
 
     @Override
@@ -56,7 +69,7 @@ public class ReversiGame implements Game {
     @Override
     public void turn() {
         if (checkerboard.gameOver())
-            if(isDraw())
+            if (isDraw())
                 view.displayDraw();
             else
                 view.displayGameOver();
@@ -90,9 +103,9 @@ public class ReversiGame implements Game {
     @Override
     public String getCurrentPlayerName() {
         if (colourTurn == Checkerboard.B) {
-            return playerBlack.getName();
+            return playerBlack;
         }
-        return playerWhite.getName();
+        return playerWhite;
     }
 
     @Override
@@ -103,9 +116,9 @@ public class ReversiGame implements Game {
     @Override
     public String getWinnerName() {
         if (checkerboard.getNumberOfBlacks() > checkerboard.getNumberOfWhites()) {
-            return playerBlack.getName();
+            return playerBlack;
         }
-        return playerWhite.getName();
+        return playerWhite;
     }
 
     @Override

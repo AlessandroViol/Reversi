@@ -18,12 +18,12 @@ public class ConsoleReversi implements ReversiView {
         System.out.println("What's your name player Black?");
         String nameBlack;
         nameBlack = scan.next();
-        game.getPlayerBlack().setName(nameBlack);
+        game.setPlayerBlack(nameBlack);
 
         System.out.println("What's your name player White?");
         String nameWhite;
         nameWhite = scan.next();
-        game.getPlayerWhite().setName(nameWhite);
+        game.setPlayerWhite(nameWhite);
 
         System.out.println("Are you ready?");
 
@@ -89,8 +89,8 @@ public class ConsoleReversi implements ReversiView {
     }
 
     protected void displayResults() {
-        System.out.println(game.getPlayerBlack().getName() + " disks: " + game.getCheckerboard().getNumberOfBlacks());
-        System.out.println(game.getPlayerWhite().getName() + " disks: " + game.getCheckerboard().getNumberOfWhites());
+        System.out.println(game.getPlayerBlack() + " disks: " + game.getCheckerboard().getNumberOfBlacks());
+        System.out.println(game.getPlayerWhite() + " disks: " + game.getCheckerboard().getNumberOfWhites());
 
         System.out.println("Press any key to terminate");
         Scanner scan = new Scanner(System.in);

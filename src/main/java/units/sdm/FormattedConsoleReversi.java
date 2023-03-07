@@ -16,12 +16,12 @@ public class FormattedConsoleReversi extends ConsoleReversi{
         System.out.println("What's your name player " + RED + BOLD + "Black" + END + "?");
         String nameBlack;
         nameBlack = scan.next();
-        game.getPlayerBlack().setName(RED + BOLD + nameBlack + END);
+        game.setPlayerBlack(RED + BOLD + nameBlack + END);
 
         System.out.println("What's your name player " + BOLD + "White" + END + "?");
         String nameWhite;
         nameWhite = scan.next();
-        game.getPlayerWhite().setName(BOLD + nameWhite + END);
+        game.setPlayerWhite(BOLD + nameWhite + END);
 
         System.out.println("Are you ready?");
 
