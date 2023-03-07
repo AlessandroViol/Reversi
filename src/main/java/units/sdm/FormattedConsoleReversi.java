@@ -3,11 +3,12 @@ package units.sdm;
 import java.util.Scanner;
 
 public class FormattedConsoleReversi extends ConsoleReversi{
-    private final String BOLD =(char) 27 + "[1m";
-    private final String LINE =(char) 27 + "[4m";
-    private final String RED = "\u001B[31m";
-    private final String GREEN = "\033[0;32m";
-    private final String END =(char) 27 + "[0m";
+    private final String BOLD = (char) 27 + "[1m";
+    private final String LINE = (char) 27 + "[4m";
+    private final String RED = (char) 27 + "[31m";
+    private final String GREEN = (char) 27 + "[32m";
+    private final String WHITE = (char) 27 + "[97m";
+    private final String END = (char) 27 + "[0m";
 
     @Override
     public void show() {
@@ -35,24 +36,24 @@ public class FormattedConsoleReversi extends ConsoleReversi{
         Checkerboard checkerboard = game.getCheckerboard();
         String currentValue;
 
-        System.out.print(LINE + "  ");
+        System.out.print(LINE + WHITE + "  ");
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             System.out.print("|" + (char) (i + 65));
         }
-        System.out.print(END + "|\n");
+        System.out.print(END + WHITE + "|\n");
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             System.out.print(LINE + (i + 1) + " ");
             for (int j = 0; j < Checkerboard.SIZE; j++) {
                 currentValue = switch (checkerboard.getCheckerboard()[i][j]) {
                     case Checkerboard.W -> "o";
-                    case Checkerboard.B -> RED + "o" + END + LINE;
-                    case Checkerboard.A -> GREEN + "x" + END + LINE;
+                    case Checkerboard.B -> RED + "o" + WHITE;
+                    case Checkerboard.A -> GREEN + "x" + WHITE;
                     default -> " ";
                 };
                 System.out.print("|" + currentValue);
             }
-            System.out.print(END + "|\n");
+            System.out.print(END + WHITE + "|\n");
         }
     }
 

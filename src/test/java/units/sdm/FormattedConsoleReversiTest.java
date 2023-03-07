@@ -8,8 +8,12 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FormattedConsoleReversiTest {
-    private final String B = "\u001B[31mo\u001B[0m" + (char) 27 + "[4m";
-    private final String A = "\033[0;32mx\u001B[0m" + (char) 27 + "[4m";
+    private final String BOLD = (char) 27 + "[1m";
+    private final String LINE = (char) 27 + "[4m";
+    private final String RED = (char) 27 + "[31m";
+    private final String GREEN = (char) 27 + "[32m";
+    private final String WHITE = (char) 27 + "[97m";
+    private final String END = (char) 27 + "[0m";
 
     @Test
     void consoleOutput() {
@@ -23,15 +27,15 @@ class FormattedConsoleReversiTest {
 
         view.displayCheckerboard();
 
-        String expectedOutput = (char) 27 + "[4m  |A|B|C|D|E|F|G|H" + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m1 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m2 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m3 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m4 | | | |o|" + B + "| | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m5 | | | |" + B + "|o| | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m6 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m7 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                                (char) 27 + "[4m8 | | | | | | | | " + (char) 27 + "[0m|\n";
+        String expectedOutput = LINE + WHITE + "  |A|B|C|D|E|F|G|H" + END + WHITE + "|\n" +
+                                LINE + "1 | | | | | | | | " + END + WHITE  + "|\n" +
+                                LINE + "2 | | | | | | | | " + END + WHITE + "|\n" +
+                                LINE + "3 | | | | | | | | " + END + WHITE + "|\n" +
+                                LINE + "4 | | | |o|" + RED + "o" + WHITE + "| | | " + END + WHITE + "|\n" +
+                                LINE + "5 | | | |" + RED + "o" + WHITE + "|o| | | " + END + WHITE + "|\n" +
+                                LINE + "6 | | | | | | | | " + END + WHITE + "|\n" +
+                                LINE + "7 | | | | | | | | " + END + WHITE + "|\n" +
+                                LINE + "8 | | | | | | | | " + END + WHITE + "|\n";
 
         assertEquals(expectedOutput, outputStream.toString());
     }
@@ -50,15 +54,15 @@ class FormattedConsoleReversiTest {
 
         view.displayCheckerboard();
 
-        String expectedOutput = (char) 27 + "[4m  |A|B|C|D|E|F|G|H" + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m1 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m2 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m3 | | | |" + A +"| | | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m4 | | |" + A + "|o|" + B + "| | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m5 | | | |" + B + "|o|" + A + "| | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m6 | | | | |" + A + "| | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m7 | | | | | | | | " + (char) 27 + "[0m|\n" +
-                (char) 27 + "[4m8 | | | | | | | | " + (char) 27 + "[0m|\n";
+        String expectedOutput = LINE + WHITE + "  |A|B|C|D|E|F|G|H" + END + WHITE + "|\n" +
+                LINE + "1 | | | | | | | | " + END + WHITE  + "|\n" +
+                LINE + "2 | | | | | | | | " + END + WHITE + "|\n" +
+                LINE + "3 | | | |" + GREEN + "x" + WHITE + "| | | | " + END + WHITE + "|\n" +
+                LINE + "4 | | |" + GREEN + "x" + WHITE + "|o|" + RED + "o" + WHITE + "| | | " + END + WHITE + "|\n" +
+                LINE + "5 | | | |" + RED + "o" + WHITE + "|o|" + GREEN + "x" + WHITE + "| | " + END + WHITE + "|\n" +
+                LINE + "6 | | | | |" + GREEN + "x" + WHITE + "| | | " + END + WHITE + "|\n" +
+                LINE + "7 | | | | | | | | " + END + WHITE + "|\n" +
+                LINE + "8 | | | | | | | | " + END + WHITE + "|\n";
 
         assertEquals(expectedOutput, outputStream.toString());
     }
