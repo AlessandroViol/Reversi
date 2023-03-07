@@ -8,7 +8,7 @@ public class Checkerboard {
     private int numberOfBlacks;
 
     //Values coding the values of the black and white pieces and empty and allowed places on the checkerboard
-    public static final  int B = 1;
+    public static final int B = 1;
     public static final int W = -1;
     public static final int N = 0;
     public static final int A = 2;
@@ -213,4 +213,23 @@ public class Checkerboard {
         return !existAllowedPlace(B) && !existAllowedPlace(W);
     }
 
+    @Override
+    public String toString() {
+        String strMatrix = "   [A][B][C][D][E][F][G][H]\n";
+        String currentValue;
+        for (int i = 0; i < Checkerboard.SIZE; i++) {
+            strMatrix = strMatrix.concat("[" + (i + 1) + "]");
+            for (int j = 0; j < Checkerboard.SIZE; j++) {
+                currentValue = switch (matrix[i][j]) {
+                    case W -> "[W]";
+                    case B -> "[B]";
+                    case A -> "[A]";
+                    default -> "[ ]";
+                };
+                strMatrix = strMatrix.concat(currentValue);
+            }
+            strMatrix = strMatrix.concat("\n");
+        }
+        return strMatrix;
+    }
 }

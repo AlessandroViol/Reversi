@@ -49,27 +49,8 @@ public class ConsoleReversi implements ReversiView {
 
     public void displayCheckerboard() {
         Checkerboard checkerboard = game.getCheckerboard();
-        String currentValue;
 
-        System.out.print("   ");
-        for (int i = 0; i < Checkerboard.SIZE; i++) {
-            System.out.print("[" + (char) (i + 65) + "]");
-        }
-        System.out.print("\n");
-
-        for (int i = 0; i < Checkerboard.SIZE; i++) {
-            System.out.print("[" + (i + 1) + "]");
-            for (int j = 0; j < Checkerboard.SIZE; j++) {
-                currentValue = switch (checkerboard.getMatrix()[i][j]) {
-                    case Checkerboard.W -> "[W]";
-                    case Checkerboard.B -> "[B]";
-                    case Checkerboard.A -> "[A]";
-                    default -> "[ ]";
-                };
-                System.out.print(currentValue);
-            }
-            System.out.print("\n");
-        }
+        System.out.print(checkerboard.toString());
     }
 
     @Override
