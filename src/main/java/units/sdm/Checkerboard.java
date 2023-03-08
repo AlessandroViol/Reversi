@@ -45,6 +45,13 @@ public class Checkerboard {
         }
     }
 
+    public static class InvalidColourValueException extends RuntimeException {
+        public InvalidColourValueException(int value) {
+            super("Tried to use value [" + value + "] as a colour value for a Checkerboard square." +
+                    "The only allowed values are: {" + W + "; " + B + "}");
+        }
+    }
+
     //attribute getters for class attributes
     public int[][] getMatrix() {
         return this.matrix;
@@ -58,8 +65,15 @@ public class Checkerboard {
         return numberOfBlacks;
     }
 
+    private void validateColour(int colour) throws InvalidColourValueException {
+        if (colour != W && colour != B)
+            throw new InvalidColourValueException(colour);
+    }
+
     //computes if a piece of the provided color can be placed in the specified square of the checkerboard
     public boolean allowPlace(int posX, int posY, int colorTurn) {
+        validateColour(colorTurn);
+
         //declaration of some conditionals regarding current adjacent square
         boolean isInVerticalBounds;
         boolean isInHorizontalBounds;
@@ -97,6 +111,8 @@ public class Checkerboard {
 
     //check if in the specified direction there is a contiguous line of disks of the same color terminating with a disk of the opposite color
     private boolean checkDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) {
+        validateColour(colourTurn);
+
         //move along the squares in the specified direction while in-bound to look for a disk of the same color or an empty square
         while (posX + offsetX >= 0 && posX + offsetX < SIZE && posY + offsetY >= 0 && posY + offsetY < SIZE) {
             if (matrix[posX + offsetX][posY + offsetY] == colourTurn)
@@ -116,15 +132,18 @@ public class Checkerboard {
 
     //if the specified placement is allowed then place the disk and update the checkerboard
     protected void place(int posX, int posY, int colourTurn) {
+        validateColour(colourTurn);
+
         if (allowPlace(posX, posY, colourTurn)) {
             matrix[posX][posY] = colourTurn;
             updateCheckerboard(posX, posY, colourTurn);
         }
-
     }
 
     //after a placement swap the color of all the adjacent disks of all the allowed lines
     protected void updateCheckerboard(int posX, int posY, int colourTurn) {
+        validateColour(colourTurn);
+
         //declaration of some conditionals regarding current adjacent square
         boolean isInVerticalBounds;
         boolean isInHorizontalBounds;
@@ -162,6 +181,8 @@ public class Checkerboard {
 
     //return true if there is at least one possible move for the player, return false otherwise
     public boolean existAllowedPlace(int colourTurn) {
+        validateColour(colourTurn);
+
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (allowPlace(i, j, colourTurn)) {
@@ -191,6 +212,8 @@ public class Checkerboard {
 
     //marks all the allowed squares for a disk color on the checkerboard
     protected void addAllowedDisks(int colourTurn) {
+        validateColour(colourTurn);
+
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (allowPlace(i, j, colourTurn)) {
