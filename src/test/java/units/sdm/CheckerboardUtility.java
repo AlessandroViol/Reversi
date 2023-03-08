@@ -2,12 +2,12 @@ package units.sdm;
 
 public class CheckerboardUtility {
 
-    public final static int B = Checkerboard.B;
-    public final static int W = Checkerboard.W;
-    public final static int N = Checkerboard.N;
-    public final static int A = Checkerboard.A;
+    public static final int B = Checkerboard.B;
+    public static final int W = Checkerboard.W;
+    public static final int N = Checkerboard.N;
+    public static final int A = Checkerboard.A;
 
-    public final static int[][] SIMPLE_CHECKERBOARD_ALLOWED_DISKS = {{N, N, N, N, N, N, N, N},
+    public static final int[][] SIMPLE_CHECKERBOARD_ALLOWED_DISKS = {{N, N, N, N, N, N, N, N},
             {N, N, N, N, N, N, N, N},
             {N, N, N, A, N, N, N, N},
             {N, N, A, W, B, N, N, N},
@@ -16,7 +16,7 @@ public class CheckerboardUtility {
             {N, N, N, N, N, N, N, N},
             {N, N, N, N, N, N, N, N}};
 
-    public final static int[][] COMPLEX_CHECKERBOARD = {{N, N, W, W, W, W, W, W},
+    public static final int[][] COMPLEX_CHECKERBOARD = {{N, N, W, W, W, W, W, W},
             {N, N, B, W, W, W, W, W},
             {N, N, N, W, W, W, W, N},
             {N, N, W, W, W, W, W, N},
@@ -25,7 +25,7 @@ public class CheckerboardUtility {
             {W, N, N, B, N, N, W, N},
             {N, N, N, N, B, N, N, N}};
 
-    public final static int[][] COMPLEX_CHECKERBOARD_ALLOWED_DISKS = {{N, N, W, W, W, W, W, W},
+    public static final int[][] COMPLEX_CHECKERBOARD_ALLOWED_DISKS = {{N, N, W, W, W, W, W, W},
             {N, N, B, W, W, W, W, W},
             {N, N, A, W, W, W, W, A},
             {N, N, W, W, W, W, W, N},

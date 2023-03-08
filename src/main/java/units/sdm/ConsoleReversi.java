@@ -33,7 +33,7 @@ public class ConsoleReversi implements ReversiView {
     }
 
     @Override
-    public void displayTurn(Checkerboard checkerboard) {
+    public void displayTurn() {
         displayCheckerboard();
 
         Scanner scan = new Scanner(System.in);

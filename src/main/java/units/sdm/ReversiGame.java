@@ -74,7 +74,7 @@ public class ReversiGame implements Game {
                 return;
             }
             checkerboard.addAllowedDisks(colourTurn);
-            view.displayTurn(checkerboard);
+            view.displayTurn();
         }
     }
 

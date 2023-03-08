@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CheckerboardTest {
     //define some shorthand constants
-    private final static int B = Checkerboard.B;
-    private final static int W = Checkerboard.W;
-    private final static int N = Checkerboard.N;
-    private final static int A = Checkerboard.A;
+    private static final int B = Checkerboard.B;
+    private static final int W = Checkerboard.W;
+    private static final int N = Checkerboard.N;
+    private static final int A = Checkerboard.A;
 
     //the zero arguments constructor should set the checkerboard matrix to the starting reversi layout
     @Test
@@ -49,7 +49,7 @@ class CheckerboardTest {
     @Test
     void addAllowedDisks() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
-        checkerboard.addAllowedDisks(Checkerboard.B);
+        checkerboard.addAllowedDisks(B);
 
         assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getMatrix());
     }
@@ -61,8 +61,8 @@ class CheckerboardTest {
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                if (checkerboard.allowPlace(i, j, Checkerboard.B))
-                    checkerboard.getMatrix()[i][j] = Checkerboard.A;
+                if (checkerboard.allowPlace(i, j, B))
+                    checkerboard.getMatrix()[i][j] = A;
             }
         }
 
@@ -72,13 +72,12 @@ class CheckerboardTest {
     //the method allowPlace should be able to recognize all the allowed placings in a generic board layout
     @Test
     void allowPlaceComplexCheckerboard() {
-        ConsoleReversi view = new ConsoleReversi();
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                if (checkerboard.allowPlace(i, j, Checkerboard.B))
-                    checkerboard.getMatrix()[i][j] = Checkerboard.A;
+                if (checkerboard.allowPlace(i, j, B))
+                    checkerboard.getMatrix()[i][j] = A;
             }
         }
 
@@ -190,7 +189,7 @@ class CheckerboardTest {
                 {B, B, B, B, B, B, B, N}};
         Checkerboard checkerboard = new Checkerboard(noPlaces);
 
-        assertFalse(checkerboard.existAllowedPlace(Checkerboard.W));
+        assertFalse(checkerboard.existAllowedPlace(W));
     }
 
     //the method existAllowPlace should return false if the white player doesn't have any allowed placing
@@ -206,7 +205,7 @@ class CheckerboardTest {
                 {B, B, B, B, B, B, B, N}};
         Checkerboard checkerboard = new Checkerboard(noPlaces);
 
-        assertTrue(checkerboard.existAllowedPlace(Checkerboard.B));
+        assertTrue(checkerboard.existAllowedPlace(B));
     }
 
     //the updateCheckerboard method should be able to swap the color of the disks in an allowed direction

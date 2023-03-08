@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReversiGameTest {
-    private final static int B = Checkerboard.B;
-    private final static int W = Checkerboard.W;
-    private final static int N = Checkerboard.N;
-    private final static int A = Checkerboard.A;
+    private static final int B = Checkerboard.B;
+    private static final int W = Checkerboard.W;
+    private static final int N = Checkerboard.N;
+    private static final int A = Checkerboard.A;
 
     public class DummyView implements ReversiView {
 
@@ -23,7 +23,7 @@ class ReversiGameTest {
         }
 
         @Override
-        public void displayTurn(Checkerboard checkerboard) {
+        public void displayTurn() {
             return;
         }
 

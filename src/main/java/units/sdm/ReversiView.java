@@ -6,7 +6,7 @@ public interface ReversiView {
 
     void show();
 
-    void displayTurn(Checkerboard checkerboard);
+    void displayTurn();
 
     void displayGameOver();
 
