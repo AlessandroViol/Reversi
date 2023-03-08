@@ -58,12 +58,47 @@ public class SwingReversi implements ReversiView {
         //create title
         JPanel northPanel = new JPanel();
 
-        JLabel title = new JLabel("Reversi!");
+        JLabel title = new JLabel("REVERSI!");
+        title.setFont(new Font("Calibri", Font.BOLD, 30));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
-        northPanel.add(title, BorderLayout.NORTH);
+        northPanel.add(title);
 
         mainContainer.add(northPanel, BorderLayout.NORTH);
+
+        Container cp = frame.getContentPane();
+        cp.setLayout(new BorderLayout());
+
+
+        
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+
+        JLabel label = new JLabel("Please enter player names");
+        label.setFont(new Font("Calibri", Font.ITALIC, 10));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        centerPanel.add(label);
+
+        JLabel labelPlayerBlack = new JLabel("Player Black");
+        centerPanel.add(labelPlayerBlack, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 4, 0, 0), 0, 0));
+
+        JTextField playerBlackName = new JTextField("", 5);
+        playerBlackName.setHorizontalAlignment(SwingConstants.CENTER);
+        playerBlackName.addActionListener(b -> game.setPlayerBlack(playerBlackName.getText()));
+        centerPanel.add(playerBlackName, new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(4, 4, 4, 4), 0, 0));
+
+
+        JLabel labelPlayerWhite = new JLabel("Player White");
+        centerPanel.add(labelPlayerWhite, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 4, 0, 0), 0, 0));
+
+        JTextField playerWhiteName = new JTextField("", 5);
+        playerBlackName.setHorizontalAlignment(SwingConstants.CENTER);
+        playerWhiteName.addActionListener(w -> game.setPlayerWhite(playerWhiteName.getText()));
+        centerPanel.add(playerWhiteName, new GridBagConstraints(0, 4, 1, 1, 1.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(4, 4, 4, 4), 0, 0));
+
 
         //add button to start the game
         JButton startGameButton = new JButton("Start the game!");
@@ -72,8 +107,12 @@ public class SwingReversi implements ReversiView {
 
         mainContainer.add(startGameButton, BorderLayout.SOUTH);
 
+        cp.add(startGameButton, BorderLayout.SOUTH);
+        cp.add(northPanel, BorderLayout.NORTH);
+        cp.add(centerPanel, BorderLayout.CENTER);
+
         //display window
-        frame.setSize(480, 360);
+        frame.setSize(500, 500);
         frame.setVisible(true);
     }
 
