@@ -70,8 +70,9 @@ public class ConsoleReversi implements ReversiView {
     }
 
     protected void displayResults() {
-        System.out.println(game.getPlayerBlack() + " disks: " + game.getCheckerboard().getNumberOfBlacks());
-        System.out.println(game.getPlayerWhite() + " disks: " + game.getCheckerboard().getNumberOfWhites());
+        Checkerboard checkerboard = game.getCheckerboard();
+        System.out.println(game.getPlayerBlack() + " disks: " + checkerboard.getNumberOfBlacks());
+        System.out.println(game.getPlayerWhite() + " disks: " + checkerboard.getNumberOfWhites());
 
         System.out.println("Press any key to terminate");
         Scanner scan = new Scanner(System.in);

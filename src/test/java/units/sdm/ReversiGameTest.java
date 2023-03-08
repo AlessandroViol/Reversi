@@ -127,40 +127,42 @@ class ReversiGameTest {
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
         reversiGame.tryPlace(2, 7);
-        reversiGame.getCheckerboard().removeAllowedDisks();
+        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
+        gameCheckerboard.removeAllowedDisks();
 
-        assertArrayEquals(referenceCheckerboard, reversiGame.getCheckerboard().getMatrix());
+        assertArrayEquals(referenceCheckerboard, gameCheckerboard.getMatrix());
 
     }
 
     @Test
     void tryPlaceNotAllowed() {
 
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        Checkerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
-        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
+        ReversiGame reversiGame = new ReversiGame(dummy, referenceCheckerboard);
 
         reversiGame.tryPlace(0, 2);
-        reversiGame.getCheckerboard().removeAllowedDisks();
+        Checkerboard checkerboard = reversiGame.getCheckerboard();
+        checkerboard.removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.getMatrix(), reversiGame.getCheckerboard().getMatrix());
+        assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
 
     }
 
     @Test
     void tryPlaceOutOfGrid() {
 
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        Checkerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
-        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
+        ReversiGame reversiGame = new ReversiGame(dummy, referenceCheckerboard);
 
         reversiGame.tryPlace(-1, 9);
-        reversiGame.getCheckerboard().removeAllowedDisks();
+        Checkerboard checkerboard = reversiGame.getCheckerboard();
+        checkerboard.removeAllowedDisks();
 
-        assertArrayEquals(checkerboard.getMatrix(), reversiGame.getCheckerboard().getMatrix());
-
+        assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
     }
 
     @Test
@@ -180,10 +182,10 @@ class ReversiGameTest {
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        reversiGame.getCheckerboard().disksCount();
+        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
+        gameCheckerboard.disksCount();
 
         assertTrue(reversiGame.isDraw());
-
     }
 
     @Test
@@ -194,7 +196,8 @@ class ReversiGameTest {
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        reversiGame.getCheckerboard().disksCount();
+        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
+        gameCheckerboard.disksCount();
 
         assertFalse(reversiGame.isDraw());
 
@@ -208,7 +211,9 @@ class ReversiGameTest {
         DummyView dummy=new DummyView();
         ReversiGame reversiGame =new ReversiGame(dummy, checkerboard);
 
-        reversiGame.getCheckerboard().disksCount();
+        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
+        gameCheckerboard.disksCount();
+
         assertEquals("White",reversiGame.getWinnerName());
     }
 
@@ -229,7 +234,9 @@ class ReversiGameTest {
         DummyView dummy=new DummyView();
         ReversiGame reversiGame =new ReversiGame(dummy, checkerboard);
 
-        reversiGame.getCheckerboard().disksCount();
+        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
+        gameCheckerboard.disksCount();
+
         assertEquals("Black",reversiGame.getWinnerName());
     }
 
