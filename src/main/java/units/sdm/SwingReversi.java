@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
+import static javax.swing.JOptionPane.showConfirmDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class SwingReversi implements ReversiView {
     private Game game;
     private JFrame frame;
@@ -72,7 +75,7 @@ public class SwingReversi implements ReversiView {
         northPanel.add(title);
 
         mainContainer.add(northPanel, BorderLayout.NORTH);
-        
+
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setOpaque(false);
 
@@ -97,7 +100,7 @@ public class SwingReversi implements ReversiView {
                 GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 4, 0, 0), 0, 0));
 
         JTextField playerWhiteName = new JTextField("", 5);
-        playerBlackName.setHorizontalAlignment(SwingConstants.CENTER);
+        playerWhiteName.setHorizontalAlignment(SwingConstants.CENTER);
         playerWhiteName.addActionListener(w -> game.setPlayerWhite(playerWhiteName.getText()));
         centerPanel.add(playerWhiteName, new GridBagConstraints(0, 4, 1, 1, 1.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(4, 4, 4, 4), 0, 0));
@@ -115,7 +118,7 @@ public class SwingReversi implements ReversiView {
         mainContainer.add(centerPanel, BorderLayout.CENTER);
 
         //display window
-        frame.setSize(500, 500);
+        frame.setSize(500, 510);
         frame.setVisible(true);
     }
 
@@ -126,7 +129,7 @@ public class SwingReversi implements ReversiView {
 
         //resize the images to the container size
         int width = mainContainer.getWidth() / Checkerboard.SIZE;
-        int height = mainContainer.getHeight() / Checkerboard.SIZE;
+        int height = (mainContainer.getHeight() - 10) / Checkerboard.SIZE;
         loadScaledImages(width, height);
 
         //reset container
@@ -136,6 +139,14 @@ public class SwingReversi implements ReversiView {
 
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setOpaque(false);
+
+        JPanel northPanel = new JPanel();
+        JLabel turn = new JLabel(game.getCurrentPlayerName() + ", it's your turn!   " +
+                "[W= " + game.getCheckerboard().getNumberOfWhites() + ", B=" + game.getCheckerboard().getNumberOfBlacks() + "]");
+        northPanel.setOpaque(true);
+        northPanel.add(turn);
+        mainContainer.add(northPanel, BorderLayout.NORTH);
+
 
         //draw squares
         for (int row = 0; row < Checkerboard.SIZE; row++)
@@ -165,9 +176,10 @@ public class SwingReversi implements ReversiView {
 
         mainContainer.add(centerPanel, BorderLayout.CENTER);
         frame.revalidate();
+
     }
 
-    private void loadScaledImages(int width, int height){
+    private void loadScaledImages(int width, int height) {
         int fitSize = width;
         if (width > height)
             fitSize = height;
@@ -183,17 +195,28 @@ public class SwingReversi implements ReversiView {
 
     @Override
     public void displayGameOver() {
+        showMessageDialog(null, game.getWinnerName() + " wins!\nWhites: " + game.getCheckerboard().getNumberOfWhites() +
+                "\nBlacks: " + game.getCheckerboard().getNumberOfBlacks(), "Game over", JOptionPane.INFORMATION_MESSAGE);
+
+        System.exit(0);
+
     }
 
     @Override
     public void displayDraw() {
+        showMessageDialog(null, "Draw!");
+
+        System.exit(0);
     }
 
     @Override
     public void displayNoMoves() {
+        showMessageDialog(null, game.getCurrentPlayerName()+", you cannot do any move!", "No moves", JOptionPane.WARNING_MESSAGE);
+        game.nextTurn();
     }
 
     @Override
     public void displayNotAllowed() {
+        showMessageDialog(null, game.getCurrentPlayerName()+", you cannot place here!", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
