@@ -58,6 +58,7 @@ public class SwingReversi implements ReversiView {
     public void displayGameStart() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.setSize(500, 510);
 
         Container mainContainer = frame.getContentPane();
         mainContainer.setLayout(new BorderLayout());
@@ -76,50 +77,57 @@ public class SwingReversi implements ReversiView {
 
         mainContainer.add(northPanel, BorderLayout.NORTH);
 
+        //add small help label
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setOpaque(false);
 
         JLabel label = new JLabel("Please enter player names");
         label.setFont(new Font("Calibri", Font.ITALIC, 10));
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        centerPanel.add(label);
+        centerPanel.add(label, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 5));
 
-        JLabel labelPlayerBlack = new JLabel("Player Black");
-        centerPanel.add(labelPlayerBlack, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 4, 0, 0), 0, 0));
+        //add text fields and labels to get player names
+        JPanel panelNameBlack = getNameQueryPanel("Black");
+        JTextField nameBlack = (JTextField) panelNameBlack.getComponent(1);
+        centerPanel.add(panelNameBlack, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 10));
 
-        JTextField playerBlackName = new JTextField("", 5);
-        playerBlackName.setHorizontalAlignment(SwingConstants.CENTER);
-        playerBlackName.addActionListener(b -> game.setPlayerBlack(playerBlackName.getText()));
-        centerPanel.add(playerBlackName, new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(4, 4, 4, 4), 0, 0));
+        JPanel panelNameWhite = getNameQueryPanel("White");
+        JTextField nameWhite = (JTextField) panelNameWhite.getComponent(1);
+        centerPanel.add(panelNameWhite, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 10));
 
-
-        JLabel labelPlayerWhite = new JLabel("Player White");
-        centerPanel.add(labelPlayerWhite, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 4, 0, 0), 0, 0));
-
-        JTextField playerWhiteName = new JTextField("", 5);
-        playerWhiteName.setHorizontalAlignment(SwingConstants.CENTER);
-        playerWhiteName.addActionListener(w -> game.setPlayerWhite(playerWhiteName.getText()));
-        centerPanel.add(playerWhiteName, new GridBagConstraints(0, 4, 1, 1, 1.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(4, 4, 4, 4), 0, 0));
-
+        mainContainer.add(centerPanel, BorderLayout.CENTER);
 
         //add button to start the game
         JButton startGameButton = new JButton("Start the game!");
         startGameButton.setHorizontalAlignment(SwingConstants.CENTER);
         startGameButton.addActionListener(s -> game.turn());
+        startGameButton.addActionListener(s -> game.setPlayerBlack(nameBlack.getText()));
+        startGameButton.addActionListener(s -> game.setPlayerWhite(nameWhite.getText()));
 
         mainContainer.add(startGameButton, BorderLayout.SOUTH);
-
-        mainContainer.add(startGameButton, BorderLayout.SOUTH);
-        mainContainer.add(northPanel, BorderLayout.NORTH);
-        mainContainer.add(centerPanel, BorderLayout.CENTER);
 
         //display window
-        frame.setSize(500, 510);
         frame.setVisible(true);
+    }
+
+    private JPanel getNameQueryPanel(String player) {
+        JPanel namePanel = new JPanel(new GridBagLayout());
+        namePanel.setOpaque(false);
+
+        JLabel labelPlayerName = new JLabel("Player " + player);
+        namePanel.add(labelPlayerName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), frame.getWidth() / 3, 0));
+
+        JTextField txtFieldPlayerName = new JTextField("", 5);
+        txtFieldPlayerName.setHorizontalAlignment(SwingConstants.CENTER);
+
+        namePanel.add(txtFieldPlayerName, new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), frame.getWidth() / 3, 0));
+
+        return namePanel;
     }
 
     @Override
@@ -206,17 +214,17 @@ public class SwingReversi implements ReversiView {
     public void displayDraw() {
         showMessageDialog(null, "Draw!");
 
-        System.exit(0);
+        frame.dispose();
     }
 
     @Override
     public void displayNoMoves() {
-        showMessageDialog(null, game.getCurrentPlayerName()+", you cannot do any move!", "No moves", JOptionPane.WARNING_MESSAGE);
+        showMessageDialog(null, game.getCurrentPlayerName() + ", you cannot do any move!", "No moves", JOptionPane.WARNING_MESSAGE);
         game.nextTurn();
     }
 
     @Override
     public void displayNotAllowed() {
-        showMessageDialog(null, game.getCurrentPlayerName()+", you cannot place here!", "Error", JOptionPane.ERROR_MESSAGE);
+        showMessageDialog(null, game.getCurrentPlayerName() + ", you cannot place here!", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
