@@ -11,6 +11,7 @@ class ReversiGameTest {
     private static final int A = Checkerboard.A;
 
     public class DummyView implements ReversiView {
+        public String invokes;
 
         @Override
         public void installLogic(Game reversiGame) {
@@ -29,42 +30,27 @@ class ReversiGameTest {
 
         @Override
         public void displayGameOver() {
-            return;
+            invokes = "displayGameOver";
         }
 
         @Override
         public void displayNoMoves() {
-            return;
+            invokes = "displayNoMoves";
         }
 
         @Override
         public void displayNotAllowed() {
-            return;
+            invokes = "displayNotAllowed";
         }
 
         @Override
-        public void displayDraw() {}
+        public void displayDraw() {
+            invokes = "displayDraw";
+        }
     }
 
     @Test
-    void endGameFull() {
-
-        int[][] GameOverFull = {{W, W, W, B, B, B, B, B},
-                {W, W, W, W, W, W, W, B},
-                {W, W, W, W, W, W, W, W},
-                {W, W, W, W, W, B, W, B},
-                {W, W, W, W, B, W, B, B},
-                {W, W, B, B, B, B, B, B},
-                {W, B, B, W, W, W, W, B},
-                {B, B, B, W, W, W, W, B}};
-
-        Checkerboard checkerboard = new Checkerboard(GameOverFull);
-        assertTrue(checkerboard.gameOver());
-
-    }
-
-    @Test
-    void setPlayerWhite(){
+    void setPlayerWhite() {
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy);
@@ -76,7 +62,7 @@ class ReversiGameTest {
     }
 
     @Test
-    void setPlayerBlack(){
+    void setPlayerBlack() {
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy);
@@ -85,28 +71,6 @@ class ReversiGameTest {
 
         assertEquals("Player2", reversiGame.getPlayerBlack());
 
-    }
-
-    @Test
-    void endGame() {
-
-        int[][] GameOverNotFull = {{W, W, W, W, W, W, W, W},
-                {W, W, W, W, W, W, W, W},
-                {W, W, W, W, W, W, W, W},
-                {W, W, W, W, W, W, W, N},
-                {W, W, W, W, W, W, N, N},
-                {W, W, W, W, W, W, N, B},
-                {W, W, W, W, W, W, W, N},
-                {W, W, W, W, W, W, W, W}};
-
-        Checkerboard checkerboard = new Checkerboard(GameOverNotFull);
-        assertTrue(checkerboard.gameOver());
-    }
-
-    @Test
-    void endGameFalse() {
-        Checkerboard checkerboard = new Checkerboard();
-        assertFalse(checkerboard.gameOver());
     }
 
     @Test
@@ -204,21 +168,21 @@ class ReversiGameTest {
     }
 
     @Test
-    void getWhiteWinnerName(){
+    void getWhiteWinnerName() {
 
-        Checkerboard checkerboard=new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
-        DummyView dummy=new DummyView();
-        ReversiGame reversiGame =new ReversiGame(dummy, checkerboard);
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
         Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
         gameCheckerboard.disksCount();
 
-        assertEquals("White",reversiGame.getWinnerName());
+        assertEquals("White", reversiGame.getWinnerName());
     }
 
     @Test
-    void getBlackWinnerName(){
+    void getBlackWinnerName() {
 
         int[][] grid = {{W, W, W, W, W, W, W, W},
                 {W, W, W, W, W, W, W, W},
@@ -229,15 +193,75 @@ class ReversiGameTest {
                 {W, W, W, W, B, B, B, B},
                 {B, B, B, B, W, W, W, W}};
 
-        Checkerboard checkerboard=new Checkerboard(grid);
+        Checkerboard checkerboard = new Checkerboard(grid);
 
-        DummyView dummy=new DummyView();
-        ReversiGame reversiGame =new ReversiGame(dummy, checkerboard);
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
         Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
         gameCheckerboard.disksCount();
 
-        assertEquals("Black",reversiGame.getWinnerName());
+        assertEquals("Black", reversiGame.getWinnerName());
+    }
+
+    @Test
+    void turnGameOver() {
+        int[][] fullMatrix = {{W, W, W, B, B, B, B, B},
+                {W, W, W, W, W, W, W, B},
+                {W, W, B, W, W, W, W, W},
+                {W, W, W, W, W, B, W, B},
+                {W, W, W, W, B, W, B, B},
+                {W, W, B, B, B, B, B, B},
+                {W, B, B, W, W, W, W, B},
+                {B, B, B, W, W, W, W, B}};
+
+        Checkerboard checkerboard = new Checkerboard(fullMatrix);
+
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
+        reversiGame.turn();
+
+        assertEquals("displayGameOver", dummy.invokes);
+    }
+
+    @Test
+    void turnDraw() {
+        int[][] drawMatrix = {{W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, W, W, W},
+                {B, B, B, B, B, B, B, B},
+                {B, B, B, B, B, B, B, B},
+                {B, B, B, B, B, B, B, B},
+                {W, W, W, W, B, B, B, B},
+                {B, B, B, B, W, W, W, W}};
+
+        Checkerboard checkerboard = new Checkerboard(drawMatrix);
+
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
+        reversiGame.turn();
+
+        assertEquals("displayDraw", dummy.invokes);
+    }
+
+    @Test
+    void turnNoMoves() {
+        int[][] blackNoMovesMatrix = {{W, W, B, B, B, B, B, B},
+                {W, W, W, W, W, W, W, B},
+                {W, W, W, W, B, B, W, B},
+                {B, W, B, W, W, W, W, B},
+                {B, W, B, W, W, W, W, W},
+                {B, W, B, W, B, W, W, B},
+                {W, W, W, W, W, W, W, N},
+                {B, B, B, B, B, B, B, N}};
+
+        Checkerboard checkerboard = new Checkerboard(blackNoMovesMatrix);
+
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
+        reversiGame.turn();
+
+        assertEquals("displayNoMoves", dummy.invokes);
     }
 
 }

@@ -65,6 +65,8 @@ public class ReversiGame implements Game {
 
     @Override
     public void turn() {
+        checkerboard.disksCount();
+
         if (checkerboard.gameOver()) {
             if (isDraw())
                 view.displayDraw();

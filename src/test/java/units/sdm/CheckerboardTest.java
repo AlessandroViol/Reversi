@@ -249,7 +249,7 @@ class CheckerboardTest {
     //the method existAllowPlace should return false if the white player doesn't have any allowed placing
     @Test
     void whiteHasNoAllowedPlacings() {
-        int[][] noPlaces = {{B, B, B, B, B, B, B, B},
+        int[][] whiteHasNoPlaces = {{B, B, B, B, B, B, B, B},
                 {W, W, W, W, W, W, W, B},
                 {W, W, B, W, B, B, W, B},
                 {B, W, B, B, W, W, W, B},
@@ -257,7 +257,7 @@ class CheckerboardTest {
                 {B, W, B, W, B, W, W, B},
                 {W, B, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(noPlaces);
+        Checkerboard checkerboard = new Checkerboard(whiteHasNoPlaces);
 
         assertFalse(checkerboard.existAllowedPlace(W));
     }
@@ -265,7 +265,7 @@ class CheckerboardTest {
     //the method existAllowPlace should return true if the white player have any allowed placing
     @Test
     void whiteHasAllowedPlacings() {
-        int[][] noPlaces = {{B, B, B, B, B, B, B, W},
+        int[][] whiteHasPlaces = {{B, B, B, B, B, B, B, W},
                 {W, W, W, W, W, W, W, B},
                 {W, W, B, W, B, B, W, B},
                 {B, W, B, B, W, W, W, B},
@@ -273,7 +273,7 @@ class CheckerboardTest {
                 {B, W, B, W, B, W, W, B},
                 {W, B, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(noPlaces);
+        Checkerboard checkerboard = new Checkerboard(whiteHasPlaces);
 
         assertTrue(checkerboard.existAllowedPlace(W));
     }
@@ -281,7 +281,7 @@ class CheckerboardTest {
     //the method existAllowPlace should return false if the black player doesn't have any allowed placing
     @Test
     void blackHasNoAllowedPlacings() {
-        int[][] noPlaces = {{W, W, B, B, B, B, B, B},
+        int[][] blackHasNoPlaces = {{W, W, B, B, B, B, B, B},
                 {W, W, W, W, W, W, W, B},
                 {W, W, W, W, B, B, W, B},
                 {B, W, B, W, W, W, W, B},
@@ -289,7 +289,7 @@ class CheckerboardTest {
                 {B, W, B, W, B, W, W, B},
                 {W, W, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(noPlaces);
+        Checkerboard checkerboard = new Checkerboard(blackHasNoPlaces);
 
         assertFalse(checkerboard.existAllowedPlace(B));
     }
@@ -297,7 +297,7 @@ class CheckerboardTest {
     //the method existAllowPlace should return true if the black player have any allowed placing
     @Test
     void blackHasAllowedPlacings() {
-        int[][] noPlaces = {{B, B, B, B, B, B, B, B},
+        int[][] blackHasPlaces = {{B, B, B, B, B, B, B, B},
                 {W, W, W, W, W, W, W, B},
                 {W, W, B, W, B, B, W, B},
                 {B, W, B, B, W, W, W, B},
@@ -305,9 +305,81 @@ class CheckerboardTest {
                 {B, W, B, W, B, W, W, B},
                 {W, B, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(noPlaces);
+        Checkerboard checkerboard = new Checkerboard(blackHasPlaces);
 
         assertTrue(checkerboard.existAllowedPlace(B));
+    }
+
+    //if the checkerboard is full then both players have no available placings gameOver should return true
+    @Test
+    void endGameFullCheckerboard() {
+        int[][] fullMatrix = {{W, W, W, B, B, B, B, B},
+                {W, W, W, W, W, W, W, B},
+                {W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, B, W, B},
+                {W, W, W, W, B, W, B, B},
+                {W, W, B, B, B, B, B, B},
+                {W, B, B, W, W, W, W, B},
+                {B, B, B, W, W, W, W, B}};
+        Checkerboard checkerboard = new Checkerboard(fullMatrix);
+
+        assertTrue(checkerboard.gameOver());
+    }
+
+    //if both players have no available placings gameOver should return true
+    @Test
+    void endGameNoAllowedPlace() {
+        int[][] notFullMatrix = {{W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, W, W, N},
+                {W, W, W, W, W, W, N, N},
+                {W, W, W, W, W, W, N, B},
+                {W, W, W, W, W, W, W, N},
+                {W, W, W, W, W, W, W, W}};
+        Checkerboard checkerboard = new Checkerboard(notFullMatrix);
+
+        assertTrue(checkerboard.gameOver());
+    }
+
+    //if both players have available moves gameOver should return false
+    @Test
+    void endGameBothHaveAllowedPlaces() {
+        Checkerboard checkerboard = new Checkerboard();
+
+        assertFalse(checkerboard.gameOver());
+    }
+
+    //if white player has available placings gameOver should return false
+    @Test
+    void endGameWhiteHasAllowedPlace() {
+        int[][] whiteHasAPMatrix = {{B, B, B, B, B, B, B, W},
+                {W, W, W, W, W, W, W, B},
+                {W, W, B, W, B, B, W, B},
+                {B, W, B, B, W, W, W, B},
+                {B, W, B, W, W, B, W, B},
+                {B, W, B, W, B, W, W, B},
+                {W, B, W, W, W, W, W, N},
+                {B, B, B, B, B, B, B, N}};
+        Checkerboard checkerboard = new Checkerboard(whiteHasAPMatrix);
+
+        assertFalse(checkerboard.gameOver());
+    }
+
+    //if black player has available placings gameOver should return false
+    @Test
+    void endGameBlackHasAllowedPlace() {
+        int[][] blackHasAPMatrix = {{B, B, B, B, B, B, B, B},
+                {W, W, W, W, W, W, W, B},
+                {W, W, B, W, B, B, W, B},
+                {B, W, B, B, W, W, W, B},
+                {B, W, B, W, W, B, W, B},
+                {B, W, B, W, B, W, W, B},
+                {W, B, W, W, W, W, W, N},
+                {B, B, B, B, B, B, B, N}};
+        Checkerboard checkerboard = new Checkerboard(blackHasAPMatrix);
+
+        assertFalse(checkerboard.gameOver());
     }
 
     //the updateCheckerboard method should be able to swap the color of the disks in an allowed direction
