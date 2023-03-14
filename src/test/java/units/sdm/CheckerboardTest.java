@@ -28,6 +28,28 @@ class CheckerboardTest {
         assertArrayEquals(referenceCheckerboard, checkerboard.getMatrix());
     }
 
+    //the zero arguments constructor should initialize the black disk counter
+    @Test
+    void createDefaultCheckerboardCountBlack() {
+        Checkerboard checkerboard = new Checkerboard();
+        int expectedNBlacks = 2;
+
+        int nBlacks = checkerboard.getNumberOfBlacks();
+
+        assertEquals(expectedNBlacks, nBlacks);
+    }
+
+    //the zero arguments constructor should initialize the white disk counter
+    @Test
+    void createDefaultCheckerboardCountWhite() {
+        Checkerboard checkerboard = new Checkerboard();
+        int expectedNWhite = 2;
+
+        int nWhite = checkerboard.getNumberOfBlacks();
+
+        assertEquals(expectedNWhite, nWhite);
+    }
+
     //the one argument constructor should set the checkerboard matrix be a copy of the provided one
     @Test
     void createComplexCheckerboard() {
@@ -90,8 +112,6 @@ class CheckerboardTest {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         int numBlacks = 8;
 
-        checkerboard.disksCount();
-
         assertEquals(numBlacks, checkerboard.getNumberOfBlacks());
     }
 
@@ -100,8 +120,6 @@ class CheckerboardTest {
     void disksCountWhite() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         int numWhites = 29;
-
-        checkerboard.disksCount();
 
         assertEquals(numWhites, checkerboard.getNumberOfWhites());
     }
@@ -246,6 +264,36 @@ class CheckerboardTest {
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
     }
 
+    //the place method should update the number of disks when a disk is placed
+    @Test
+    void placeUpdateDisks() {
+        Checkerboard checkerboard = new Checkerboard();
+        int initialNBlacks = checkerboard.getNumberOfBlacks();
+        int initialNWhites = checkerboard.getNumberOfWhites();
+
+        checkerboard.place(2, 3, B);
+
+        int finalNBlacks = checkerboard.getNumberOfBlacks();
+        int finalNWhites = checkerboard.getNumberOfWhites();
+
+        assertNotEquals(initialNBlacks, finalNBlacks);
+        assertNotEquals(initialNWhites, finalNWhites);
+    }
+
+    //the place method should update the number of disks when a disk is placed
+    @Test
+    void placeUpdateDisksToExpectedValues() {
+        Checkerboard checkerboard = new Checkerboard();
+
+        checkerboard.place(2, 3, B);
+
+        int nBlacks = checkerboard.getNumberOfBlacks();
+        int nWhites = checkerboard.getNumberOfWhites();
+
+        assertEquals(4, nBlacks);
+        assertEquals(1, nWhites);
+    }
+
     //the method existAllowPlace should return false if the white player doesn't have any allowed placing
     @Test
     void whiteHasNoAllowedPlacings() {
@@ -382,33 +430,6 @@ class CheckerboardTest {
         assertFalse(checkerboard.gameOver());
     }
 
-    //the updateCheckerboard method should be able to swap the color of the disks in an allowed direction
-    @Test
-    void updateCheckerboard() {
-        int[][] checkerboardMatrix = {{N, N, W, W, W, W, W, W},
-                {N, N, B, W, W, W, W, W},
-                {N, N, N, W, W, W, W, B},
-                {N, N, W, W, W, W, W, N},
-                {B, B, W, W, B, B, W, W},
-                {N, W, B, W, N, N, W, N},
-                {W, N, N, B, N, N, W, N},
-                {N, N, N, N, B, N, N, N}};
-        Checkerboard checkerboard = new Checkerboard(checkerboardMatrix);
-
-        int[][] referenceCheckerboard = {{N, N, W, W, W, W, W, W},
-                {N, N, B, W, W, W, W, W},
-                {N, N, N, W, W, W, W, B},
-                {N, N, W, W, W, W, B, N},
-                {B, B, W, W, B, B, W, W},
-                {N, W, B, W, N, N, W, N},
-                {W, N, N, B, N, N, W, N},
-                {N, N, N, N, B, N, N, N}};
-
-        checkerboard.updateCheckerboard(2, 7, B);
-
-        assertArrayEquals(referenceCheckerboard, checkerboard.getMatrix());
-    }
-
     //the removeAllowedDisks method should remove the marks of allowed placings
     @Test
     void removeAllowedDisks() {
@@ -418,7 +439,7 @@ class CheckerboardTest {
         assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD, checkerboard.getMatrix());
     }
 
-    //the toString method should return the string representation of the default checherboard matrix as expected
+    //the toString method should return the string representation of the default checkerboard matrix as expected
     @Test
     void defaultCheckerboardToString() {
         Checkerboard checkerboard = new Checkerboard();
@@ -437,7 +458,7 @@ class CheckerboardTest {
     }
 
 
-    //the toString method should return the string representation of the default checherboard matrix with allowed placings as expected
+    //the toString method should return the string representation of the default checkerboard matrix with allowed placings as expected
     @Test
     void defaultCheckerboardAllowedPlaceToString() {
         Checkerboard checkerboard = new Checkerboard();
@@ -455,5 +476,88 @@ class CheckerboardTest {
         checkerboard.addAllowedDisks(B);
 
         assertEquals(referenceString, checkerboard.toString());
+    }
+
+    //check that the constructor throws an InvalidSquareValueException when there is an illegal value for a checkerboard square
+    @Test
+    void constructorThrowsException() {
+        int[][] checkerboardMatrix = {{0, 1, 2, -1, 10000, W, W, W},
+                {N, N, B, W, W, W, W, W},
+                {N, N, N, W, W, W, W, B},
+                {N, N, W, W, W, W, W, N},
+                {B, B, W, W, B, B, W, W},
+                {N, W, B, W, N, N, W, N},
+                {W, N, N, B, N, N, W, N},
+                {N, N, N, N, B, N, N, N}};
+
+        boolean throwedExc = false;
+
+        try {
+            Checkerboard checkerboard = new Checkerboard(checkerboardMatrix);
+        } catch (Checkerboard.InvalidSquareValueException e) {
+            throwedExc = true;
+        }
+
+        assertTrue(throwedExc);
+    }
+
+    //check that the place method throws an InvalidColourValueException when an illegal colour is passed
+    @Test
+    void placeThrowsException() {
+        boolean throwedExc = false;
+        Checkerboard checkerboard = new Checkerboard();
+
+        try {
+            checkerboard.place(2, 3, 0);
+        } catch (Checkerboard.InvalidColourValueException e) {
+            throwedExc = true;
+        }
+
+        assertTrue(throwedExc);
+    }
+
+    //check that the allowPlace method throws an InvalidColourValueException when an illegal colour is passed
+    @Test
+    void allowPlaceThrowsException() {
+        boolean throwedExc = false;
+        Checkerboard checkerboard = new Checkerboard();
+
+        try {
+            checkerboard.allowPlace(2, 3, 0);
+        } catch (Checkerboard.InvalidColourValueException e) {
+            throwedExc = true;
+        }
+
+        assertTrue(throwedExc);
+    }
+
+    //check that the existAllowedPlace method throws an InvalidColourValueException when an illegal colour is passed
+    @Test
+    void existAllowedPlaceThrowsException() {
+        boolean throwedExc = false;
+        Checkerboard checkerboard = new Checkerboard();
+
+        try {
+            checkerboard.existAllowedPlace(0);
+        } catch (Checkerboard.InvalidColourValueException e) {
+            throwedExc = true;
+        }
+
+        assertTrue(throwedExc);
+    }
+
+    //check that the addAllowedDisks method throws an InvalidColourValueException when an illegal colour is passed
+    @Test
+    void addAllowedDisksThrowsException() {
+        boolean throwedExc = false;
+        Checkerboard checkerboard = new Checkerboard();
+
+        try {
+            checkerboard.addAllowedDisks(0);
+        } catch (Checkerboard.InvalidColourValueException e) {
+            throwedExc = true;
+        }
+
+        assertTrue(throwedExc);
     }
 }

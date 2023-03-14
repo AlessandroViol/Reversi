@@ -7,9 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.GenericArrayType;
 
-import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class SwingReversi implements ReversiView {
@@ -95,7 +93,7 @@ public class SwingReversi implements ReversiView {
             bottomLImg = ImageIO.read(file);
 
         } catch (IOException ie) {
-            ie.printStackTrace();
+            System.err.println("Couldn't open an image file");
         }
     }
 

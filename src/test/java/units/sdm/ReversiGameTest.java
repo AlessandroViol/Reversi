@@ -2,6 +2,9 @@ package units.sdm;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReversiGameTest {
@@ -11,74 +14,98 @@ class ReversiGameTest {
     private static final int A = Checkerboard.A;
 
     public class DummyView implements ReversiView {
-        public String invokes;
+        public String called;
+        public List<String> traceback = new ArrayList<String>();
 
         @Override
         public void installLogic(Game reversiGame) {
-            return;
+            called = "installLogic";
+            traceback.add(called);
         }
 
         @Override
         public void show() {
-            return;
+            called = "show";
+            traceback.add(called);
         }
 
         @Override
         public void displayTurn() {
-            return;
+            called = "displayTurn";
+            traceback.add(called);
         }
 
         @Override
         public void displayGameOver() {
-            invokes = "displayGameOver";
+            called = "displayGameOver";
+            traceback.add(called);
         }
 
         @Override
         public void displayNoMoves() {
-            invokes = "displayNoMoves";
+            called = "displayNoMoves";
+            traceback.add(called);
         }
 
         @Override
         public void displayNotAllowed() {
-            invokes = "displayNotAllowed";
+            called = "displayNotAllowed";
+            traceback.add(called);
         }
 
         @Override
         public void displayDraw() {
-            invokes = "displayDraw";
+            called = "displayDraw";
+            traceback.add(called);
         }
     }
 
     @Test
-    void setPlayerWhite() {
-
+    void setPlayerWhiteName() {
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy);
 
         reversiGame.setPlayerWhite("Player1");
 
         assertEquals("Player1", reversiGame.getPlayerWhite());
-
     }
 
     @Test
-    void setPlayerBlack() {
+    void setPlayerWhiteNameToEmpty() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
 
+        reversiGame.setPlayerWhite("");
+
+        assertEquals("White", reversiGame.getPlayerWhite());
+    }
+
+    @Test
+    void setPlayerBlackName() {
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy);
 
         reversiGame.setPlayerBlack("Player2");
 
         assertEquals("Player2", reversiGame.getPlayerBlack());
+    }
 
+    @Test
+    void setPlayerBlackNameToEmpty() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.setPlayerBlack("");
+
+        assertEquals("Black", reversiGame.getPlayerBlack());
     }
 
     @Test
     void tryPlaceAllowed() {
-
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
-        int[][] referenceCheckerboard = {{N, N, W, W, W, W, W, W},
+        int[][] referenceCheckerboard = {
+                {N, N, W, W, W, W, W, W},
                 {N, N, B, W, W, W, W, W},
                 {N, N, N, W, W, W, W, B},
                 {N, N, W, W, W, W, B, N},
@@ -95,12 +122,10 @@ class ReversiGameTest {
         gameCheckerboard.removeAllowedDisks();
 
         assertArrayEquals(referenceCheckerboard, gameCheckerboard.getMatrix());
-
     }
 
     @Test
-    void tryPlaceNotAllowed() {
-
+    void tryPlaceOccupied() {
         Checkerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
@@ -111,22 +136,78 @@ class ReversiGameTest {
         checkerboard.removeAllowedDisks();
 
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
-
     }
 
     @Test
     void tryPlaceOutOfGrid() {
-
         Checkerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, referenceCheckerboard);
 
-        reversiGame.tryPlace(-1, 9);
+        reversiGame.tryPlace(0, 9);
+        reversiGame.tryPlace(9, 0);
+        reversiGame.tryPlace(0, -1);
+        reversiGame.tryPlace(-1, 0);
+
+        reversiGame.tryPlace(9, 9);
+        reversiGame.tryPlace(-1, -1);
+
         Checkerboard checkerboard = reversiGame.getCheckerboard();
         checkerboard.removeAllowedDisks();
 
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
+    }
+
+    @Test
+    void tryPlaceNotAllowed() {
+        Checkerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy, referenceCheckerboard);
+
+        reversiGame.tryPlace(0, 0);
+        Checkerboard checkerboard = reversiGame.getCheckerboard();
+        checkerboard.removeAllowedDisks();
+
+        assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
+    }
+
+    @Test
+    void getCurrentPlayerBlack() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.start();
+        reversiGame.turn();
+
+        assertEquals("Black", reversiGame.getCurrentPlayerName());
+    }
+
+    @Test
+    void getCurrentPlayerWhite() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.start();
+        reversiGame.turn();
+        reversiGame.nextTurn();
+
+        assertEquals("White", reversiGame.getCurrentPlayerName());
+    }
+
+    @Test
+    void nextTurnChangePlayer() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.start();
+        reversiGame.turn();
+        String initialPlayer = reversiGame.getCurrentPlayerName();
+        reversiGame.nextTurn();
+        String nextPlayer = reversiGame.getCurrentPlayerName();
+
+        assertNotEquals(initialPlayer, nextPlayer);
     }
 
     @Test
@@ -146,9 +227,6 @@ class ReversiGameTest {
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
-        gameCheckerboard.disksCount();
-
         assertTrue(reversiGame.isDraw());
     }
 
@@ -159,9 +237,6 @@ class ReversiGameTest {
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
-
-        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
-        gameCheckerboard.disksCount();
 
         assertFalse(reversiGame.isDraw());
 
@@ -174,9 +249,6 @@ class ReversiGameTest {
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
-
-        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
-        gameCheckerboard.disksCount();
 
         assertEquals("White", reversiGame.getWinnerName());
     }
@@ -198,10 +270,17 @@ class ReversiGameTest {
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
-        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
-        gameCheckerboard.disksCount();
-
         assertEquals("Black", reversiGame.getWinnerName());
+    }
+
+    @Test
+    void startCallsShow() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.start();
+
+        assertEquals("show", dummy.called);
     }
 
     @Test
@@ -221,7 +300,7 @@ class ReversiGameTest {
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
         reversiGame.turn();
 
-        assertEquals("displayGameOver", dummy.invokes);
+        assertEquals("displayGameOver", dummy.called);
     }
 
     @Test
@@ -241,7 +320,7 @@ class ReversiGameTest {
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
         reversiGame.turn();
 
-        assertEquals("displayDraw", dummy.invokes);
+        assertEquals("displayDraw", dummy.called);
     }
 
     @Test
@@ -261,7 +340,66 @@ class ReversiGameTest {
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
         reversiGame.turn();
 
-        assertEquals("displayNoMoves", dummy.invokes);
+        assertEquals("displayNoMoves", dummy.called);
     }
 
+    @Test
+    void turnPlayed() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.turn();
+
+        assertEquals("displayTurn", dummy.called);
+    }
+
+    @Test
+    void turnAddsAllowed() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.turn();
+
+        assertEquals("displayTurn", dummy.called);
+    }
+
+    @Test
+    void validateAndTryPlaceEmptyRow() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.validateAndTryPlace("", "A");
+
+        assertEquals("displayNotAllowed", dummy.called);
+    }
+
+    @Test
+    void validateAndTryPlaceWrongRowFormat() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.validateAndTryPlace("TEST", "A");
+
+        assertEquals("displayNotAllowed", dummy.called);
+    }
+
+    @Test
+    void validateAndTryPlaceEmptyColumn() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.validateAndTryPlace("1", "");
+
+        assertEquals("displayNotAllowed", dummy.called);
+    }
+
+    @Test
+    void validateAndTryPlaceWrongColumnFormat() {
+        DummyView dummy = new DummyView();
+        ReversiGame reversiGame = new ReversiGame(dummy);
+
+        reversiGame.validateAndTryPlace("1", "TEST");
+
+        assertEquals("displayNotAllowed", dummy.called);
+    }
 }

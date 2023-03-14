@@ -65,8 +65,6 @@ public class ReversiGame implements Game {
 
     @Override
     public void turn() {
-        checkerboard.disksCount();
-
         if (checkerboard.gameOver()) {
             if (isDraw())
                 view.displayDraw();
@@ -86,7 +84,6 @@ public class ReversiGame implements Game {
     public void tryPlace(int x, int y) {
         if (x >= 0 && x < Checkerboard.SIZE && y >= 0 && y < Checkerboard.SIZE && checkerboard.allowPlace(x, y, colourTurn)) {
             checkerboard.place(x, y, colourTurn);
-            checkerboard.disksCount();
             nextTurn();
         } else
             view.displayNotAllowed();
@@ -123,14 +120,20 @@ public class ReversiGame implements Game {
     @Override
     public void validateAndTryPlace(String row, String column) {
         int rowIndex;
+        int columnIndex;
+
         try {
             rowIndex = Integer.parseInt(row) - 1;
         } catch (NumberFormatException ex) {
             view.displayNotAllowed();
             return;
         }
-        int columnIndex = column.toUpperCase().toCharArray()[0] - 65;
 
-        tryPlace(rowIndex, columnIndex);
+        if (column.length() > 0) {
+            columnIndex = column.toUpperCase().toCharArray()[0] - 65;
+            tryPlace(rowIndex, columnIndex);
+        }
+        else
+            view.displayNotAllowed();
     }
 }

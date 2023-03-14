@@ -22,11 +22,14 @@ public class Checkerboard {
         matrix[4][3] = B;
         matrix[3][4] = B;
         matrix[4][4] = W;
+
+        this.disksCount();
     }
 
     //one argument constructor that copies the matrix of a given checkerboard
     public Checkerboard(int[][] matrix) throws InvalidSquareValueException {
         this.matrix = new int[SIZE][SIZE];
+
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 int squareVal = matrix[i][j];
@@ -36,6 +39,8 @@ public class Checkerboard {
                     this.matrix[i][j] = squareVal;
             }
         }
+
+        this.disksCount();
     }
 
     //declare 2 exception for unexpected values for the checkerboard cells
@@ -73,7 +78,7 @@ public class Checkerboard {
     }
 
     //computes if a piece of the provided color can be placed in the specified square of the checkerboard
-    public boolean allowPlace(int posX, int posY, int colorTurn) {
+    public boolean allowPlace(int posX, int posY, int colorTurn) throws InvalidColourValueException{
         validateColour(colorTurn);
 
         boolean isOppositeColor;
@@ -106,7 +111,7 @@ public class Checkerboard {
     }
 
     //check if in the specified direction there is a contiguous line of disks of the same color terminating with a disk of the opposite color
-    private boolean checkDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) {
+    private boolean checkDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) throws InvalidColourValueException {
         validateColour(colourTurn);
 
         while (posX + offsetX >= 0 && posX + offsetX < SIZE && posY + offsetY >= 0 && posY + offsetY < SIZE) {
@@ -124,17 +129,18 @@ public class Checkerboard {
     }
 
     //if the specified placement is allowed then place the disk and update the checkerboard
-    protected void place(int posX, int posY, int colourTurn) {
+    public void place(int posX, int posY, int colourTurn) throws InvalidColourValueException {
         validateColour(colourTurn);
 
         if (allowPlace(posX, posY, colourTurn)) {
             matrix[posX][posY] = colourTurn;
             updateCheckerboard(posX, posY, colourTurn);
+            disksCount();
         }
     }
 
     //after a placement swap the color of all the adjacent disks of all the allowed lines
-    protected void updateCheckerboard(int posX, int posY, int colourTurn) {
+    private void updateCheckerboard(int posX, int posY, int colourTurn) throws InvalidColourValueException {
         validateColour(colourTurn);
 
         boolean isOppositeColor;
@@ -152,7 +158,7 @@ public class Checkerboard {
                 }
     }
 
-    private void swapAlongDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn){
+    private void swapAlongDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) throws InvalidColourValueException {
         validateColour(colourTurn);
 
         while (matrix[posX + offsetX][posY + offsetY] == -colourTurn) {
@@ -164,7 +170,7 @@ public class Checkerboard {
 
 
     //return true if there is at least one possible move for the player, return false otherwise
-    public boolean existAllowedPlace(int colourTurn) {
+    public boolean existAllowedPlace(int colourTurn) throws InvalidColourValueException {
         validateColour(colourTurn);
 
         for (int i = 0; i < SIZE; i++) {
@@ -178,8 +184,7 @@ public class Checkerboard {
     }
 
     //refresh the counter of the placed disks of each color
-    public void disksCount() {
-
+    private void disksCount() {
         numberOfBlacks = 0;
         numberOfWhites = 0;
 
@@ -195,7 +200,7 @@ public class Checkerboard {
     }
 
     //marks all the allowed squares for a disk color on the checkerboard
-    protected void addAllowedDisks(int colourTurn) {
+    public void addAllowedDisks(int colourTurn) throws InvalidColourValueException {
         validateColour(colourTurn);
 
         for (int i = 0; i < SIZE; i++) {
@@ -208,11 +213,11 @@ public class Checkerboard {
     }
 
     //removes the marking of all the allowed squares
-    protected void removeAllowedDisks() {
+    public void removeAllowedDisks() {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
-                if (matrix[i][j] == A) matrix[i][j] = N;
-
+                if (matrix[i][j] == A)
+                    matrix[i][j] = N;
     }
 
     //return true if neither players have available placings and false otherwise
