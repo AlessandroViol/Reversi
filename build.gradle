@@ -35,3 +35,11 @@ jar {
 application {
     mainClass = 'units.sdm.Main'
 }
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/img"
+        }
+    }
+}
