@@ -119,7 +119,7 @@ class ReversiGameTest {
 
         reversiGame.tryPlace(2, 7);
         Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
-        gameCheckerboard.removeAllowedDisks();
+        gameCheckerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(referenceCheckerboard, gameCheckerboard.getMatrix());
     }
@@ -133,7 +133,7 @@ class ReversiGameTest {
 
         reversiGame.tryPlace(0, 2);
         Checkerboard checkerboard = reversiGame.getCheckerboard();
-        checkerboard.removeAllowedDisks();
+        checkerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
     }
@@ -154,7 +154,7 @@ class ReversiGameTest {
         reversiGame.tryPlace(-1, -1);
 
         Checkerboard checkerboard = reversiGame.getCheckerboard();
-        checkerboard.removeAllowedDisks();
+        checkerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
     }
@@ -168,7 +168,7 @@ class ReversiGameTest {
 
         reversiGame.tryPlace(0, 0);
         Checkerboard checkerboard = reversiGame.getCheckerboard();
-        checkerboard.removeAllowedDisks();
+        checkerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
     }

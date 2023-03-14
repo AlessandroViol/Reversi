@@ -5,13 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CheckerboardTest {
-    //define some shorthand constants
     private static final int B = Checkerboard.B;
     private static final int W = Checkerboard.W;
     private static final int N = Checkerboard.N;
     private static final int A = Checkerboard.A;
 
-    //the zero arguments constructor should set the checkerboard matrix to the starting reversi layout
     @Test
     void createDefaultCheckerboard() {
         Checkerboard checkerboard = new Checkerboard();
@@ -28,7 +26,6 @@ class CheckerboardTest {
         assertArrayEquals(referenceCheckerboard, checkerboard.getMatrix());
     }
 
-    //the zero arguments constructor should initialize the black disk counter
     @Test
     void createDefaultCheckerboardCountBlack() {
         Checkerboard checkerboard = new Checkerboard();
@@ -39,7 +36,6 @@ class CheckerboardTest {
         assertEquals(expectedNBlacks, nBlacks);
     }
 
-    //the zero arguments constructor should initialize the white disk counter
     @Test
     void createDefaultCheckerboardCountWhite() {
         Checkerboard checkerboard = new Checkerboard();
@@ -50,7 +46,6 @@ class CheckerboardTest {
         assertEquals(expectedNWhite, nWhite);
     }
 
-    //the one argument constructor should set the checkerboard matrix be a copy of the provided one
     @Test
     void createComplexCheckerboard() {
         int[][] referenceCheckerboard = {{W, W, B, W, N, N, N, W},
@@ -67,23 +62,21 @@ class CheckerboardTest {
         assertArrayEquals(referenceCheckerboard, checkerboard.getMatrix());
     }
 
-    //the addAllowedDisks method should mark all the allowed placings in a generic board layout
     @Test
     void addAllowedDisks() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
-        checkerboard.addAllowedDisks(B);
+        checkerboard.markAllowedPlacings(B);
 
         assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getMatrix());
     }
 
-    //the addAllowedDisks method should mark all the allowed placings in the starting layout
     @Test
     void allowPlaceDefaultCheckerboard() {
         Checkerboard checkerboard = new Checkerboard();
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                if (checkerboard.allowPlace(i, j, B))
+                if (checkerboard.isPlaceAllowed(i, j, B))
                     checkerboard.getMatrix()[i][j] = A;
             }
         }
@@ -91,14 +84,13 @@ class CheckerboardTest {
         assertArrayEquals(CheckerboardUtility.SIMPLE_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getMatrix());
     }
 
-    //the method allowPlace should be able to recognize all the allowed placings in a generic board layout
     @Test
     void allowPlaceComplexCheckerboard() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         for (int i = 0; i < Checkerboard.SIZE; i++) {
             for (int j = 0; j < Checkerboard.SIZE; j++) {
-                if (checkerboard.allowPlace(i, j, B))
+                if (checkerboard.isPlaceAllowed(i, j, B))
                     checkerboard.getMatrix()[i][j] = A;
             }
         }
@@ -106,7 +98,6 @@ class CheckerboardTest {
         assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getMatrix());
     }
 
-    //The method disksCount should count the correct number of black disks
     @Test
     void disksCountBlack() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
@@ -115,7 +106,6 @@ class CheckerboardTest {
         assertEquals(numBlacks, checkerboard.getNumberOfBlacks());
     }
 
-    //the method disksCount should count the correct number of white disks
     @Test
     void disksCountWhite() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
@@ -124,7 +114,6 @@ class CheckerboardTest {
         assertEquals(numWhites, checkerboard.getNumberOfWhites());
     }
 
-    //when placing a white disk in an allowed position the values of the matrix elements should be set to white according to Reversi rules
     @Test
     void placeWhite() {
         Checkerboard checkerboard = new Checkerboard();
@@ -144,7 +133,6 @@ class CheckerboardTest {
         assertArrayEquals(expectedMatrix, checkerboard.getMatrix());
     }
 
-    //when placing a black disk in an allowed position the values of the matrix elements should be set to black according to Reversi rules
     @Test
     void placeBlack() {
         Checkerboard checkerboard = new Checkerboard();
@@ -164,7 +152,6 @@ class CheckerboardTest {
         assertArrayEquals(expectedMatrix, checkerboard.getMatrix());
     }
 
-    //the place method for black disks should work in all directions and be able to handle the border squares
     @Test
     void blackPlaceAtBounds() {
         int[][] borderMatrix = {{B, N, N, N, B, N, N, B},
@@ -194,7 +181,6 @@ class CheckerboardTest {
         assertArrayEquals(expectedMatrix, checkerboard.getMatrix());
     }
 
-    //the place method for white disks should work in all directions and be able to handle the border squares
     @Test
     void whitePlaceAtBounds() {
         int[][] borderMatrix = {{W, N, N, N, W, N, N, W},
@@ -224,11 +210,10 @@ class CheckerboardTest {
         assertArrayEquals(expectedMatrix, checkerboard.getMatrix());
     }
 
-    //the place method shouldn't edit the matrix if the specified position is not allowed for white
     @Test
     void whitePlaceNotAllowed() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
-        checkerboard.addAllowedDisks(B);
+        checkerboard.markAllowedPlacings(B);
 
         Checkerboard referenceCheckerboard = new Checkerboard(checkerboard.getMatrix());
 
@@ -244,11 +229,10 @@ class CheckerboardTest {
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
     }
 
-    //the place method shouldn't edit the matrix if the specified position is not allowed for black
     @Test
     void blackPlaceNotAllowed() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
-        checkerboard.addAllowedDisks(W);
+        checkerboard.markAllowedPlacings(W);
 
         Checkerboard referenceCheckerboard = new Checkerboard(checkerboard.getMatrix());
 
@@ -264,7 +248,6 @@ class CheckerboardTest {
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
     }
 
-    //the place method should update the number of disks when a disk is placed
     @Test
     void placeUpdateDisks() {
         Checkerboard checkerboard = new Checkerboard();
@@ -280,7 +263,6 @@ class CheckerboardTest {
         assertNotEquals(initialNWhites, finalNWhites);
     }
 
-    //the place method should update the number of disks when a disk is placed
     @Test
     void placeUpdateDisksToExpectedValues() {
         Checkerboard checkerboard = new Checkerboard();
@@ -294,7 +276,6 @@ class CheckerboardTest {
         assertEquals(1, nWhites);
     }
 
-    //the method existAllowPlace should return false if the white player doesn't have any allowed placing
     @Test
     void whiteHasNoAllowedPlacings() {
         int[][] whiteHasNoPlaces = {{B, B, B, B, B, B, B, B},
@@ -310,7 +291,6 @@ class CheckerboardTest {
         assertFalse(checkerboard.existAllowedPlace(W));
     }
 
-    //the method existAllowPlace should return true if the white player have any allowed placing
     @Test
     void whiteHasAllowedPlacings() {
         int[][] whiteHasPlaces = {{B, B, B, B, B, B, B, W},
@@ -326,7 +306,6 @@ class CheckerboardTest {
         assertTrue(checkerboard.existAllowedPlace(W));
     }
 
-    //the method existAllowPlace should return false if the black player doesn't have any allowed placing
     @Test
     void blackHasNoAllowedPlacings() {
         int[][] blackHasNoPlaces = {{W, W, B, B, B, B, B, B},
@@ -342,7 +321,6 @@ class CheckerboardTest {
         assertFalse(checkerboard.existAllowedPlace(B));
     }
 
-    //the method existAllowPlace should return true if the black player have any allowed placing
     @Test
     void blackHasAllowedPlacings() {
         int[][] blackHasPlaces = {{B, B, B, B, B, B, B, B},
@@ -358,7 +336,6 @@ class CheckerboardTest {
         assertTrue(checkerboard.existAllowedPlace(B));
     }
 
-    //if the checkerboard is full then both players have no available placings gameOver should return true
     @Test
     void endGameFullCheckerboard() {
         int[][] fullMatrix = {{W, W, W, B, B, B, B, B},
@@ -371,10 +348,9 @@ class CheckerboardTest {
                 {B, B, B, W, W, W, W, B}};
         Checkerboard checkerboard = new Checkerboard(fullMatrix);
 
-        assertTrue(checkerboard.gameOver());
+        assertTrue(checkerboard.isGameover());
     }
 
-    //if both players have no available placings gameOver should return true
     @Test
     void endGameNoAllowedPlace() {
         int[][] notFullMatrix = {{W, W, W, W, W, W, W, W},
@@ -387,18 +363,16 @@ class CheckerboardTest {
                 {W, W, W, W, W, W, W, W}};
         Checkerboard checkerboard = new Checkerboard(notFullMatrix);
 
-        assertTrue(checkerboard.gameOver());
+        assertTrue(checkerboard.isGameover());
     }
 
-    //if both players have available moves gameOver should return false
     @Test
     void endGameBothHaveAllowedPlaces() {
         Checkerboard checkerboard = new Checkerboard();
 
-        assertFalse(checkerboard.gameOver());
+        assertFalse(checkerboard.isGameover());
     }
 
-    //if white player has available placings gameOver should return false
     @Test
     void endGameWhiteHasAllowedPlace() {
         int[][] whiteHasAPMatrix = {{B, B, B, B, B, B, B, W},
@@ -411,10 +385,9 @@ class CheckerboardTest {
                 {B, B, B, B, B, B, B, N}};
         Checkerboard checkerboard = new Checkerboard(whiteHasAPMatrix);
 
-        assertFalse(checkerboard.gameOver());
+        assertFalse(checkerboard.isGameover());
     }
 
-    //if black player has available placings gameOver should return false
     @Test
     void endGameBlackHasAllowedPlace() {
         int[][] blackHasAPMatrix = {{B, B, B, B, B, B, B, B},
@@ -427,19 +400,17 @@ class CheckerboardTest {
                 {B, B, B, B, B, B, B, N}};
         Checkerboard checkerboard = new Checkerboard(blackHasAPMatrix);
 
-        assertFalse(checkerboard.gameOver());
+        assertFalse(checkerboard.isGameover());
     }
 
-    //the removeAllowedDisks method should remove the marks of allowed placings
     @Test
     void removeAllowedDisks() {
         Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
-        checkerboard.removeAllowedDisks();
+        checkerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD, checkerboard.getMatrix());
     }
 
-    //the toString method should return the string representation of the default checkerboard matrix as expected
     @Test
     void defaultCheckerboardToString() {
         Checkerboard checkerboard = new Checkerboard();
@@ -457,8 +428,6 @@ class CheckerboardTest {
         assertEquals(referenceString, checkerboard.toString());
     }
 
-
-    //the toString method should return the string representation of the default checkerboard matrix with allowed placings as expected
     @Test
     void defaultCheckerboardAllowedPlaceToString() {
         Checkerboard checkerboard = new Checkerboard();
@@ -473,12 +442,11 @@ class CheckerboardTest {
                 "[7][ ][ ][ ][ ][ ][ ][ ][ ]\n" +
                 "[8][ ][ ][ ][ ][ ][ ][ ][ ]\n";
 
-        checkerboard.addAllowedDisks(B);
+        checkerboard.markAllowedPlacings(B);
 
         assertEquals(referenceString, checkerboard.toString());
     }
 
-    //check that the constructor throws an InvalidSquareValueException when there is an illegal value for a checkerboard square
     @Test
     void constructorThrowsException() {
         int[][] checkerboardMatrix = {{0, 1, 2, -1, 10000, W, W, W},
@@ -501,7 +469,6 @@ class CheckerboardTest {
         assertTrue(throwedExc);
     }
 
-    //check that the place method throws an InvalidColourValueException when an illegal colour is passed
     @Test
     void placeThrowsException() {
         boolean throwedExc = false;
@@ -509,29 +476,27 @@ class CheckerboardTest {
 
         try {
             checkerboard.place(2, 3, 0);
-        } catch (Checkerboard.InvalidColourValueException e) {
+        } catch (Checkerboard.InvalidColorValueException e) {
             throwedExc = true;
         }
 
         assertTrue(throwedExc);
     }
 
-    //check that the allowPlace method throws an InvalidColourValueException when an illegal colour is passed
     @Test
     void allowPlaceThrowsException() {
         boolean throwedExc = false;
         Checkerboard checkerboard = new Checkerboard();
 
         try {
-            checkerboard.allowPlace(2, 3, 0);
-        } catch (Checkerboard.InvalidColourValueException e) {
+            checkerboard.isPlaceAllowed(2, 3, 0);
+        } catch (Checkerboard.InvalidColorValueException e) {
             throwedExc = true;
         }
 
         assertTrue(throwedExc);
     }
 
-    //check that the existAllowedPlace method throws an InvalidColourValueException when an illegal colour is passed
     @Test
     void existAllowedPlaceThrowsException() {
         boolean throwedExc = false;
@@ -539,22 +504,21 @@ class CheckerboardTest {
 
         try {
             checkerboard.existAllowedPlace(0);
-        } catch (Checkerboard.InvalidColourValueException e) {
+        } catch (Checkerboard.InvalidColorValueException e) {
             throwedExc = true;
         }
 
         assertTrue(throwedExc);
     }
 
-    //check that the addAllowedDisks method throws an InvalidColourValueException when an illegal colour is passed
     @Test
     void addAllowedDisksThrowsException() {
         boolean throwedExc = false;
         Checkerboard checkerboard = new Checkerboard();
 
         try {
-            checkerboard.addAllowedDisks(0);
-        } catch (Checkerboard.InvalidColourValueException e) {
+            checkerboard.markAllowedPlacings(0);
+        } catch (Checkerboard.InvalidColorValueException e) {
             throwedExc = true;
         }
 

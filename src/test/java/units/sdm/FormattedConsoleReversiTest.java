@@ -51,7 +51,7 @@ class FormattedConsoleReversiTest {
         view.installLogic(reversiGame);
 
         Checkerboard checkerboard = reversiGame.getCheckerboard();
-        checkerboard.addAllowedDisks(Checkerboard.B);
+        checkerboard.markAllowedPlacings(Checkerboard.B);
 
         view.displayCheckerboard();
 

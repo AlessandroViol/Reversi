@@ -1,18 +1,16 @@
 package units.sdm;
 
 public class ReversiGame implements Game {
-
     private String playerWhite;
     private String playerBlack;
+
+    private int colorTurn = 1;
 
     private Checkerboard checkerboard;
 
     private ReversiView view;
 
-    private int colourTurn = 1;
-
     public ReversiGame(ReversiView view) {
-
         this.playerBlack = "Black";
         this.playerWhite = "White";
 
@@ -22,7 +20,6 @@ public class ReversiGame implements Game {
     }
 
     public ReversiGame(ReversiView view, Checkerboard checkerboard) {
-
         this.playerBlack = "Black";
         this.playerWhite = "White";
 
@@ -65,55 +62,26 @@ public class ReversiGame implements Game {
 
     @Override
     public void turn() {
-        if (checkerboard.gameOver()) {
+        if (checkerboard.isGameover())
             if (isDraw())
                 view.displayDraw();
             else
                 view.displayGameOver();
-        } else {
-            if (!checkerboard.existAllowedPlace(colourTurn)) {
+        else {
+            if (!checkerboard.existAllowedPlace(colorTurn)) {
                 view.displayNoMoves();
                 return;
             }
-            checkerboard.addAllowedDisks(colourTurn);
+            checkerboard.markAllowedPlacings(colorTurn);
             view.displayTurn();
         }
     }
 
     @Override
-    public void tryPlace(int x, int y) {
-        if (x >= 0 && x < Checkerboard.SIZE && y >= 0 && y < Checkerboard.SIZE && checkerboard.allowPlace(x, y, colourTurn)) {
-            checkerboard.place(x, y, colourTurn);
-            nextTurn();
-        } else
-            view.displayNotAllowed();
-    }
-
-    @Override
-    public void nextTurn() {
-        colourTurn = -colourTurn;
-        checkerboard.removeAllowedDisks();
-        turn();
-    }
-
-    @Override
     public String getCurrentPlayerName() {
-        if (colourTurn == Checkerboard.B) {
+        if (colorTurn == Checkerboard.B)
             return playerBlack;
-        }
-        return playerWhite;
-    }
 
-    @Override
-    public boolean isDraw() {
-        return checkerboard.getNumberOfBlacks() == checkerboard.getNumberOfWhites();
-    }
-
-    @Override
-    public String getWinnerName() {
-        if (checkerboard.getNumberOfBlacks() > checkerboard.getNumberOfWhites()) {
-            return playerBlack;
-        }
         return playerWhite;
     }
 
@@ -135,5 +103,34 @@ public class ReversiGame implements Game {
         }
         else
             view.displayNotAllowed();
+    }
+
+    @Override
+    public void tryPlace(int x, int y) {
+        if (x >= 0 && x < Checkerboard.SIZE && y >= 0 && y < Checkerboard.SIZE && checkerboard.isPlaceAllowed(x, y, colorTurn)) {
+            checkerboard.place(x, y, colorTurn);
+            nextTurn();
+        } else
+            view.displayNotAllowed();
+    }
+
+    @Override
+    public void nextTurn() {
+        colorTurn = -colorTurn;
+        checkerboard.unmarkAllowedPlacings();
+        turn();
+    }
+
+    @Override
+    public boolean isDraw() {
+        return checkerboard.getNumberOfBlacks() == checkerboard.getNumberOfWhites();
+    }
+
+    @Override
+    public String getWinnerName() {
+        if (checkerboard.getNumberOfBlacks() > checkerboard.getNumberOfWhites())
+            return playerBlack;
+
+        return playerWhite;
     }
 }

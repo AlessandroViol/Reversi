@@ -7,14 +7,11 @@ public class Checkerboard {
     private int numberOfWhites;
     private int numberOfBlacks;
 
-    //Values coding the values of the black and white pieces and empty and allowed places on the checkerboard
     public static final int B = 1;
     public static final int W = -1;
     public static final int N = 0;
     public static final int A = 2;
 
-
-    //zero argument constructor that initialize the default checkerboard for reversi
     public Checkerboard() {
         matrix = new int[SIZE][SIZE];
 
@@ -23,10 +20,9 @@ public class Checkerboard {
         matrix[3][4] = B;
         matrix[4][4] = W;
 
-        this.disksCount();
+        this.countDisks();
     }
 
-    //one argument constructor that copies the matrix of a given checkerboard
     public Checkerboard(int[][] matrix) throws InvalidSquareValueException {
         this.matrix = new int[SIZE][SIZE];
 
@@ -40,10 +36,9 @@ public class Checkerboard {
             }
         }
 
-        this.disksCount();
+        this.countDisks();
     }
 
-    //declare 2 exception for unexpected values for the checkerboard cells
     public static class InvalidSquareValueException extends RuntimeException {
         public InvalidSquareValueException(int value) {
             super("Tried to write value [" + value + "] into a Checkerboard object. The only allowed values are: " +
@@ -51,14 +46,13 @@ public class Checkerboard {
         }
     }
 
-    public static class InvalidColourValueException extends RuntimeException {
-        public InvalidColourValueException(int value) {
-            super("Tried to use value [" + value + "] as a colour value for a Checkerboard square." +
+    public static class InvalidColorValueException extends RuntimeException {
+        public InvalidColorValueException(int value) {
+            super("Tried to use value [" + value + "] as a color value for a Checkerboard square." +
                     "The only allowed values are: {" + W + "; " + B + "}");
         }
     }
 
-    //attribute getters for class attributes
     public int[][] getMatrix() {
         return this.matrix;
     }
@@ -71,28 +65,25 @@ public class Checkerboard {
         return numberOfBlacks;
     }
 
-    //if the colour doesn't belong to the available colour values throws an InvalidColourValueException exception
-    private void validateColour(int colour) throws InvalidColourValueException {
-        if (colour != W && colour != B)
-            throw new InvalidColourValueException(colour);
+    private void validateColor(int color) throws InvalidColorValueException {
+        if (color != W && color != B)
+            throw new InvalidColorValueException(color);
     }
 
-    //computes if a piece of the provided color can be placed in the specified square of the checkerboard
-    public boolean allowPlace(int posX, int posY, int colorTurn) throws InvalidColourValueException{
-        validateColour(colorTurn);
+    public boolean isPlaceAllowed(int posX, int posY, int colorTurn) throws InvalidColorValueException{
+        validateColor(colorTurn);
 
         boolean isOppositeColor;
         boolean isDirectionAllowed;
 
-        boolean isEmpty = matrix[posX][posY] == N || matrix[posX][posY] == A;
-        if (!isEmpty)
+        if (!isSquareEmpty(posX, posY))
             return false;
 
         for (int offsetX = -1; offsetX < 2; offsetX++)
             for (int offsetY = -1; offsetY < 2; offsetY++)
-                if(isAllowedAdjacent(offsetX, offsetY, posX, posY)) {
-                    isOppositeColor = matrix[posX + offsetX][posY + offsetY] == -colorTurn;
-                    isDirectionAllowed = checkDirection(offsetX, offsetY, posX + offsetX, posY + offsetY, colorTurn);
+                if(isSquareInBounds(posX + offsetX, posY + offsetY)) {
+                    isOppositeColor = isOppositeColor(posX + offsetX, posY + offsetY, colorTurn);
+                    isDirectionAllowed = isDirectionAllowed(offsetX, offsetY, posX + offsetX, posY + offsetY, colorTurn);
 
                     if (isOppositeColor && isDirectionAllowed)
                         return true;
@@ -101,24 +92,33 @@ public class Checkerboard {
         return false;
     }
 
-    //check that the adjacent square is in the board and that is different from the specified square
-    private boolean isAllowedAdjacent(int offsetX, int offsetY, int posX, int posY) {
-        boolean isInVerticalBounds = (posX + offsetX >= 0) && (posX + offsetX < SIZE);
-        boolean isSameSquare = (offsetX == 0) && (offsetY == 0);
-        boolean isInHorizontalBounds = (posY + offsetY >= 0) && (posY + offsetY < SIZE);
-
-        return isInVerticalBounds && !isSameSquare && isInHorizontalBounds;
+    private boolean isSquareEmpty(int posX, int posY) {
+        return matrix[posX][posY] == N || matrix[posX][posY] == A;
     }
 
-    //check if in the specified direction there is a contiguous line of disks of the same color terminating with a disk of the opposite color
-    private boolean checkDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) throws InvalidColourValueException {
-        validateColour(colourTurn);
+    private boolean isSquareInBounds(int posX, int posY) {
+        boolean isInVerticalBounds = (posX >= 0) && (posX < SIZE);
+        boolean isInHorizontalBounds = (posY >= 0) && (posY < SIZE);
 
-        while (posX + offsetX >= 0 && posX + offsetX < SIZE && posY + offsetY >= 0 && posY + offsetY < SIZE) {
-            if (matrix[posX + offsetX][posY + offsetY] == colourTurn)
+        return isInVerticalBounds && isInHorizontalBounds;
+    }
+
+    private boolean isOppositeColor(int posX, int posY, int color) {
+        return matrix[posX][posY] == -color;
+    }
+
+    private boolean isSameColor(int posX, int posY, int color) {
+        return matrix[posX][posY] == color;
+    }
+
+    private boolean isDirectionAllowed(int offsetX, int offsetY, int posX, int posY, int colorTurn) throws InvalidColorValueException {
+        validateColor(colorTurn);
+
+        while (isSquareInBounds(posX + offsetX, posY + offsetY)) {
+            if (isSameColor(posX + offsetX, posY + offsetY, colorTurn))
                 return true;
 
-            else if (matrix[posX + offsetX][posY + offsetY] == N || matrix[posX + offsetX][posY + offsetY] == A)
+            else if (isSquareEmpty(posX + offsetX, posY + offsetY))
                 return false;
 
             posX = posX + offsetX;
@@ -128,104 +128,87 @@ public class Checkerboard {
         return false;
     }
 
-    //if the specified placement is allowed then place the disk and update the checkerboard
-    public void place(int posX, int posY, int colourTurn) throws InvalidColourValueException {
-        validateColour(colourTurn);
+    public void place(int posX, int posY, int colorTurn) throws InvalidColorValueException {
+        validateColor(colorTurn);
 
-        if (allowPlace(posX, posY, colourTurn)) {
-            matrix[posX][posY] = colourTurn;
-            updateCheckerboard(posX, posY, colourTurn);
-            disksCount();
+        if (isPlaceAllowed(posX, posY, colorTurn)) {
+            matrix[posX][posY] = colorTurn;
+            updateMatrix(posX, posY, colorTurn);
+            countDisks();
         }
     }
 
-    //after a placement swap the color of all the adjacent disks of all the allowed lines
-    private void updateCheckerboard(int posX, int posY, int colourTurn) throws InvalidColourValueException {
-        validateColour(colourTurn);
+    private void updateMatrix(int posX, int posY, int colorTurn) throws InvalidColorValueException {
+        validateColor(colorTurn);
 
         boolean isOppositeColor;
         boolean isDirectionAllowed;
 
         for (int offsetX = -1; offsetX < 2; offsetX++)
             for (int offsetY = -1; offsetY < 2; offsetY++)
-                if (isAllowedAdjacent(offsetX, offsetY, posX, posY)) {
-                    isOppositeColor = matrix[posX + offsetX][posY + offsetY] == -colourTurn;
-                    isDirectionAllowed = checkDirection(offsetX, offsetY, posX + offsetX, posY + offsetY, colourTurn);
+                if (isSquareInBounds(posX + offsetX, posY + offsetY)) {
+                    isOppositeColor = isOppositeColor(posX + offsetX, posY + offsetY, colorTurn);
+                    isDirectionAllowed = isDirectionAllowed(offsetX, offsetY, posX + offsetX, posY + offsetY, colorTurn);
 
                     if (isOppositeColor && isDirectionAllowed) {
-                        swapAlongDirection(offsetX, offsetY, posX, posY, colourTurn);
+                        swapAlongDirection(offsetX, offsetY, posX, posY, colorTurn);
                     }
                 }
     }
 
-    private void swapAlongDirection(int offsetX, int offsetY, int posX, int posY, int colourTurn) throws InvalidColourValueException {
-        validateColour(colourTurn);
+    private void swapAlongDirection(int offsetX, int offsetY, int posX, int posY, int colorTurn) throws InvalidColorValueException {
+        validateColor(colorTurn);
 
-        while (matrix[posX + offsetX][posY + offsetY] == -colourTurn) {
-            matrix[posX + offsetX][posY + offsetY] = colourTurn;
+        while (isOppositeColor(posX + offsetX, posY + offsetY, colorTurn)) {
+            matrix[posX + offsetX][posY + offsetY] = colorTurn;
             posX += offsetX;
             posY += offsetY;
         }
     }
 
+    public boolean existAllowedPlace(int colorTurn) throws InvalidColorValueException {
+        validateColor(colorTurn);
 
-    //return true if there is at least one possible move for the player, return false otherwise
-    public boolean existAllowedPlace(int colourTurn) throws InvalidColourValueException {
-        validateColour(colourTurn);
-
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (allowPlace(i, j, colourTurn)) {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                if (isPlaceAllowed(i, j, colorTurn))
                     return true;
-                }
-            }
-        }
+
         return false;
     }
 
-    //refresh the counter of the placed disks of each color
-    private void disksCount() {
+    private void countDisks() {
         numberOfBlacks = 0;
         numberOfWhites = 0;
 
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (matrix[i][j] == W) {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                if (matrix[i][j] == W)
                     numberOfWhites += 1;
-                } else if (matrix[i][j] == B) {
+                else if (matrix[i][j] == B)
                     numberOfBlacks += 1;
-                }
-            }
-        }
     }
 
-    //marks all the allowed squares for a disk color on the checkerboard
-    public void addAllowedDisks(int colourTurn) throws InvalidColourValueException {
-        validateColour(colourTurn);
+    public void markAllowedPlacings(int colorTurn) throws InvalidColorValueException {
+        validateColor(colorTurn);
 
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (allowPlace(i, j, colourTurn)) {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                if (isPlaceAllowed(i, j, colorTurn))
                     matrix[i][j] = A;
-                }
-            }
-        }
     }
 
-    //removes the marking of all the allowed squares
-    public void removeAllowedDisks() {
+    public void unmarkAllowedPlacings() {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
                 if (matrix[i][j] == A)
                     matrix[i][j] = N;
     }
 
-    //return true if neither players have available placings and false otherwise
-    public boolean gameOver() {
+    public boolean isGameover() {
         return !existAllowedPlace(B) && !existAllowedPlace(W);
     }
 
-    //override the toString method to return a String that represents the checkerboard
     @Override
     public String toString() {
         String strMatrix = "   [A][B][C][D][E][F][G][H]\n";
