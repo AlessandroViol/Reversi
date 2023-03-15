@@ -3,7 +3,7 @@ package units.sdm;
 import javax.swing.*;
 import java.awt.*;
 
-public class ImageLoader {
+public class ImageManager {
     private Image img;
     private ImageIcon icon;
     private final int originalWidth;
@@ -11,7 +11,7 @@ public class ImageLoader {
 
     private final int commonMeasure = 512;
 
-    public ImageLoader(String url) {
+    public ImageManager(String url) {
         this.icon = new ImageIcon(getClass().getResource("/" + url + ".png"));
 
         this.originalWidth = icon.getIconWidth();

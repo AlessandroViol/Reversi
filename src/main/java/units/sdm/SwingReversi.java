@@ -2,8 +2,6 @@ package units.sdm;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -12,6 +10,10 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class SwingReversi implements ReversiView {
     private Game game;
     private JFrame frame;
+
+    private final int width = 600;
+    private final int length = 720;
+
 
     private final Color BG_COLOR = new Color(208, 206, 197);
 
@@ -49,10 +51,11 @@ public class SwingReversi implements ReversiView {
         SwingUtilities.invokeLater(this::displayGameStart);
     }
 
+    @Override
     public void displayGameStart() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.setSize(1080, 720);
+        frame.setSize(width, length);
 
         Container mainContainer = frame.getContentPane();
         mainContainer.setLayout(new BorderLayout());
@@ -62,9 +65,11 @@ public class SwingReversi implements ReversiView {
         JPanel northPanel = new JPanel();
         northPanel.setOpaque(false);
 
-        JLabel title = new JLabel("REVERSI!");
+        JLabel title = new JLabel();
         title.setOpaque(false);
-        title.setFont(new Font("Calibri", Font.BOLD, 30));
+        ImageManager titleImg = new ImageManager("Title");
+        titleImg.scaleIcon(150, 150);
+        title.setIcon(titleImg.getIcon());
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
         northPanel.add(title);
@@ -152,10 +157,119 @@ public class SwingReversi implements ReversiView {
         mainContainer.setBackground(BG_COLOR);
 
         //point board
-        JPanel northPanel = getPointPanel();
+        JPanel northPanel = getTurnInfoPanel();
         mainContainer.add(northPanel, BorderLayout.NORTH);
 
         //draw board
+        JPanel centerPanel = getCheckerboardPanel();
+        mainContainer.add(centerPanel, BorderLayout.CENTER);
+
+        frame.revalidate();
+    }
+
+    private JPanel getTurnInfoPanel() {
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setOpaque(false);
+
+        //Points of Black
+        JPanel leftPanel = getPlayerPointsPanel(Checkerboard.B);
+
+        mainPanel.add(leftPanel, BorderLayout.WEST);
+
+        //Current turn
+        JPanel centerPanel = getCurrentTurnPanel();
+
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+
+        //Points of White
+        JPanel rightPanel = getPlayerPointsPanel(Checkerboard.W);
+
+        mainPanel.add(rightPanel, BorderLayout.EAST);
+
+        return mainPanel;
+    }
+
+    private JPanel getPlayerPointsPanel(int color) {
+        JPanel rightPanel = new JPanel(new GridBagLayout());
+        rightPanel.setOpaque(false);
+
+        String name;
+        int points;
+        Insets nameInset;
+        Insets pointsInset;
+
+        if (color == Checkerboard.B) {
+            name = game.getPlayerBlack();
+            points = game.getCheckerboard().getNumberOfBlacks();
+            nameInset = new Insets(30, 30, 0, 0);
+            pointsInset = new Insets(0, 30, 30, 0);
+        } else {
+            name = game.getPlayerWhite();
+            points = game.getCheckerboard().getNumberOfWhites();
+            nameInset = new Insets(30, 0, 0, 30);
+            pointsInset = new Insets(0, 0, 30, 30);
+        }
+
+        JLabel nameLabel = new JLabel(name);
+        nameLabel.setFont(new Font("Calibri", Font.BOLD, 18));
+        nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        rightPanel.add(nameLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, nameInset, 0, 0));
+
+        JLabel pointsLabel = new JLabel("" + points);
+        pointsLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+        pointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        rightPanel.add(pointsLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, pointsInset, 0, 0));
+
+        return rightPanel;
+    }
+
+    private JPanel getCurrentTurnPanel() {
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setOpaque(false);
+
+        JLabel turn = new JLabel("It's your turn!");
+        turn.setFont(new Font("Calibri", Font.PLAIN, 15));
+        turn.setHorizontalAlignment(SwingConstants.CENTER);
+
+        centerPanel.add(turn, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(30, 0, 0, 0), 0, 0));
+
+        JLabel currentColor;
+        if (game.getCurrentPlayerName().equals(game.getPlayerBlack()))
+            currentColor = images.getLabel("BlackToken");
+        else
+            currentColor = images.getLabel("WhiteToken");
+        currentColor.setHorizontalAlignment(SwingConstants.CENTER);
+
+        centerPanel.add(currentColor, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+        JLabel currentPlayer = new JLabel(game.getCurrentPlayerName());
+        currentPlayer.setFont(new Font("Calibri", Font.BOLD, 20));
+        currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        centerPanel.add(currentPlayer, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 30, 0), 0, 0));
+
+        return centerPanel;
+    }
+
+    private JPanel getCheckerboardPanel() {
+        JPanel centerPanel = getCheckerboardBorderPanel();
+
+        JPanel checkerboardPanel = getCheckerboardSquaresPanel();
+
+        centerPanel.add(checkerboardPanel, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+        return centerPanel;
+    }
+
+    private JPanel getCheckerboardBorderPanel() {
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setOpaque(false);
 
@@ -191,10 +305,16 @@ public class SwingReversi implements ReversiView {
         centerPanel.add(leftBorder, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        //draw squares
+        return centerPanel;
+    }
+
+    private JPanel getCheckerboardSquaresPanel() {
         JPanel checkerboardPanel = new JPanel(new GridBagLayout());
         checkerboardPanel.setOpaque(false);
-        for (int row = 0; row < Checkerboard.SIZE; row++)
+
+        Checkerboard checkerboard = game.getCheckerboard();
+
+        for (int row = 0; row < Checkerboard.SIZE; row++) {
             for (int column = 0; column < Checkerboard.SIZE; column++) {
                 JLabel square = new JLabel();
                 final int rowIndex = row;
@@ -218,82 +338,9 @@ public class SwingReversi implements ReversiView {
                 checkerboardPanel.add(square, new GridBagConstraints(column, row, 1, 1, 0.0, 0.0,
                         GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
             }
+        }
 
-        centerPanel.add(checkerboardPanel, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        mainContainer.add(centerPanel, BorderLayout.CENTER);
-
-        frame.revalidate();
-    }
-
-    private JPanel getPointPanel() {
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setOpaque(false);
-
-        //Points of Black
-        JPanel leftPanel = new JPanel(new GridBagLayout());
-        leftPanel.setOpaque(false);
-
-        JLabel blackName = new JLabel(game.getPlayerBlack());
-        blackName.setFont(new Font("Calibri", Font.BOLD, 18));
-        blackName.setHorizontalAlignment(SwingConstants.CENTER);
-        leftPanel.add(blackName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(30, 30, 0, 0), 0, 0));
-
-        JLabel pointsBlack = new JLabel("" + game.getCheckerboard().getNumberOfBlacks());
-        pointsBlack.setFont(new Font("Calibri", Font.PLAIN, 20));
-        pointsBlack.setHorizontalAlignment(SwingConstants.CENTER);
-        leftPanel.add(pointsBlack, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 30, 30, 0), 0, 0));
-
-        mainPanel.add(leftPanel, BorderLayout.WEST);
-
-        //Current turn
-        JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setOpaque(false);
-
-        JLabel turn = new JLabel("It's your turn!");
-        turn.setFont(new Font("Calibri", Font.PLAIN, 15));
-        turn.setHorizontalAlignment(SwingConstants.CENTER);
-        centerPanel.add(turn, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(30, 0, 0, 0), 0, 0));
-
-        JLabel currentColor;
-        if (game.getCurrentPlayerName().equals(game.getPlayerBlack()))
-            currentColor = images.getLabel("BlackToken");
-        else
-            currentColor = images.getLabel("WhiteToken");
-        currentColor.setHorizontalAlignment(SwingConstants.CENTER);
-        centerPanel.add(currentColor, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-        JLabel currentPlayer = new JLabel(game.getCurrentPlayerName());
-        currentPlayer.setFont(new Font("Calibri", Font.BOLD, 20));
-        currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
-        centerPanel.add(currentPlayer, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 30, 0), 0, 0));
-
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
-
-        //Points of White
-        JPanel rightPanel = new JPanel(new GridBagLayout());
-        rightPanel.setOpaque(false);
-
-        JLabel whiteName = new JLabel(game.getPlayerWhite());
-        whiteName.setFont(new Font("Calibri", Font.BOLD, 18));
-        whiteName.setHorizontalAlignment(SwingConstants.CENTER);
-        rightPanel.add(whiteName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(30, 0, 0, 30), 0, 0));
-
-        JLabel pointsWhite = new JLabel("" + game.getCheckerboard().getNumberOfWhites());
-        pointsWhite.setFont(new Font("Calibri", Font.PLAIN, 20));
-        pointsWhite.setHorizontalAlignment(SwingConstants.CENTER);
-        rightPanel.add(pointsWhite, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 30, 30), 0, 0));
-
-        mainPanel.add(rightPanel, BorderLayout.EAST);
-
-        return mainPanel;
+        return checkerboardPanel;
     }
 
     @Override

@@ -30,6 +30,12 @@ class ReversiGameTest {
         }
 
         @Override
+        public void displayGameStart() {
+            called = "displayGameStart";
+            traceback.add(called);
+        }
+
+        @Override
         public void displayTurn() {
             called = "displayTurn";
             traceback.add(called);

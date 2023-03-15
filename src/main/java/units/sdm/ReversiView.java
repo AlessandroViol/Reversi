@@ -6,6 +6,8 @@ public interface ReversiView {
 
     void show();
 
+    void displayGameStart();
+
     void displayTurn();
 
     void displayGameOver();

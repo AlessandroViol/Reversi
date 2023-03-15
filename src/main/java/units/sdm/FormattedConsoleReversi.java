@@ -11,7 +11,7 @@ public class FormattedConsoleReversi extends ConsoleReversi{
     private static final String END = (char) 27 + "[0m";
 
     @Override
-    public void show() {
+    public void displayGameStart() {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("What's your name player " + RED + BOLD + "Black" + END + "?");

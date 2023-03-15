@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ImageCollection {
-    Map<String, ImageLoader> images = new HashMap<String, ImageLoader>();
+    Map<String, ImageManager> images = new HashMap<String, ImageManager>();
 
     public void add(String key) {
-        images.put(key, new ImageLoader(key));
+        images.put(key, new ImageManager(key));
     }
 
     public ImageIcon getIcon(String key) {
@@ -23,7 +23,7 @@ public class ImageCollection {
     }
 
     public void rescale(int width, int height) {
-        for(ImageLoader image : images.values()) {
+        for(ImageManager image : images.values()) {
             image.scaleIcon(width, height);
         }
     }
