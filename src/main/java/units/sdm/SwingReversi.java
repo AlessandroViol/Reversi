@@ -1,12 +1,11 @@
 package units.sdm;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -16,85 +15,28 @@ public class SwingReversi implements ReversiView {
 
     private final Color BG_COLOR = new Color(208, 206, 197);
 
-    private Image blackImg;
-    private ImageIcon blackIcon;
-    private Image whiteImg;
-    private ImageIcon whiteIcon;
-    private Image noneImg;
-    private ImageIcon noneIcon;
-    private Image allowedImg;
-    private ImageIcon allowedIcon;
-
-    private Image blackTokenImg;
-    private ImageIcon blackTokenIcon;
-    private Image whiteTokenImg;
-    private ImageIcon whiteTokenIcon;
-
-    private Image topImg;
-    private ImageIcon topIcon;
-    private Image bottomImg;
-    private ImageIcon bottomIcon;
-    private Image rightImg;
-    private ImageIcon rightIcon;
-    private Image leftImg;
-    private ImageIcon leftIcon;
-
-    private Image topRImg;
-    private ImageIcon topRIcon;
-    private Image topLImg;
-    private ImageIcon topLIcon;
-    private Image bottomRImg;
-    private ImageIcon bottomRIcon;
-    private Image bottomLImg;
-    private ImageIcon bottomLIcon;
+    private ImageCollection images;
 
     public SwingReversi() {
-        try {
-            File file = new File("src/main/img/Black.png");
-            blackImg = ImageIO.read(file);
+        images = new ImageCollection();
 
-            file = new File("src/main/img/White.png");
-            whiteImg = ImageIO.read(file);
+        images.add("Black");
+        images.add("White");
+        images.add("None");
+        images.add("Allowed");
 
-            file = new File("src/main/img/None.png");
-            noneImg = ImageIO.read(file);
+        images.add("BlackToken");
+        images.add("WhiteToken");
 
-            file = new File("src/main/img/Allowed.png");
-            allowedImg = ImageIO.read(file);
+        images.add("Top");
+        images.add("Bottom");
+        images.add("Right");
+        images.add("Left");
 
-            file = new File("src/main/img/BlackToken.png");
-            blackTokenImg = ImageIO.read(file);
-
-            file = new File("src/main/img/WhiteToken.png");
-            whiteTokenImg = ImageIO.read(file);
-
-            file = new File("src/main/img/Top.png");
-            topImg = ImageIO.read(file);
-
-            file = new File("src/main/img/Bottom.png");
-            bottomImg = ImageIO.read(file);
-
-            file = new File("src/main/img/Right.png");
-            rightImg = ImageIO.read(file);
-
-            file = new File("src/main/img/Left.png");
-            leftImg = ImageIO.read(file);
-
-            file = new File("src/main/img/TopRight.png");
-            topRImg = ImageIO.read(file);
-
-            file = new File("src/main/img/TopLeft.png");
-            topLImg = ImageIO.read(file);
-
-            file = new File("src/main/img/BottomRight.png");
-            bottomRImg = ImageIO.read(file);
-
-            file = new File("src/main/img/BottomLeft.png");
-            bottomLImg = ImageIO.read(file);
-
-        } catch (IOException ie) {
-            System.err.println("Couldn't open an image file");
-        }
+        images.add("TopRight");
+        images.add("TopLeft");
+        images.add("BottomRight");
+        images.add("BottomLeft");
     }
 
     @Override
@@ -135,7 +77,6 @@ public class SwingReversi implements ReversiView {
 
         JLabel label = new JLabel("Please enter player names");
         label.setFont(new Font("Calibri", Font.ITALIC, 10));
-        //label.setHorizontalAlignment(SwingConstants.CENTER);
         centerPanel.add(label, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 5));
 
@@ -170,6 +111,8 @@ public class SwingReversi implements ReversiView {
 
         //display window
         frame.setVisible(true);
+
+        rescaleCheckerboard();
     }
 
     private JPanel getNameQueryPanel(String player) {
@@ -189,15 +132,19 @@ public class SwingReversi implements ReversiView {
         return namePanel;
     }
 
+    private void rescaleCheckerboard() {
+        Container mainContainer = frame.getContentPane();
+
+        int width = mainContainer.getWidth() / (Checkerboard.SIZE + 4);
+        int height = (mainContainer.getHeight() - 100) / (Checkerboard.SIZE + 4);
+
+        images.rescale(width, height);
+    }
+
     @Override
     public void displayTurn() {
         Checkerboard checkerboard = game.getCheckerboard();
         Container mainContainer = frame.getContentPane();
-
-        //resize the images to the container size
-        int width = mainContainer.getWidth() / (Checkerboard.SIZE + 2);
-        int height = (mainContainer.getHeight() - 10) / (Checkerboard.SIZE + 2);
-        loadScaledImages(width, height);
 
         //reset container
         mainContainer.removeAll();
@@ -212,43 +159,35 @@ public class SwingReversi implements ReversiView {
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setOpaque(false);
 
-        JLabel topRBorder = new JLabel();
-        topRBorder.setIcon(topRIcon);
+        JLabel topRBorder = images.getLabel("TopRight");
         centerPanel.add(topRBorder, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JLabel topBorder = new JLabel();
-        topBorder.setIcon(topIcon);
+        JLabel topBorder = images.getLabel("Top");
         centerPanel.add(topBorder, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JLabel topLBorder = new JLabel();
-        topLBorder.setIcon(topLIcon);
+        JLabel topLBorder = images.getLabel("TopLeft");
         centerPanel.add(topLBorder, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JLabel bottomRBorder = new JLabel();
-        bottomRBorder.setIcon(bottomRIcon);
+        JLabel bottomRBorder = images.getLabel("BottomRight");
         centerPanel.add(bottomRBorder, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
                 GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JLabel bottomBorder = new JLabel();
-        bottomBorder.setIcon(bottomIcon);
+        JLabel bottomBorder = images.getLabel("Bottom");
         centerPanel.add(bottomBorder, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
                 GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JLabel bottomLBorder = new JLabel();
-        bottomLBorder.setIcon(bottomLIcon);
+        JLabel bottomLBorder = images.getLabel("BottomLeft");
         centerPanel.add(bottomLBorder, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
                 GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JLabel rightBorder = new JLabel();
-        rightBorder.setIcon(rightIcon);
+        JLabel rightBorder = images.getLabel("Right");
         centerPanel.add(rightBorder, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
                 GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        JLabel leftBorder = new JLabel();
-        leftBorder.setIcon(leftIcon);
+        JLabel leftBorder = images.getLabel("Left");
         centerPanel.add(leftBorder, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
@@ -270,10 +209,10 @@ public class SwingReversi implements ReversiView {
                 });
 
                 switch (checkerboard.getMatrix()[row][column]) {
-                    case Checkerboard.B -> square.setIcon(blackIcon);
-                    case Checkerboard.W -> square.setIcon(whiteIcon);
-                    case Checkerboard.A -> square.setIcon(allowedIcon);
-                    default -> square.setIcon(noneIcon);
+                    case Checkerboard.B -> square.setIcon(images.getIcon("Black"));
+                    case Checkerboard.W -> square.setIcon(images.getIcon("White"));
+                    case Checkerboard.A -> square.setIcon(images.getIcon("Allowed"));
+                    default -> square.setIcon(images.getIcon("None"));
                 }
 
                 checkerboardPanel.add(square, new GridBagConstraints(column, row, 1, 1, 0.0, 0.0,
@@ -285,38 +224,6 @@ public class SwingReversi implements ReversiView {
         mainContainer.add(centerPanel, BorderLayout.CENTER);
 
         frame.revalidate();
-    }
-
-    private void loadScaledImages(int width, int height) {
-        int fitSize = width;
-        if (width > height)
-            fitSize = height;
-        fitSize = 51;
-
-        blackIcon = new ImageIcon(blackImg.getScaledInstance(fitSize, fitSize, Image.SCALE_SMOOTH));
-        whiteIcon = new ImageIcon(whiteImg.getScaledInstance(fitSize, fitSize, Image.SCALE_SMOOTH));
-        noneIcon = new ImageIcon(noneImg.getScaledInstance(fitSize, fitSize, Image.SCALE_SMOOTH));
-        allowedIcon = new ImageIcon(allowedImg.getScaledInstance(fitSize, fitSize, Image.SCALE_SMOOTH));
-
-        blackTokenIcon = new ImageIcon(blackTokenImg.getScaledInstance(fitSize, fitSize, Image.SCALE_SMOOTH));
-        whiteTokenIcon = new ImageIcon(whiteTokenImg.getScaledInstance(fitSize, fitSize, Image.SCALE_SMOOTH));
-
-        double ratio = fitSize / 512;
-        /*
-        topIcon = new ImageIcon(topImg.getScaledInstance((int) (5200 * ratio), (int) (552 * ratio), Image.SCALE_SMOOTH));
-        bottomIcon = new ImageIcon(bottomImg.getScaledInstance((int) (5200 * ratio), (int) (552 * ratio), Image.SCALE_SMOOTH));
-        rightIcon = new ImageIcon(rightImg.getScaledInstance((int) (552 * ratio), (int) (4096 * ratio), Image.SCALE_SMOOTH));
-        leftIcon = new ImageIcon(leftImg.getScaledInstance((int) (552 * ratio), (int) (4096 * ratio), Image.SCALE_SMOOTH));*/
-
-        topIcon = new ImageIcon(topImg.getScaledInstance(408, 55, Image.SCALE_SMOOTH));
-        bottomIcon = new ImageIcon(bottomImg.getScaledInstance(408, 55, Image.SCALE_SMOOTH));
-        rightIcon = new ImageIcon(rightImg.getScaledInstance(55, 408, Image.SCALE_SMOOTH));
-        leftIcon = new ImageIcon(leftImg.getScaledInstance(55, 408, Image.SCALE_SMOOTH));
-
-        topRIcon = new ImageIcon(topRImg.getScaledInstance(55, 55, Image.SCALE_SMOOTH));
-        topLIcon = new ImageIcon(topLImg.getScaledInstance(55, 55, Image.SCALE_SMOOTH));
-        bottomRIcon = new ImageIcon(bottomRImg.getScaledInstance(55, 55, Image.SCALE_SMOOTH));
-        bottomLIcon = new ImageIcon(bottomLImg.getScaledInstance(55, 55, Image.SCALE_SMOOTH));
     }
 
     private JPanel getPointPanel() {
@@ -351,11 +258,11 @@ public class SwingReversi implements ReversiView {
         centerPanel.add(turn, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(30, 0, 0, 0), 0, 0));
 
-        JLabel currentColor = new JLabel();
+        JLabel currentColor;
         if (game.getCurrentPlayerName().equals(game.getPlayerBlack()))
-            currentColor.setIcon(blackTokenIcon);
+            currentColor = images.getLabel("BlackToken");
         else
-            currentColor.setIcon(whiteTokenIcon);
+            currentColor = images.getLabel("WhiteToken");
         currentColor.setHorizontalAlignment(SwingConstants.CENTER);
         centerPanel.add(currentColor, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
