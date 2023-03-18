@@ -68,19 +68,16 @@ public class SwingReversi implements ReversiView {
 
         JLabel label = new JLabel("Please enter player names");
         label.setFont(new Font("Calibri", Font.ITALIC, 10));
-        centerPanel.add(label, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 5));
+        centerPanel.add(label, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 5));
 
         //add text fields and labels to get player names
         JPanel panelNameBlack = getNameQueryPanel("Black");
         JTextField nameBlack = (JTextField) panelNameBlack.getComponent(1);
-        centerPanel.add(panelNameBlack, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 10));
+        centerPanel.add(panelNameBlack, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 10));
 
         JPanel panelNameWhite = getNameQueryPanel("White");
         JTextField nameWhite = (JTextField) panelNameWhite.getComponent(1);
-        centerPanel.add(panelNameWhite, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 10));
+        centerPanel.add(panelNameWhite, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 10));
 
         mainContainer.add(centerPanel, BorderLayout.CENTER);
 
@@ -95,8 +92,7 @@ public class SwingReversi implements ReversiView {
         buttonStart.addActionListener(s -> game.setPlayerBlack(nameBlack.getText()));
         buttonStart.addActionListener(s -> game.setPlayerWhite(nameWhite.getText()));
 
-        southPanel.add(buttonStart, new GridBagConstraints(1, 0, 3, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 10, 0), 0, 0));
+        southPanel.add(buttonStart, new GridBagConstraints(1, 0, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 10, 0), 0, 0));
 
         mainContainer.add(southPanel, BorderLayout.SOUTH);
 
@@ -128,14 +124,12 @@ public class SwingReversi implements ReversiView {
         namePanel.setOpaque(false);
 
         JLabel labelPlayerName = new JLabel("Player " + player);
-        namePanel.add(labelPlayerName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), frame.getWidth() / 3, 0));
+        namePanel.add(labelPlayerName, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), frame.getWidth() / 3, 0));
 
         JTextField txtFieldPlayerName = new JTextField(player, 5);
         txtFieldPlayerName.setHorizontalAlignment(SwingConstants.CENTER);
 
-        namePanel.add(txtFieldPlayerName, new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 10, 0), frame.getWidth() / 3, 0));
+        namePanel.add(txtFieldPlayerName, new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 10, 0), frame.getWidth() / 3, 0));
 
         return namePanel;
     }
@@ -167,13 +161,15 @@ public class SwingReversi implements ReversiView {
         JPanel southPanel = new JPanel(new GridBagLayout());
         southPanel.setOpaque(false);
 
-        JButton buttonStart = new JButton("Fit screen");
-        buttonStart.setHorizontalAlignment(SwingConstants.CENTER);
+        JButton buttonFit = new JButton("Fit screen");
+        buttonFit.setHorizontalAlignment(SwingConstants.CENTER);
 
-        buttonStart.addActionListener(s -> {rescaleCheckerboard(); displayTurn();});
+        buttonFit.addActionListener(s -> {
+            rescaleCheckerboard();
+            displayTurn();
+        });
 
-        southPanel.add(buttonStart, new GridBagConstraints(1, 0, 3, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 10, 0), 0, 0));
+        southPanel.add(buttonFit, new GridBagConstraints(1, 0, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 10, 0), 0, 0));
 
         mainContainer.add(southPanel, BorderLayout.SOUTH);
 
@@ -227,15 +223,13 @@ public class SwingReversi implements ReversiView {
         nameLabel.setFont(new Font("Calibri", Font.BOLD, 18));
         nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        rightPanel.add(nameLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, nameInset, 0, 0));
+        rightPanel.add(nameLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, nameInset, 0, 0));
 
         JLabel pointsLabel = new JLabel("" + points);
         pointsLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
         pointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        rightPanel.add(pointsLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, pointsInset, 0, 0));
+        rightPanel.add(pointsLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, pointsInset, 0, 0));
 
         return rightPanel;
     }
@@ -248,25 +242,20 @@ public class SwingReversi implements ReversiView {
         turn.setFont(new Font("Calibri", Font.PLAIN, 15));
         turn.setHorizontalAlignment(SwingConstants.CENTER);
 
-        centerPanel.add(turn, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(30, 0, 0, 0), 0, 0));
+        centerPanel.add(turn, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(30, 0, 0, 0), 0, 0));
 
         JLabel currentColor;
-        if (game.getCurrentPlayerName().equals(game.getPlayerBlack()))
-            currentColor = images.getLabel("BlackToken");
-        else
-            currentColor = images.getLabel("WhiteToken");
+        if (game.getCurrentPlayerName().equals(game.getPlayerBlack())) currentColor = images.getLabel("BlackToken");
+        else currentColor = images.getLabel("WhiteToken");
         currentColor.setHorizontalAlignment(SwingConstants.CENTER);
 
-        centerPanel.add(currentColor, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(currentColor, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel currentPlayer = new JLabel(game.getCurrentPlayerName());
         currentPlayer.setFont(new Font("Calibri", Font.BOLD, 20));
         currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
 
-        centerPanel.add(currentPlayer, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 30, 0), 0, 0));
+        centerPanel.add(currentPlayer, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 30, 0), 0, 0));
 
         return centerPanel;
     }
@@ -276,8 +265,7 @@ public class SwingReversi implements ReversiView {
 
         JPanel checkerboardPanel = getCheckerboardSquaresPanel();
 
-        centerPanel.add(checkerboardPanel, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(checkerboardPanel, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         return centerPanel;
     }
@@ -287,36 +275,28 @@ public class SwingReversi implements ReversiView {
         centerPanel.setOpaque(false);
 
         JLabel topRBorder = images.getLabel("TopRight");
-        centerPanel.add(topRBorder, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(topRBorder, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel topBorder = images.getLabel("Top");
-        centerPanel.add(topBorder, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(topBorder, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel topLBorder = images.getLabel("TopLeft");
-        centerPanel.add(topLBorder, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(topLBorder, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel bottomRBorder = images.getLabel("BottomRight");
-        centerPanel.add(bottomRBorder, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
-                GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(bottomRBorder, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel bottomBorder = images.getLabel("Bottom");
-        centerPanel.add(bottomBorder, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-                GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(bottomBorder, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel bottomLBorder = images.getLabel("BottomLeft");
-        centerPanel.add(bottomLBorder, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-                GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(bottomLBorder, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel rightBorder = images.getLabel("Right");
-        centerPanel.add(rightBorder, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(rightBorder, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JLabel leftBorder = images.getLabel("Left");
-        centerPanel.add(leftBorder, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        centerPanel.add(leftBorder, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         return centerPanel;
     }
@@ -348,8 +328,7 @@ public class SwingReversi implements ReversiView {
                     default -> square.setIcon(images.getIcon("None"));
                 }
 
-                checkerboardPanel.add(square, new GridBagConstraints(column, row, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+                checkerboardPanel.add(square, new GridBagConstraints(column, row, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
             }
         }
 
@@ -366,9 +345,7 @@ public class SwingReversi implements ReversiView {
 
         Checkerboard checkerboard = game.getCheckerboard();
 
-        showMessageDialog(null, game.getWinnerName() + " wins!\n" +
-                "Whites: " + checkerboard.getNumberOfWhites() + "\n" +
-                "Blacks: " + checkerboard.getNumberOfBlacks(), "Game over", JOptionPane.INFORMATION_MESSAGE);
+        showMessageDialog(null, game.getWinnerName() + " wins!\n\n" + game.getPlayerWhite() + " (white): " + checkerboard.getNumberOfWhites() + " disks\n" + game.getPlayerBlack() + " (black): " + checkerboard.getNumberOfBlacks() + " disks\n\n\nPress OK to terminate.", "Game over", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
@@ -381,7 +358,7 @@ public class SwingReversi implements ReversiView {
         JPanel component = (JPanel) mainContainer.getComponent(0);
         component.remove(1);
 
-        showMessageDialog(null, "Draw!");
+        showMessageDialog(null, "Draw!\n\nPress OK to terminate.", "Game Over", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
