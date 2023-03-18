@@ -2,18 +2,13 @@ package units.sdm;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class SwingReversi implements ReversiView {
     private Game game;
     private JFrame frame;
-
-    private final int width = 600;
-    private final int length = 720;
-
 
     private final Color BG_COLOR = new Color(208, 206, 197);
 
@@ -53,6 +48,9 @@ public class SwingReversi implements ReversiView {
 
     @Override
     public void displayGameStart() {
+        final int width = 600;
+        final int length = 720;
+
         frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(width, length);
@@ -62,19 +60,7 @@ public class SwingReversi implements ReversiView {
         mainContainer.setBackground(BG_COLOR);
 
         //create title
-        JPanel northPanel = new JPanel();
-        northPanel.setOpaque(false);
-
-        JLabel title = new JLabel();
-        title.setOpaque(false);
-        ImageManager titleImg = new ImageManager("Title");
-        titleImg.scaleIcon(150, 150);
-        title.setIcon(titleImg.getIcon());
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-
-        northPanel.add(title);
-
-        mainContainer.add(northPanel, BorderLayout.NORTH);
+        mainContainer.add(getTitlePanel(), BorderLayout.NORTH);
 
         //add small help label
         JPanel centerPanel = new JPanel(new GridBagLayout());
@@ -120,6 +106,23 @@ public class SwingReversi implements ReversiView {
         rescaleCheckerboard();
     }
 
+    private JPanel getTitlePanel() {
+        JPanel northPanel = new JPanel();
+        northPanel.setOpaque(false);
+
+        JLabel title = new JLabel();
+        title.setOpaque(false);
+
+        ImageManager titleImg = new ImageManager("Title");
+        titleImg.scaleIcon(150, 150);
+        title.setIcon(titleImg.getIcon());
+
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        northPanel.add(title);
+
+        return northPanel;
+    }
+
     private JPanel getNameQueryPanel(String player) {
         JPanel namePanel = new JPanel(new GridBagLayout());
         namePanel.setOpaque(false);
@@ -148,7 +151,6 @@ public class SwingReversi implements ReversiView {
 
     @Override
     public void displayTurn() {
-        Checkerboard checkerboard = game.getCheckerboard();
         Container mainContainer = frame.getContentPane();
 
         //reset container
@@ -157,34 +159,45 @@ public class SwingReversi implements ReversiView {
         mainContainer.setBackground(BG_COLOR);
 
         //point board
-        JPanel northPanel = getTurnInfoPanel();
-        mainContainer.add(northPanel, BorderLayout.NORTH);
+        mainContainer.add(getTurnInfoPanel(), BorderLayout.NORTH);
 
         //draw board
-        JPanel centerPanel = getCheckerboardPanel();
-        mainContainer.add(centerPanel, BorderLayout.CENTER);
+        mainContainer.add(getCheckerboardPanel(), BorderLayout.CENTER);
+
+        JPanel southPanel = new JPanel(new GridBagLayout());
+        southPanel.setOpaque(false);
+
+        JButton buttonStart = new JButton("Fit screen");
+        buttonStart.setHorizontalAlignment(SwingConstants.CENTER);
+
+        buttonStart.addActionListener(s -> {rescaleCheckerboard(); displayTurn();});
+
+        southPanel.add(buttonStart, new GridBagConstraints(1, 0, 3, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 10, 0), 0, 0));
+
+        mainContainer.add(southPanel, BorderLayout.SOUTH);
 
         frame.revalidate();
     }
 
     private JPanel getTurnInfoPanel() {
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel mainPanel = new JPanel(new GridLayout(1, 3));
         mainPanel.setOpaque(false);
 
         //Points of Black
         JPanel leftPanel = getPlayerPointsPanel(Checkerboard.B);
 
-        mainPanel.add(leftPanel, BorderLayout.WEST);
+        mainPanel.add(leftPanel);
 
         //Current turn
         JPanel centerPanel = getCurrentTurnPanel();
 
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(centerPanel);
 
         //Points of White
         JPanel rightPanel = getPlayerPointsPanel(Checkerboard.W);
 
-        mainPanel.add(rightPanel, BorderLayout.EAST);
+        mainPanel.add(rightPanel);
 
         return mainPanel;
     }
@@ -345,15 +358,29 @@ public class SwingReversi implements ReversiView {
 
     @Override
     public void displayGameOver() {
-        showMessageDialog(null, game.getWinnerName() + " wins!\nWhites: " + game.getCheckerboard().getNumberOfWhites() +
-                "\nBlacks: " + game.getCheckerboard().getNumberOfBlacks(), "Game over", JOptionPane.INFORMATION_MESSAGE);
+        displayTurn();
 
-        System.exit(0);
+        Container mainContainer = frame.getContentPane();
+        JPanel component = (JPanel) mainContainer.getComponent(0);
+        component.remove(1);
 
+        Checkerboard checkerboard = game.getCheckerboard();
+
+        showMessageDialog(null, game.getWinnerName() + " wins!\n" +
+                "Whites: " + checkerboard.getNumberOfWhites() + "\n" +
+                "Blacks: " + checkerboard.getNumberOfBlacks(), "Game over", JOptionPane.INFORMATION_MESSAGE);
+
+        frame.dispose();
     }
 
     @Override
     public void displayDraw() {
+        displayTurn();
+
+        Container mainContainer = frame.getContentPane();
+        JPanel component = (JPanel) mainContainer.getComponent(0);
+        component.remove(1);
+
         showMessageDialog(null, "Draw!");
 
         frame.dispose();
@@ -361,6 +388,8 @@ public class SwingReversi implements ReversiView {
 
     @Override
     public void displayNoMoves() {
+        displayTurn();
+
         showMessageDialog(null, game.getCurrentPlayerName() + ", you cannot do any move!", "No moves", JOptionPane.WARNING_MESSAGE);
         game.nextTurn();
     }
