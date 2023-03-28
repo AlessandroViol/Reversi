@@ -23,6 +23,8 @@ public interface Game {
 
     boolean isDraw();
 
+    boolean isGameover();
+
     String getWinnerName();
 
     void validateAndTryPlace(String row, String column);

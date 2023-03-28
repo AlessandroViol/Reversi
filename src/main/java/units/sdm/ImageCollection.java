@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ImageCollection {
-    Map<String, ImageManager> images = new HashMap<String, ImageManager>();
+    private final Map<String, ImageManager> images = new HashMap<>();
 
     public void add(String key) {
         images.put(key, new ImageManager(key));
     }
 
     public ImageIcon getIcon(String key) {
-        return images.get(key).getIcon();
+        ImageManager image = images.get(key);
+        return image.getIcon();
     }
 
     public JLabel getLabel(String key) {

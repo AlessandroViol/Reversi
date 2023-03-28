@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ImageManager {
-    private Image img;
+    private final Image img;
     private ImageIcon icon;
     private final int originalWidth;
     private final int originalHeight;
@@ -21,9 +21,7 @@ public class ImageManager {
     }
 
     public void scaleIcon(int width, int height) {
-        int fitSize = width;
-        if (width > height)
-            fitSize = height;
+        int fitSize = Math.min(width, height);
 
         double ratio = (double) commonMeasure / fitSize;
 

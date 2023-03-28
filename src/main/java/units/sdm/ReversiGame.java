@@ -1,14 +1,17 @@
 package units.sdm;
 
+import static units.sdm.Checkerboard.B;
+import static units.sdm.Checkerboard.W;
+
 public class ReversiGame implements Game {
     private String playerWhite;
     private String playerBlack;
 
     private int colorTurn = 1;
 
-    private Checkerboard checkerboard;
+    private final Checkerboard checkerboard;
 
-    private ReversiView view;
+    private final ReversiView view;
 
     public ReversiGame(ReversiView view) {
         this.playerBlack = "Black";
@@ -62,7 +65,7 @@ public class ReversiGame implements Game {
 
     @Override
     public void turn() {
-        if (checkerboard.isGameover())
+        if (isGameover())
             if (isDraw())
                 view.displayDraw();
             else
@@ -79,7 +82,7 @@ public class ReversiGame implements Game {
 
     @Override
     public String getCurrentPlayerName() {
-        if (colorTurn == Checkerboard.B)
+        if (colorTurn == B)
             return playerBlack;
 
         return playerWhite;
@@ -124,6 +127,11 @@ public class ReversiGame implements Game {
     @Override
     public boolean isDraw() {
         return checkerboard.getNumberOfBlacks() == checkerboard.getNumberOfWhites();
+    }
+
+    @Override
+    public boolean isGameover() {
+        return !checkerboard.existAllowedPlace(B) && !checkerboard.existAllowedPlace(W);
     }
 
     @Override

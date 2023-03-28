@@ -13,9 +13,9 @@ class ReversiGameTest {
     private static final int N = Checkerboard.N;
     private static final int A = Checkerboard.A;
 
-    public class DummyView implements ReversiView {
+    private class DummyView implements ReversiView {
         public String called;
-        public List<String> traceback = new ArrayList<String>();
+        public List<String> traceback = new ArrayList<>();
 
         @Override
         public void installLogic(Game reversiGame) {
@@ -214,6 +214,89 @@ class ReversiGameTest {
         String nextPlayer = reversiGame.getCurrentPlayerName();
 
         assertNotEquals(initialPlayer, nextPlayer);
+    }
+
+    @Test
+    void endGameFullCheckerboard() {
+        int[][] fullMatrix = {{W, W, W, B, B, B, B, B},
+                {W, W, W, W, W, W, W, B},
+                {W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, B, W, B},
+                {W, W, W, W, B, W, B, B},
+                {W, W, B, B, B, B, B, B},
+                {W, B, B, W, W, W, W, B},
+                {B, B, B, W, W, W, W, B}};
+        Checkerboard checkerboard = new Checkerboard(fullMatrix);
+
+        DummyView dummy = new DummyView();
+        Game game = new ReversiGame(dummy, checkerboard);
+
+        assertTrue(game.isGameover());
+    }
+
+    @Test
+    void endGameNoAllowedPlace() {
+        int[][] notFullMatrix = {{W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, W, W, W},
+                {W, W, W, W, W, W, W, N},
+                {W, W, W, W, W, W, N, N},
+                {W, W, W, W, W, W, N, B},
+                {W, W, W, W, W, W, W, N},
+                {W, W, W, W, W, W, W, W}};
+        Checkerboard checkerboard = new Checkerboard(notFullMatrix);
+
+        DummyView dummy = new DummyView();
+        Game game = new ReversiGame(dummy, checkerboard);
+
+        assertTrue(game.isGameover());
+    }
+
+    @Test
+    void endGameBothHaveAllowedPlaces() {
+        Checkerboard checkerboard = new Checkerboard();
+
+
+        DummyView dummy = new DummyView();
+        Game game = new ReversiGame(dummy, checkerboard);
+
+        assertFalse(game.isGameover());
+    }
+
+    @Test
+    void endGameWhiteHasAllowedPlace() {
+        int[][] whiteHasAPMatrix = {{B, B, B, B, B, B, B, W},
+                {W, W, W, W, W, W, W, B},
+                {W, W, B, W, B, B, W, B},
+                {B, W, B, B, W, W, W, B},
+                {B, W, B, W, W, B, W, B},
+                {B, W, B, W, B, W, W, B},
+                {W, B, W, W, W, W, W, N},
+                {B, B, B, B, B, B, B, N}};
+        Checkerboard checkerboard = new Checkerboard(whiteHasAPMatrix);
+
+        DummyView dummy = new DummyView();
+        Game game = new ReversiGame(dummy, checkerboard);
+
+        assertFalse(game.isGameover());
+    }
+
+    @Test
+    void endGameBlackHasAllowedPlace() {
+        int[][] blackHasAPMatrix = {{B, B, B, B, B, B, B, B},
+                {W, W, W, W, W, W, W, B},
+                {W, W, B, W, B, B, W, B},
+                {B, W, B, B, W, W, W, B},
+                {B, W, B, W, W, B, W, B},
+                {B, W, B, W, B, W, W, B},
+                {W, B, W, W, W, W, W, N},
+                {B, B, B, B, B, B, B, N}};
+        Checkerboard checkerboard = new Checkerboard(blackHasAPMatrix);
+
+        DummyView dummy = new DummyView();
+        Game game = new ReversiGame(dummy, checkerboard);
+
+        assertFalse(game.isGameover());
     }
 
     @Test

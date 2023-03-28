@@ -2,7 +2,7 @@ package units.sdm;
 
 public class Checkerboard {
     public static final int SIZE = 8;
-    private int[][] matrix;
+    private final int[][] matrix;
 
     private int numberOfWhites;
     private int numberOfBlacks;
@@ -203,10 +203,6 @@ public class Checkerboard {
             for (int j = 0; j < SIZE; j++)
                 if (matrix[i][j] == A)
                     matrix[i][j] = N;
-    }
-
-    public boolean isGameover() {
-        return !existAllowedPlace(B) && !existAllowedPlace(W);
     }
 
     @Override
