@@ -395,7 +395,7 @@ class CheckerboardTest {
 
         try {
             AbstractCheckerboard checkerboard = new Checkerboard(checkerboardMatrix);
-        } catch (AbstractCheckerboard.InvalidSquareValueException e) {
+        } catch (InvalidSquareValueException e) {
             throwedExc = true;
         }
 
@@ -409,7 +409,7 @@ class CheckerboardTest {
 
         try {
             checkerboard.place(2, 3, 0);
-        } catch (AbstractCheckerboard.InvalidColorValueException e) {
+        } catch (InvalidColorValueException e) {
             throwedExc = true;
         }
 
@@ -423,7 +423,7 @@ class CheckerboardTest {
 
         try {
             checkerboard.isPlaceAllowed(2, 3, 0);
-        } catch (AbstractCheckerboard.InvalidColorValueException e) {
+        } catch (InvalidColorValueException e) {
             throwedExc = true;
         }
 
@@ -437,7 +437,7 @@ class CheckerboardTest {
 
         try {
             checkerboard.existAllowedPlace(0);
-        } catch (AbstractCheckerboard.InvalidColorValueException e) {
+        } catch (InvalidColorValueException e) {
             throwedExc = true;
         }
 
@@ -451,7 +451,7 @@ class CheckerboardTest {
 
         try {
             checkerboard.markAllowedPlacings(0);
-        } catch (AbstractCheckerboard.InvalidColorValueException e) {
+        } catch (InvalidColorValueException e) {
             throwedExc = true;
         }
 

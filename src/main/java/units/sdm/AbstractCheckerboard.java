@@ -79,18 +79,4 @@ public abstract class AbstractCheckerboard {
         }
         return strMatrix;
     }
-
-    public static class InvalidSquareValueException extends RuntimeException {
-        public InvalidSquareValueException(int value) {
-            super("Tried to write value [" + value + "] into a Checkerboard object. The only allowed values are: " +
-                    "{" + W + "; " + B + "; " + N + "; " + A + "}");
-        }
-    }
-
-    public static class InvalidColorValueException extends RuntimeException {
-        public InvalidColorValueException(int value) {
-            super("Tried to use value [" + value + "] as a color value for a Checkerboard square." +
-                    "The only allowed values are: {" + W + "; " + B + "}");
-        }
-    }
 }
