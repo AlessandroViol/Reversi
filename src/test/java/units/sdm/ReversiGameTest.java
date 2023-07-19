@@ -8,10 +8,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReversiGameTest {
-    private static final int B = Checkerboard.B;
-    private static final int W = Checkerboard.W;
-    private static final int N = Checkerboard.N;
-    private static final int A = Checkerboard.A;
+    private static final int B = AbstractCheckerboard.B;
+    private static final int W = AbstractCheckerboard.W;
+    private static final int N = AbstractCheckerboard.N;
+    private static final int A = AbstractCheckerboard.A;
 
     private class DummyView implements ReversiView {
         public String called;
@@ -108,7 +108,7 @@ class ReversiGameTest {
 
     @Test
     void tryPlaceAllowed() {
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         int[][] referenceCheckerboard = {
                 {N, N, W, W, W, W, W, W},
@@ -124,7 +124,7 @@ class ReversiGameTest {
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
 
         reversiGame.tryPlace(2, 7);
-        Checkerboard gameCheckerboard = reversiGame.getCheckerboard();
+        AbstractCheckerboard gameCheckerboard = reversiGame.getCheckerboard();
         gameCheckerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(referenceCheckerboard, gameCheckerboard.getMatrix());
@@ -132,13 +132,13 @@ class ReversiGameTest {
 
     @Test
     void tryPlaceOccupied() {
-        Checkerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, referenceCheckerboard);
 
         reversiGame.tryPlace(0, 2);
-        Checkerboard checkerboard = reversiGame.getCheckerboard();
+        AbstractCheckerboard checkerboard = reversiGame.getCheckerboard();
         checkerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
@@ -146,7 +146,7 @@ class ReversiGameTest {
 
     @Test
     void tryPlaceOutOfGrid() {
-        Checkerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, referenceCheckerboard);
@@ -159,7 +159,7 @@ class ReversiGameTest {
         reversiGame.tryPlace(9, 9);
         reversiGame.tryPlace(-1, -1);
 
-        Checkerboard checkerboard = reversiGame.getCheckerboard();
+        AbstractCheckerboard checkerboard = reversiGame.getCheckerboard();
         checkerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
@@ -167,13 +167,13 @@ class ReversiGameTest {
 
     @Test
     void tryPlaceNotAllowed() {
-        Checkerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard referenceCheckerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, referenceCheckerboard);
 
         reversiGame.tryPlace(0, 0);
-        Checkerboard checkerboard = reversiGame.getCheckerboard();
+        AbstractCheckerboard checkerboard = reversiGame.getCheckerboard();
         checkerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(referenceCheckerboard.getMatrix(), checkerboard.getMatrix());
@@ -226,7 +226,7 @@ class ReversiGameTest {
                 {W, W, B, B, B, B, B, B},
                 {W, B, B, W, W, W, W, B},
                 {B, B, B, W, W, W, W, B}};
-        Checkerboard checkerboard = new Checkerboard(fullMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(fullMatrix);
 
         DummyView dummy = new DummyView();
         Game game = new ReversiGame(dummy, checkerboard);
@@ -244,7 +244,7 @@ class ReversiGameTest {
                 {W, W, W, W, W, W, N, B},
                 {W, W, W, W, W, W, W, N},
                 {W, W, W, W, W, W, W, W}};
-        Checkerboard checkerboard = new Checkerboard(notFullMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(notFullMatrix);
 
         DummyView dummy = new DummyView();
         Game game = new ReversiGame(dummy, checkerboard);
@@ -254,7 +254,7 @@ class ReversiGameTest {
 
     @Test
     void endGameBothHaveAllowedPlaces() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
 
         DummyView dummy = new DummyView();
@@ -273,7 +273,7 @@ class ReversiGameTest {
                 {B, W, B, W, B, W, W, B},
                 {W, B, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(whiteHasAPMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(whiteHasAPMatrix);
 
         DummyView dummy = new DummyView();
         Game game = new ReversiGame(dummy, checkerboard);
@@ -291,7 +291,7 @@ class ReversiGameTest {
                 {B, W, B, W, B, W, W, B},
                 {W, B, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(blackHasAPMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(blackHasAPMatrix);
 
         DummyView dummy = new DummyView();
         Game game = new ReversiGame(dummy, checkerboard);
@@ -311,7 +311,7 @@ class ReversiGameTest {
                 {W, W, W, W, B, B, B, B},
                 {B, B, B, B, W, W, W, W}};
 
-        Checkerboard checkerboard = new Checkerboard(drawCheckerboard);
+        AbstractCheckerboard checkerboard = new Checkerboard(drawCheckerboard);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
@@ -322,7 +322,7 @@ class ReversiGameTest {
     @Test
     void isNotDraw() {
 
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
@@ -334,7 +334,7 @@ class ReversiGameTest {
     @Test
     void getWhiteWinnerName() {
 
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
@@ -354,7 +354,7 @@ class ReversiGameTest {
                 {W, W, W, W, B, B, B, B},
                 {B, B, B, B, W, W, W, W}};
 
-        Checkerboard checkerboard = new Checkerboard(grid);
+        AbstractCheckerboard checkerboard = new Checkerboard(grid);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
@@ -383,7 +383,7 @@ class ReversiGameTest {
                 {W, B, B, W, W, W, W, B},
                 {B, B, B, W, W, W, W, B}};
 
-        Checkerboard checkerboard = new Checkerboard(fullMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(fullMatrix);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
@@ -403,7 +403,7 @@ class ReversiGameTest {
                 {W, W, W, W, B, B, B, B},
                 {B, B, B, B, W, W, W, W}};
 
-        Checkerboard checkerboard = new Checkerboard(drawMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(drawMatrix);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);
@@ -423,7 +423,7 @@ class ReversiGameTest {
                 {W, W, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
 
-        Checkerboard checkerboard = new Checkerboard(blackNoMovesMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(blackNoMovesMatrix);
 
         DummyView dummy = new DummyView();
         ReversiGame reversiGame = new ReversiGame(dummy, checkerboard);

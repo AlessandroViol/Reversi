@@ -33,22 +33,22 @@ public class FormattedConsoleReversi extends ConsoleReversi{
 
     @Override
     public void displayCheckerboard() {
-        Checkerboard checkerboard = game.getCheckerboard();
+        AbstractCheckerboard checkerboard = game.getCheckerboard();
         String currentValue;
 
         System.out.print(LINE + WHITE + "  ");
-        for (int i = 0; i < Checkerboard.SIZE; i++) {
+        for (int i = 0; i < AbstractCheckerboard.SIZE; i++) {
             System.out.print("|" + (char) (i + 65));
         }
         System.out.print(END + WHITE + "|\n");
 
-        for (int i = 0; i < Checkerboard.SIZE; i++) {
+        for (int i = 0; i < AbstractCheckerboard.SIZE; i++) {
             System.out.print(LINE + (i + 1) + " ");
-            for (int j = 0; j < Checkerboard.SIZE; j++) {
+            for (int j = 0; j < AbstractCheckerboard.SIZE; j++) {
                 currentValue = switch (checkerboard.getMatrix()[i][j]) {
-                    case Checkerboard.W -> "o";
-                    case Checkerboard.B -> RED + "o" + WHITE;
-                    case Checkerboard.A -> GREEN + "x" + WHITE;
+                    case AbstractCheckerboard.W -> "o";
+                    case AbstractCheckerboard.B -> RED + "o" + WHITE;
+                    case AbstractCheckerboard.A -> GREEN + "x" + WHITE;
                     default -> " ";
                 };
                 System.out.print("|" + currentValue);

@@ -9,7 +9,7 @@ public class ReversiGame implements Game {
 
     private int colorTurn = 1;
 
-    private final Checkerboard checkerboard;
+    private final AbstractCheckerboard checkerboard;
 
     private final ReversiView view;
 
@@ -22,7 +22,7 @@ public class ReversiGame implements Game {
         this.view = view;
     }
 
-    public ReversiGame(ReversiView view, Checkerboard checkerboard) {
+    public ReversiGame(ReversiView view, AbstractCheckerboard checkerboard) {
         this.playerBlack = "Black";
         this.playerWhite = "White";
 
@@ -59,7 +59,7 @@ public class ReversiGame implements Game {
     }
 
     @Override
-    public Checkerboard getCheckerboard() {
+    public AbstractCheckerboard getCheckerboard() {
         return checkerboard;
     }
 
@@ -110,7 +110,7 @@ public class ReversiGame implements Game {
 
     @Override
     public void tryPlace(int x, int y) {
-        if (x >= 0 && x < Checkerboard.SIZE && y >= 0 && y < Checkerboard.SIZE && checkerboard.isPlaceAllowed(x, y, colorTurn)) {
+        if (x >= 0 && x < AbstractCheckerboard.SIZE && y >= 0 && y < AbstractCheckerboard.SIZE && checkerboard.isPlaceAllowed(x, y, colorTurn)) {
             checkerboard.place(x, y, colorTurn);
             nextTurn();
         } else

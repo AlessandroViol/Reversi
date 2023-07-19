@@ -145,8 +145,8 @@ public class SwingReversi implements ReversiView {
     private void rescaleCheckerboard() {
         Container mainContainer = frame.getContentPane();
 
-        int width = mainContainer.getWidth() / (Checkerboard.SIZE + 4);
-        int height = (mainContainer.getHeight() - 100) / (Checkerboard.SIZE + 4);
+        int width = mainContainer.getWidth() / (AbstractCheckerboard.SIZE + 4);
+        int height = (mainContainer.getHeight() - 100) / (AbstractCheckerboard.SIZE + 4);
 
         images.rescale(width, height);
     }
@@ -190,7 +190,7 @@ public class SwingReversi implements ReversiView {
         mainPanel.setOpaque(false);
 
         //Points of Black
-        JPanel leftPanel = getPlayerPointsPanel(Checkerboard.B);
+        JPanel leftPanel = getPlayerPointsPanel(AbstractCheckerboard.B);
 
         mainPanel.add(leftPanel);
 
@@ -200,7 +200,7 @@ public class SwingReversi implements ReversiView {
         mainPanel.add(centerPanel);
 
         //Points of White
-        JPanel rightPanel = getPlayerPointsPanel(Checkerboard.W);
+        JPanel rightPanel = getPlayerPointsPanel(AbstractCheckerboard.W);
 
         mainPanel.add(rightPanel);
 
@@ -216,8 +216,8 @@ public class SwingReversi implements ReversiView {
         Insets nameInset;
         Insets pointsInset;
 
-        Checkerboard checkerboard = game.getCheckerboard();
-        if (color == Checkerboard.B) {
+        AbstractCheckerboard checkerboard = game.getCheckerboard();
+        if (color == AbstractCheckerboard.B) {
             name = game.getPlayerBlack();
             points = checkerboard.getNumberOfBlacks();
             nameInset = new Insets(30, 30, 0, 0);
@@ -333,10 +333,10 @@ public class SwingReversi implements ReversiView {
         JPanel checkerboardPanel = new JPanel(new GridBagLayout());
         checkerboardPanel.setOpaque(false);
 
-        Checkerboard checkerboard = game.getCheckerboard();
+        AbstractCheckerboard checkerboard = game.getCheckerboard();
 
-        for (int row = 0; row < Checkerboard.SIZE; row++) {
-            for (int column = 0; column < Checkerboard.SIZE; column++) {
+        for (int row = 0; row < AbstractCheckerboard.SIZE; row++) {
+            for (int column = 0; column < AbstractCheckerboard.SIZE; column++) {
                 JLabel square = new JLabel();
                 final int rowIndex = row;
                 final int columnIndex = column;
@@ -350,9 +350,9 @@ public class SwingReversi implements ReversiView {
                 });
 
                 switch (checkerboard.getMatrix()[row][column]) {
-                    case Checkerboard.B -> square.setIcon(images.getIcon("Black"));
-                    case Checkerboard.W -> square.setIcon(images.getIcon("White"));
-                    case Checkerboard.A -> square.setIcon(images.getIcon("Allowed"));
+                    case AbstractCheckerboard.B -> square.setIcon(images.getIcon("Black"));
+                    case AbstractCheckerboard.W -> square.setIcon(images.getIcon("White"));
+                    case AbstractCheckerboard.A -> square.setIcon(images.getIcon("Allowed"));
                     default -> square.setIcon(images.getIcon("None"));
                 }
 
@@ -372,7 +372,7 @@ public class SwingReversi implements ReversiView {
         JPanel component = (JPanel) mainContainer.getComponent(0);
         component.remove(1);
 
-        Checkerboard checkerboard = game.getCheckerboard();
+        AbstractCheckerboard checkerboard = game.getCheckerboard();
 
         showMessageDialog(null, game.getWinnerName() + " wins!\n\n" +
                 game.getPlayerWhite() + " (white): " + checkerboard.getNumberOfWhites() + " disks\n" +

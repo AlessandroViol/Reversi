@@ -11,7 +11,7 @@ public interface Game {
 
     void setPlayerBlack(String name);
 
-    Checkerboard getCheckerboard();
+    AbstractCheckerboard getCheckerboard();
 
     void turn();
 

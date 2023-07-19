@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CheckerboardTest {
-    private static final int B = Checkerboard.B;
-    private static final int W = Checkerboard.W;
-    private static final int N = Checkerboard.N;
-    private static final int A = Checkerboard.A;
+    private static final int B = AbstractCheckerboard.B;
+    private static final int W = AbstractCheckerboard.W;
+    private static final int N = AbstractCheckerboard.N;
+    private static final int A = AbstractCheckerboard.A;
 
     @Test
     void createDefaultCheckerboard() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         int[][] referenceCheckerboard = {{N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N},
@@ -28,7 +28,7 @@ class CheckerboardTest {
 
     @Test
     void createDefaultCheckerboardCountBlack() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
         int expectedNBlacks = 2;
 
         int nBlacks = checkerboard.getNumberOfBlacks();
@@ -38,7 +38,7 @@ class CheckerboardTest {
 
     @Test
     void createDefaultCheckerboardCountWhite() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
         int expectedNWhite = 2;
 
         int nWhite = checkerboard.getNumberOfBlacks();
@@ -57,14 +57,14 @@ class CheckerboardTest {
                 {N, N, W, W, W, B, B, W},
                 {N, N, N, W, N, N, B, W}};
 
-        Checkerboard checkerboard = new Checkerboard(referenceCheckerboard);
+        AbstractCheckerboard checkerboard = new Checkerboard(referenceCheckerboard);
 
         assertArrayEquals(referenceCheckerboard, checkerboard.getMatrix());
     }
 
     @Test
     void addAllowedDisks() {
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         checkerboard.markAllowedPlacings(B);
 
         assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS, checkerboard.getMatrix());
@@ -72,10 +72,10 @@ class CheckerboardTest {
 
     @Test
     void allowPlaceDefaultCheckerboard() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
-        for (int i = 0; i < Checkerboard.SIZE; i++) {
-            for (int j = 0; j < Checkerboard.SIZE; j++) {
+        for (int i = 0; i < AbstractCheckerboard.SIZE; i++) {
+            for (int j = 0; j < AbstractCheckerboard.SIZE; j++) {
                 if (checkerboard.isPlaceAllowed(i, j, B))
                     checkerboard.getMatrix()[i][j] = A;
             }
@@ -86,10 +86,10 @@ class CheckerboardTest {
 
     @Test
     void allowPlaceComplexCheckerboard() {
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
 
-        for (int i = 0; i < Checkerboard.SIZE; i++) {
-            for (int j = 0; j < Checkerboard.SIZE; j++) {
+        for (int i = 0; i < AbstractCheckerboard.SIZE; i++) {
+            for (int j = 0; j < AbstractCheckerboard.SIZE; j++) {
                 if (checkerboard.isPlaceAllowed(i, j, B))
                     checkerboard.getMatrix()[i][j] = A;
             }
@@ -100,7 +100,7 @@ class CheckerboardTest {
 
     @Test
     void disksCountBlack() {
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         int numBlacks = 8;
 
         assertEquals(numBlacks, checkerboard.getNumberOfBlacks());
@@ -108,7 +108,7 @@ class CheckerboardTest {
 
     @Test
     void disksCountWhite() {
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         int numWhites = 29;
 
         assertEquals(numWhites, checkerboard.getNumberOfWhites());
@@ -116,7 +116,7 @@ class CheckerboardTest {
 
     @Test
     void placeWhite() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         int[][] expectedMatrix = {{N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N},
@@ -135,7 +135,7 @@ class CheckerboardTest {
 
     @Test
     void placeBlack() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         int[][] expectedMatrix = {{N, N, N, N, N, N, N, N},
                 {N, N, N, N, N, N, N, N},
@@ -162,7 +162,7 @@ class CheckerboardTest {
                 {N, N, W, N, W, W, N, N},
                 {N, W, N, N, W, N, W, N},
                 {B, N, N, N, B, N, N, B}};
-        Checkerboard checkerboard = new Checkerboard(borderMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(borderMatrix);
 
         int[][] expectedMatrix = {{B, N, N, N, B, N, N, B},
                 {N, B, N, N, B, N, B, N},
@@ -191,7 +191,7 @@ class CheckerboardTest {
                 {N, N, B, N, B, B, N, N},
                 {N, B, N, N, B, N, B, N},
                 {W, N, N, N, W, N, N, W}};
-        Checkerboard checkerboard = new Checkerboard(borderMatrix);
+        AbstractCheckerboard checkerboard = new Checkerboard(borderMatrix);
 
         int[][] expectedMatrix = {{W, N, N, N, W, N, N, W},
                 {N, W, N, N, W, N, W, N},
@@ -212,10 +212,10 @@ class CheckerboardTest {
 
     @Test
     void whitePlaceNotAllowed() {
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         checkerboard.markAllowedPlacings(B);
 
-        Checkerboard referenceCheckerboard = new Checkerboard(checkerboard.getMatrix());
+        AbstractCheckerboard referenceCheckerboard = new Checkerboard(checkerboard.getMatrix());
 
         //empty square with no adjacent
         checkerboard.place(0, 0, W);
@@ -231,10 +231,10 @@ class CheckerboardTest {
 
     @Test
     void blackPlaceNotAllowed() {
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD);
         checkerboard.markAllowedPlacings(W);
 
-        Checkerboard referenceCheckerboard = new Checkerboard(checkerboard.getMatrix());
+        AbstractCheckerboard referenceCheckerboard = new Checkerboard(checkerboard.getMatrix());
 
         //empty square with no adjacent
         checkerboard.place(0, 0, B);
@@ -250,7 +250,7 @@ class CheckerboardTest {
 
     @Test
     void placeUpdateDisks() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
         int initialNBlacks = checkerboard.getNumberOfBlacks();
         int initialNWhites = checkerboard.getNumberOfWhites();
 
@@ -265,7 +265,7 @@ class CheckerboardTest {
 
     @Test
     void placeUpdateDisksToExpectedValues() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         checkerboard.place(2, 3, B);
 
@@ -286,7 +286,7 @@ class CheckerboardTest {
                 {B, W, B, W, B, W, W, B},
                 {W, B, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(whiteHasNoPlaces);
+        AbstractCheckerboard checkerboard = new Checkerboard(whiteHasNoPlaces);
 
         assertFalse(checkerboard.existAllowedPlace(W));
     }
@@ -301,7 +301,7 @@ class CheckerboardTest {
                 {B, W, B, W, B, W, W, B},
                 {W, B, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(whiteHasPlaces);
+        AbstractCheckerboard checkerboard = new Checkerboard(whiteHasPlaces);
 
         assertTrue(checkerboard.existAllowedPlace(W));
     }
@@ -316,7 +316,7 @@ class CheckerboardTest {
                 {B, W, B, W, B, W, W, B},
                 {W, W, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(blackHasNoPlaces);
+        AbstractCheckerboard checkerboard = new Checkerboard(blackHasNoPlaces);
 
         assertFalse(checkerboard.existAllowedPlace(B));
     }
@@ -331,14 +331,14 @@ class CheckerboardTest {
                 {B, W, B, W, B, W, W, B},
                 {W, B, W, W, W, W, W, N},
                 {B, B, B, B, B, B, B, N}};
-        Checkerboard checkerboard = new Checkerboard(blackHasPlaces);
+        AbstractCheckerboard checkerboard = new Checkerboard(blackHasPlaces);
 
         assertTrue(checkerboard.existAllowedPlace(B));
     }
 
     @Test
     void removeAllowedDisks() {
-        Checkerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
+        AbstractCheckerboard checkerboard = new Checkerboard(CheckerboardUtility.COMPLEX_CHECKERBOARD_ALLOWED_DISKS);
         checkerboard.unmarkAllowedPlacings();
 
         assertArrayEquals(CheckerboardUtility.COMPLEX_CHECKERBOARD, checkerboard.getMatrix());
@@ -346,7 +346,7 @@ class CheckerboardTest {
 
     @Test
     void defaultCheckerboardToString() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         String referenceString = "   [A][B][C][D][E][F][G][H]\n" +
                 "[1][ ][ ][ ][ ][ ][ ][ ][ ]\n" +
@@ -363,7 +363,7 @@ class CheckerboardTest {
 
     @Test
     void defaultCheckerboardAllowedPlaceToString() {
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         String referenceString = "   [A][B][C][D][E][F][G][H]\n" +
                 "[1][ ][ ][ ][ ][ ][ ][ ][ ]\n" +
@@ -394,8 +394,8 @@ class CheckerboardTest {
         boolean throwedExc = false;
 
         try {
-            Checkerboard checkerboard = new Checkerboard(checkerboardMatrix);
-        } catch (Checkerboard.InvalidSquareValueException e) {
+            AbstractCheckerboard checkerboard = new Checkerboard(checkerboardMatrix);
+        } catch (AbstractCheckerboard.InvalidSquareValueException e) {
             throwedExc = true;
         }
 
@@ -405,11 +405,11 @@ class CheckerboardTest {
     @Test
     void placeThrowsException() {
         boolean throwedExc = false;
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         try {
             checkerboard.place(2, 3, 0);
-        } catch (Checkerboard.InvalidColorValueException e) {
+        } catch (AbstractCheckerboard.InvalidColorValueException e) {
             throwedExc = true;
         }
 
@@ -419,11 +419,11 @@ class CheckerboardTest {
     @Test
     void allowPlaceThrowsException() {
         boolean throwedExc = false;
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         try {
             checkerboard.isPlaceAllowed(2, 3, 0);
-        } catch (Checkerboard.InvalidColorValueException e) {
+        } catch (AbstractCheckerboard.InvalidColorValueException e) {
             throwedExc = true;
         }
 
@@ -433,11 +433,11 @@ class CheckerboardTest {
     @Test
     void existAllowedPlaceThrowsException() {
         boolean throwedExc = false;
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         try {
             checkerboard.existAllowedPlace(0);
-        } catch (Checkerboard.InvalidColorValueException e) {
+        } catch (AbstractCheckerboard.InvalidColorValueException e) {
             throwedExc = true;
         }
 
@@ -447,11 +447,11 @@ class CheckerboardTest {
     @Test
     void addAllowedDisksThrowsException() {
         boolean throwedExc = false;
-        Checkerboard checkerboard = new Checkerboard();
+        AbstractCheckerboard checkerboard = new Checkerboard();
 
         try {
             checkerboard.markAllowedPlacings(0);
-        } catch (Checkerboard.InvalidColorValueException e) {
+        } catch (AbstractCheckerboard.InvalidColorValueException e) {
             throwedExc = true;
         }
 

@@ -66,7 +66,7 @@ public class ConsoleReversi implements ReversiView {
     }
 
     public void displayCheckerboard() {
-        Checkerboard checkerboard = game.getCheckerboard();
+        AbstractCheckerboard checkerboard = game.getCheckerboard();
 
         System.out.print(checkerboard.toString());
     }
@@ -88,7 +88,7 @@ public class ConsoleReversi implements ReversiView {
     }
 
     protected void displayResults() {
-        Checkerboard checkerboard = game.getCheckerboard();
+        AbstractCheckerboard checkerboard = game.getCheckerboard();
         System.out.println(game.getPlayerBlack() + " disks: " + checkerboard.getNumberOfBlacks());
         System.out.println(game.getPlayerWhite() + " disks: " + checkerboard.getNumberOfWhites());
 

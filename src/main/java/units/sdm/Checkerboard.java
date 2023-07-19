@@ -1,68 +1,21 @@
 package units.sdm;
 
-public class Checkerboard {
-    public static final int SIZE = 8;
-    private final int[][] matrix;
-
-    private int numberOfWhites;
-    private int numberOfBlacks;
-
-    public static final int B = 1;
-    public static final int W = -1;
-    public static final int N = 0;
-    public static final int A = 2;
-
+public class Checkerboard extends AbstractCheckerboard {
     public Checkerboard() {
-        matrix = new int[SIZE][SIZE];
-
-        matrix[3][3] = W;
-        matrix[4][3] = B;
-        matrix[3][4] = B;
-        matrix[4][4] = W;
+        super(new int[][] {{N, N, N, N, N, N, N, N},
+                {N, N, N, N, N, N, N, N},
+                {N, N, N, N, N, N, N, N},
+                {N, N, N, W, B, N, N, N},
+                {N, N, N, B, W, N, N, N},
+                {N, N, N, N, N, N, N, N},
+                {N, N, N, N, N, N, N, N},
+                {N, N, N, N, N, N, N, N}});
 
         this.countDisks();
     }
 
     public Checkerboard(int[][] matrix) throws InvalidSquareValueException {
-        this.matrix = new int[SIZE][SIZE];
-
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                int squareVal = matrix[i][j];
-                if (squareVal != W && squareVal != B && squareVal != N && squareVal != A)
-                    throw new InvalidSquareValueException(squareVal);
-                else
-                    this.matrix[i][j] = squareVal;
-            }
-        }
-
-        this.countDisks();
-    }
-
-    public static class InvalidSquareValueException extends RuntimeException {
-        public InvalidSquareValueException(int value) {
-            super("Tried to write value [" + value + "] into a Checkerboard object. The only allowed values are: " +
-                    "{" + W + "; " + B + "; " + N + "; " + A + "}");
-        }
-    }
-
-    public static class InvalidColorValueException extends RuntimeException {
-        public InvalidColorValueException(int value) {
-            super("Tried to use value [" + value + "] as a color value for a Checkerboard square." +
-                    "The only allowed values are: {" + W + "; " + B + "}");
-        }
-    }
-
-    public int[][] getMatrix() {
-        return this.matrix;
-    }
-
-    public int getNumberOfWhites() {
-        return numberOfWhites;
-    }
-
-    public int getNumberOfBlacks() {
-        return numberOfBlacks;
+        super(matrix);
     }
 
     private void validateColor(int color) throws InvalidColorValueException {
@@ -70,7 +23,8 @@ public class Checkerboard {
             throw new InvalidColorValueException(color);
     }
 
-    public boolean isPlaceAllowed(int posX, int posY, int colorTurn) throws InvalidColorValueException{
+    @Override
+    public boolean isPlaceAllowed(int posX, int posY, int colorTurn) throws InvalidColorValueException {
         validateColor(colorTurn);
 
         boolean isOppositeColor;
@@ -81,7 +35,7 @@ public class Checkerboard {
 
         for (int offsetX = -1; offsetX < 2; offsetX++)
             for (int offsetY = -1; offsetY < 2; offsetY++)
-                if(isSquareInBounds(posX + offsetX, posY + offsetY)) {
+                if (isSquareInBounds(posX + offsetX, posY + offsetY)) {
                     isOppositeColor = isOppositeColor(posX + offsetX, posY + offsetY, colorTurn);
                     isDirectionAllowed = isDirectionAllowed(offsetX, offsetY, posX + offsetX, posY + offsetY, colorTurn);
 
@@ -128,6 +82,7 @@ public class Checkerboard {
         return false;
     }
 
+    @Override
     public void place(int posX, int posY, int colorTurn) throws InvalidColorValueException {
         validateColor(colorTurn);
 
@@ -166,6 +121,7 @@ public class Checkerboard {
         }
     }
 
+    @Override
     public boolean existAllowedPlace(int colorTurn) throws InvalidColorValueException {
         validateColor(colorTurn);
 
@@ -177,18 +133,7 @@ public class Checkerboard {
         return false;
     }
 
-    private void countDisks() {
-        numberOfBlacks = 0;
-        numberOfWhites = 0;
-
-        for (int i = 0; i < SIZE; i++)
-            for (int j = 0; j < SIZE; j++)
-                if (matrix[i][j] == W)
-                    numberOfWhites += 1;
-                else if (matrix[i][j] == B)
-                    numberOfBlacks += 1;
-    }
-
+    @Override
     public void markAllowedPlacings(int colorTurn) throws InvalidColorValueException {
         validateColor(colorTurn);
 
@@ -198,30 +143,11 @@ public class Checkerboard {
                     matrix[i][j] = A;
     }
 
+    @Override
     public void unmarkAllowedPlacings() {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
                 if (matrix[i][j] == A)
                     matrix[i][j] = N;
-    }
-
-    @Override
-    public String toString() {
-        String strMatrix = "   [A][B][C][D][E][F][G][H]\n";
-        String currentValue;
-        for (int i = 0; i < Checkerboard.SIZE; i++) {
-            strMatrix = strMatrix.concat("[" + (i + 1) + "]");
-            for (int j = 0; j < Checkerboard.SIZE; j++) {
-                currentValue = switch (matrix[i][j]) {
-                    case W -> "[W]";
-                    case B -> "[B]";
-                    case A -> "[A]";
-                    default -> "[ ]";
-                };
-                strMatrix = strMatrix.concat(currentValue);
-            }
-            strMatrix = strMatrix.concat("\n");
-        }
-        return strMatrix;
     }
 }
