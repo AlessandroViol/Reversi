@@ -10,14 +10,14 @@ public abstract class AbstractCheckerboard {
     protected int numberOfWhites;
     protected int numberOfBlacks;
 
-    public AbstractCheckerboard(int[][] matrix) throws InvalidSquareValueException {
+    protected AbstractCheckerboard(int[][] matrix) throws IllegalSquareValueArgumentException {
         this.matrix = new int[SIZE][SIZE];
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 int squareVal = matrix[i][j];
                 if (squareVal != W && squareVal != B && squareVal != N && squareVal != A)
-                    throw new InvalidSquareValueException(squareVal);
+                    throw new IllegalSquareValueArgumentException(squareVal);
                 else
                     this.matrix[i][j] = squareVal;
             }
@@ -38,13 +38,13 @@ public abstract class AbstractCheckerboard {
         return numberOfBlacks;
     }
 
-    public abstract boolean isPlaceAllowed(int posX, int posY, int colorTurn) throws InvalidColorValueException;
+    public abstract boolean isPlaceAllowed(int posX, int posY, int colorTurn) throws IllegalColorArgumentException;
 
-    public abstract void place(int posX, int posY, int colorTurn) throws InvalidColorValueException;
+    public abstract void place(int posX, int posY, int colorTurn) throws IllegalColorArgumentException;
 
-    public abstract boolean existAllowedPlace(int colorTurn) throws InvalidColorValueException;
+    public abstract boolean existAllowedPlace(int colorTurn) throws IllegalColorArgumentException;
 
-    public abstract void markAllowedPlacings(int colorTurn) throws InvalidColorValueException;
+    public abstract void markAllowedPlacings(int colorTurn) throws IllegalColorArgumentException;
 
     public abstract void unmarkAllowedPlacings();
 
@@ -64,9 +64,9 @@ public abstract class AbstractCheckerboard {
     public String toString() {
         String strMatrix = "   [A][B][C][D][E][F][G][H]\n";
         String currentValue;
-        for (int i = 0; i < Checkerboard.SIZE; i++) {
+        for (int i = 0; i < SIZE; i++) {
             strMatrix = strMatrix.concat("[" + (i + 1) + "]");
-            for (int j = 0; j < Checkerboard.SIZE; j++) {
+            for (int j = 0; j < SIZE; j++) {
                 currentValue = switch (matrix[i][j]) {
                     case W -> "[W]";
                     case B -> "[B]";

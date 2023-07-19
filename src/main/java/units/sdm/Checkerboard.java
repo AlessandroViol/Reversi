@@ -14,17 +14,17 @@ public class Checkerboard extends AbstractCheckerboard {
         this.countDisks();
     }
 
-    public Checkerboard(int[][] matrix) throws InvalidSquareValueException {
+    public Checkerboard(int[][] matrix) throws IllegalSquareValueArgumentException {
         super(matrix);
     }
 
-    private void validateColor(int color) throws InvalidColorValueException {
+    private void validateColor(int color) throws IllegalColorArgumentException {
         if (color != W && color != B)
-            throw new InvalidColorValueException(color);
+            throw new IllegalColorArgumentException(color);
     }
 
     @Override
-    public boolean isPlaceAllowed(int posX, int posY, int colorTurn) throws InvalidColorValueException {
+    public boolean isPlaceAllowed(int posX, int posY, int colorTurn) throws IllegalColorArgumentException {
         validateColor(colorTurn);
 
         boolean isOppositeColor;
@@ -65,7 +65,7 @@ public class Checkerboard extends AbstractCheckerboard {
         return matrix[posX][posY] == color;
     }
 
-    private boolean isDirectionAllowed(int offsetX, int offsetY, int posX, int posY, int colorTurn) throws InvalidColorValueException {
+    private boolean isDirectionAllowed(int offsetX, int offsetY, int posX, int posY, int colorTurn) throws IllegalColorArgumentException {
         validateColor(colorTurn);
 
         while (isSquareInBounds(posX + offsetX, posY + offsetY)) {
@@ -83,7 +83,7 @@ public class Checkerboard extends AbstractCheckerboard {
     }
 
     @Override
-    public void place(int posX, int posY, int colorTurn) throws InvalidColorValueException {
+    public void place(int posX, int posY, int colorTurn) throws IllegalColorArgumentException {
         validateColor(colorTurn);
 
         if (isPlaceAllowed(posX, posY, colorTurn)) {
@@ -93,7 +93,7 @@ public class Checkerboard extends AbstractCheckerboard {
         }
     }
 
-    private void updateMatrix(int posX, int posY, int colorTurn) throws InvalidColorValueException {
+    private void updateMatrix(int posX, int posY, int colorTurn) throws IllegalColorArgumentException {
         validateColor(colorTurn);
 
         boolean isOppositeColor;
@@ -111,7 +111,7 @@ public class Checkerboard extends AbstractCheckerboard {
                 }
     }
 
-    private void swapAlongDirection(int offsetX, int offsetY, int posX, int posY, int colorTurn) throws InvalidColorValueException {
+    private void swapAlongDirection(int offsetX, int offsetY, int posX, int posY, int colorTurn) throws IllegalColorArgumentException {
         validateColor(colorTurn);
 
         while (isOppositeColor(posX + offsetX, posY + offsetY, colorTurn)) {
@@ -122,7 +122,7 @@ public class Checkerboard extends AbstractCheckerboard {
     }
 
     @Override
-    public boolean existAllowedPlace(int colorTurn) throws InvalidColorValueException {
+    public boolean existAllowedPlace(int colorTurn) throws IllegalColorArgumentException {
         validateColor(colorTurn);
 
         for (int i = 0; i < SIZE; i++)
@@ -134,7 +134,7 @@ public class Checkerboard extends AbstractCheckerboard {
     }
 
     @Override
-    public void markAllowedPlacings(int colorTurn) throws InvalidColorValueException {
+    public void markAllowedPlacings(int colorTurn) throws IllegalColorArgumentException {
         validateColor(colorTurn);
 
         for (int i = 0; i < SIZE; i++)

@@ -65,11 +65,12 @@ public class ReversiGame implements Game {
 
     @Override
     public void turn() {
-        if (isGameover())
+        if (isGameover()) {
             if (isDraw())
                 view.displayDraw();
             else
                 view.displayGameOver();
+        }
         else {
             if (!checkerboard.existAllowedPlace(colorTurn)) {
                 view.displayNoMoves();
