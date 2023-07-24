@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'units.sdm'
-version '2.0-beta'
+version '2.0'
 
 repositories {
     mavenCentral()
