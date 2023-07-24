@@ -2,7 +2,7 @@ package units.sdm;
 
 import java.util.Scanner;
 
-public class ConsoleReversi implements ReversiView {
+public class ConsoleReversi implements View {
 
     protected Game game;
 

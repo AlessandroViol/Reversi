@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
-public class SwingReversi implements ReversiView {
+public class SwingReversi implements View {
     private Game game;
     private JFrame frame;
 

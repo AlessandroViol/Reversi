@@ -11,9 +11,9 @@ public class ReversiGame implements Game {
 
     private final AbstractCheckerboard checkerboard;
 
-    private final ReversiView view;
+    private final View view;
 
-    public ReversiGame(ReversiView view) {
+    public ReversiGame(View view) {
         this.playerBlack = "Black";
         this.playerWhite = "White";
 
@@ -22,7 +22,7 @@ public class ReversiGame implements Game {
         this.view = view;
     }
 
-    public ReversiGame(ReversiView view, AbstractCheckerboard checkerboard) {
+    public ReversiGame(View view, AbstractCheckerboard checkerboard) {
         this.playerBlack = "Black";
         this.playerWhite = "White";
 

@@ -2,9 +2,6 @@ package units.sdm;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReversiGameTest {
@@ -13,56 +10,47 @@ class ReversiGameTest {
     private static final int N = AbstractCheckerboard.N;
     private static final int A = AbstractCheckerboard.A;
 
-    private class DummyView implements ReversiView {
+    private class DummyView implements View {
         public String called;
-        public List<String> traceback = new ArrayList<>();
 
         @Override
         public void installLogic(Game reversiGame) {
             called = "installLogic";
-            traceback.add(called);
         }
 
         @Override
         public void show() {
             called = "show";
-            traceback.add(called);
         }
 
         @Override
         public void displayGameStart() {
             called = "displayGameStart";
-            traceback.add(called);
         }
 
         @Override
         public void displayTurn() {
             called = "displayTurn";
-            traceback.add(called);
         }
 
         @Override
         public void displayGameOver() {
             called = "displayGameOver";
-            traceback.add(called);
         }
 
         @Override
         public void displayNoMoves() {
             called = "displayNoMoves";
-            traceback.add(called);
         }
 
         @Override
         public void displayNotAllowed() {
             called = "displayNotAllowed";
-            traceback.add(called);
         }
 
         @Override
         public void displayDraw() {
             called = "displayDraw";
-            traceback.add(called);
         }
     }
 

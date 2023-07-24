@@ -1,6 +1,6 @@
 package units.sdm;
 
-public interface ReversiView {
+public interface View {
 
     void installLogic(Game game);
 
